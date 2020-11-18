@@ -1,15 +1,17 @@
 #!/bin/bash
 
-# Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Current Track
 # @raycast.mode inline
 # @raycast.refreshTime 5s
-
-# Optional parameters:
+#
 # @raycast.icon ℹ️
 # @raycast.packageName cmus
-
+#
+# @raycast.description Shows info on the current track if cmus is running
+# @raycast.author mmerle
+# @raycast.authorURL https://github.com/mmerle
+#
 # Modified script from https://github.com/Anachron/i3blocks/blob/master/blocks/cmus
 
 info_cmus=$(cmus-remote -Q)
@@ -28,6 +30,5 @@ elif [[ "${info_status}" == *"paused"* ]]; then
 else
   out_text="No Track Playing"
 fi
-
 
 echo "${out_text}"
