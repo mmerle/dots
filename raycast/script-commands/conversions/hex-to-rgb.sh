@@ -4,14 +4,16 @@
 # @raycast.schemaVersion 1
 # @raycast.title Hex to RGB
 # @raycast.mode silent
+# @raycast.packageName Conversions
 
 # Optional parameters:
 # @raycast.author Caleb Stauffer
 # @raycast.authorURL https://github.com/crstauf
-# @raycast.description Convert hex to RGB.
+# @raycast.description Convert HEX color values to RGB values.
 # @raycast.icon 🎨
+# @raycast.argument1 { "type": "text", "placeholder": "HEX" }
 
-hex=$(pbpaste)
+hex=$1
 first="${hex:0:1}"
 
 if [ "#" = "$first" ]; then

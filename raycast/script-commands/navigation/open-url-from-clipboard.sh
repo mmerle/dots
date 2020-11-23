@@ -17,4 +17,3 @@ then
 else
     echo "String in clipboard is a not valid URL"
 fi
-
