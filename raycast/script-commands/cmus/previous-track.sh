@@ -5,7 +5,7 @@
 # @raycast.mode silent
 #
 # @raycast.icon ⏪
-# @raycast.packageName cmus
+# @raycast.packageName Cmus
 #
 # @raycast.description Goes back a track if cmus is running
 # @raycast.author mmerle

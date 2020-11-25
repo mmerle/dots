@@ -5,7 +5,7 @@
 # @raycast.mode silent
 #
 # @raycast.icon 🔀
-# @raycast.packageName cmus
+# @raycast.packageName Cmus
 #
 # @raycast.description Toggles the shuffle option if cmus is running
 # @raycast.author mmerle

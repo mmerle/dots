@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Dependency: requires SVGO (https://github.com/svg/svgo)
+# Install via npm: `npm install -g svgo`
+
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Optimize SVG
