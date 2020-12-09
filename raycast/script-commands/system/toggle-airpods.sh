@@ -6,7 +6,7 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon 🎧
+# @raycast.icon images/airpods.png
 
 tell application "System Events" to tell process "SystemUIServer"
     set bt to (first menu bar item whose description is "bluetooth") of menu bar 1
