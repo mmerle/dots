@@ -32,7 +32,7 @@
 # Configuration
 
 # API token with `project:read` scope (https://sentry.io/settings/account/api/auth-tokens/)
-API_TOKEN = "b8012bb6b53c4e9bb7c3f0cde89fcfce8ef0949b521d42218ab9d9f2178a127b"
+API_TOKEN = ${{ secrets.SENTRY_API }}
 
 # Slug of organization the issues belong to
 ORGANIZATION = "mmerle"
