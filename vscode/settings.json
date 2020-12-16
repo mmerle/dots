@@ -1,26 +1,22 @@
 {
-  // editor
   "breadcrumbs.enabled": false,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.wordWrap": "off",
-  "editor.fontFamily": "'Office Code Pro', Consolas, Hack, SF Mono",
+  "editor.fontFamily": "Office Code Pro D, Hack, SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
-  "editor.fontWeight": "400",
   "editor.lineHeight": 21,
-  "editor.renderLineHighlight": "gutter",
   "editor.scrollBeyondLastLine": false,
   "editor.smoothScrolling": true,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.cursorBlinking": "smooth",
   "editor.renderIndentGuides": false,
-  "explorer.compactFolders": false,
-  "editor.scrollbar.horizontal": "hidden",
-  // "editor.scrollbar.vertical": "hidden",
+  "editor.renderLineHighlight": "gutter",
   "editor.padding.bottom": 20,
   "editor.padding.top": 20,
   "editor.tabSize": 2,
+  "explorer.compactFolders": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
   "explorer.openEditors.visible": 0,
@@ -31,17 +27,18 @@
     "**/.git": true
   },
   "workbench.startupEditor": "newUntitledFile",
+  "workbench.colorTheme": "Flora",
+  "workbench.iconTheme": "quill-icons",
+  "workbench.tree.indent": 18,
   "workbench.settings.useSplitJSON": true,
-  // "workbench.fontAliasing": "antialiased",
+  "workbench.fontAliasing": "auto",
   "workbench.tips.enabled": false,
-  "workbench.activityBar.visible": true,
+  "workbench.activityBar.visible": false,
   "zenMode.fullScreen": false,
   "files.trimFinalNewlines": true,
   "terminal.integrated.shell.osx": "/bin/zsh",
-  "terminal.external.osxExec": "Hyper.app",
   "telemetry.enableTelemetry": false,
   "window.title": "${rootName}",
-  // integrated terminal
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.lineHeight": 1.2,
   // language specific
@@ -57,29 +54,12 @@
   "extensions.ignoreRecommendations": true,
   "prettier.printWidth": 400,
   "prettier.singleQuote": true,
-  "prettier-eslintIntegration": false,
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "liveSassCompile.settings.generateMap": false,
-  "liveSassCompile.settings.formats": [
-    {
-      "format": "compressed",
-      "extensionName": ".min.css",
-      "savePath": null
-    }
-  ],
-  "svg.minify.removeViewBox": false,
-  "workbench.iconTheme": "quill-icons",
-  "workbench.colorTheme": "Flora",
-  "editor.matchBrackets": false,
-  "window.zoomLevel": 0,
-  "python.showStartPage": false,
   "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
-  "editor.letterSpacing": 0.25,
-  "workbench.statusBar.visible": true
+  "editor.formatOnType": false
 }
