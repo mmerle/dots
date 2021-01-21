@@ -23,12 +23,12 @@ if [[ $? -eq 0 ]]; then
   track_artist=$(echo "${info_cmus}" | sed -n -e 's/^.*artist//p' | head -n 1)
   track_album=$(echo "${info_cmus}" | sed -n -e 's/^.*album//p' | head -n 1)
     if [[ $info_status == *"playing"* ]]; then
-        out_text="${track_title} —${track_artist}"
+        out_text="${track_title} -${track_artist}"
     else
-        out_text="[PAUSED] ${track_title} —${track_artist}"
+        out_text="${track_title} -${track_artist} (Paused)"
     fi
 else
-  out_text="Cmus is not running"
+  out_text="Not playing"
 fi
 
 echo ${out_text}
