@@ -6,6 +6,7 @@
 # @raycast.mode silent
 
 # Optional parameters:
+# @raycast.packageName Audio
 # @raycast.icon images/airpods.png
 
 tell application "System Events" to tell process "SystemUIServer"

@@ -12,7 +12,6 @@
 # @raycast.authorURL https://github.com/mmerle
 # @raycast.description Show currently playing track in Music.
 
-
 if application "Music" is not running then
 	log "Not playing"
 	return
