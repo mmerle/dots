@@ -8,7 +8,7 @@
 # @raycast.author Caleb Stauffer
 # @raycast.authorURL https://github.com/crstauf
 # @raycast.description Report process with largest system CPU usage.
-# @raycast.packageName System
+# @raycast.packageName Performance
 # @raycast.icon 📈
 
 output=$(ps -exco pcpu,comm | sort -k 1 -n -r | head -n 1)
