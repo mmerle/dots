@@ -11,15 +11,17 @@
 
 import IOBluetooth
 
+let deviceAddress = "24-D0-DF-84-76-F8"
+
 func toggleAirPods() {
-    guard let bluetoothDevice = IOBluetoothDevice(addressString: "24-D0-DF-84-76-F8") else {
+    guard let bluetoothDevice = IOBluetoothDevice(addressString: deviceAddress) else {
         print("Device not found")
-        exit(-2)
+        exit(1)
     }
 
     if !bluetoothDevice.isPaired() {
         print("Device not paired")
-        exit(-4)
+        exit(1)
     }
 
     if bluetoothDevice.isConnected() {

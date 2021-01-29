@@ -31,20 +31,20 @@ BAR_LENGTH=33
 current_year=$(date +%Y)
 current_day=$(date +%j)
 
-if [ $((current_year % 400)) -eq 0 ]
+if [[ $((current_year % 400)) -eq 0 ]]
 then
   DAYS=366
-elif [ $((current_year % 100)) -eq 0 ]
+elif [[ $((current_year % 100)) -eq 0 ]]
 then
   DAYS=365
-elif [ $((current_year % 4)) -eq 0 ]
+elif [[ $((current_year % 4)) -eq 0 ]]
 then
   DAYS=366
 else
   DAYS=365
 fi
 
-percentage=$((100 * $current_day / $DAYS))
+percentage=$((100 * 10#$current_day / $DAYS))
 
 filled_element_count=$(($BAR_LENGTH * $percentage / 100))
 blank_element_count=$(($BAR_LENGTH - $filled_element_count))
