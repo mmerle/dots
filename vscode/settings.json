@@ -16,6 +16,7 @@
   "editor.padding.bottom": 20,
   "editor.padding.top": 20,
   "editor.tabSize": 2,
+  "editor.autoClosingQuotes": "always",
   "explorer.compactFolders": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
@@ -46,12 +47,20 @@
   "css.completion.completePropertyWithSemicolon": false,
   "less.completion.completePropertyWithSemicolon": false,
   "html-css-class-completion.enableEmmetSupport": true,
-  "css.lint.validProperties": ["composes"],
+  "css.lint.validProperties": [
+    "composes"
+  ],
   "css.lint.unknownAtRules": "ignore",
-  "scss.lint.validProperties": ["composes"],
+  "scss.lint.validProperties": [
+    "composes"
+  ],
   "scss.lint.unknownAtRules": "ignore",
   // extensions
   "extensions.ignoreRecommendations": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html"
+  },
   "prettier.printWidth": 400,
   "prettier.singleQuote": true,
   "[html]": {
@@ -60,6 +69,12 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false
+  "python.showStartPage": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.matchBrackets": false,
+  "window.zoomLevel": 0,
+  "files.exclude": {
+    "**/node_modules": true
+  }
 }
