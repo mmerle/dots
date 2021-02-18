@@ -6,6 +6,6 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon ⁉️
+# @raycast.icon images/restart.png
 
 tell application "Finder" to restart

@@ -6,6 +6,6 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon ‼️
+# @raycast.icon images/shutdown.png
 
 tell application "Finder" to shut down
