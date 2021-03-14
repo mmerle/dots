@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.wordWrap": "off",
-  "editor.fontFamily": "Office Code Pro D, Hack, SF Mono",
+  "editor.fontFamily": "'MD IO 0.1', Office Code Pro D, Hack, SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
   "editor.lineHeight": 21,
@@ -16,6 +16,7 @@
   "editor.padding.bottom": 20,
   "editor.padding.top": 20,
   "editor.tabSize": 2,
+  "editor.glyphMargin": false,
   "editor.autoClosingQuotes": "always",
   "explorer.compactFolders": false,
   "explorer.confirmDragAndDrop": false,
@@ -35,6 +36,7 @@
   "workbench.fontAliasing": "auto",
   "workbench.tips.enabled": false,
   "workbench.activityBar.visible": false,
+  "workbench.editor.pinnedTabSizing": "compact",
   "zenMode.fullScreen": false,
   "files.trimFinalNewlines": true,
   "terminal.integrated.shell.osx": "/bin/zsh",
@@ -68,6 +70,9 @@
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.js": "javascriptreact"
   },
   "python.showStartPage": false,
   "editor.formatOnPaste": true,
