@@ -7,7 +7,7 @@
 // @raycast.packageName System
 //
 // Optional parameters:
-// @raycast.icon 🎨
+// @raycast.icon images/colour-picker.png
 //
 // Documentation:
 // @raycast.description Sample a colour from anywhere on your screen.
