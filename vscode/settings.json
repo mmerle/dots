@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.wordWrap": "off",
-  "editor.fontFamily": "'MD IO 0.1', Office Code Pro D, Hack, SF Mono",
+  "editor.fontFamily": "'MD IO 0.2', Office Code Pro D, SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
   "editor.lineHeight": 21,
