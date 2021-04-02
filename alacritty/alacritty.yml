@@ -15,14 +15,14 @@ background_opacity: 1
 # Font config
 font:
   normal:
-    family: Office Code Pro
+    family: MD IO 0.2
     style: Regular
   bold:
-    family: Office Code Pro
-    style:
+    family: MD IO 0.2
+    style: Bold
   italic:
-    family: Office Code Pro
-    style: Italic
+    family: MD IO 0.2
+    style: Regular
   size: 13
   offset:
     x: 0
