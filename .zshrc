@@ -1,4 +1,5 @@
 export ZSH="/Users/merle/.oh-my-zsh"
+export SHELL=zsh
 
 ZSH_THEME="geometry/geometry"
 
@@ -25,27 +26,53 @@ plugins=(tmux)
 plugins=(npm)
 plugins=(yarn)
 plugins=(colored-man-pages)
+plugins=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-# Key binds
+# keybinds
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
-# Aliases
+# aliases
 alias tsm="transmission-remote"
 alias la="ls -A"
 alias vim="nvim"
 alias rm="rm -i"
-alias g="git"
-alias gs="git status"
 alias yt-dl="youtube-dl -f 140"
 
-# Other
+# git aliases
+alias g="git"
+alias gs="git status"
+alias ga='git add'
+alias gc='git commit -m'
+alias go='git checkout'
+alias gu='git push'
+alias gp='git pull'
+alias gb='git branch'
+alias gm='git merge'
+alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
+
+# config aliases
+alias ,dots='code ~/.config/dots'
+alias ,zsh='code ~/.zshrc'
+alias ,alacritty='code ~/.config/alacritty/alacritty.yml'
+
+# code
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
-# Scripts
-function colortest(){
+# search <directory> for <file> (ignores node_modules and dot directories)
+fdir() {
+  find "$1" -type d \( -name node_modules -o -path '*/\.*' \) -prune -false -o -name "*$2*"
+}
+
+# search currect dirsectory for <file>
+f() {
+  fdir . "$1"
+}
+
+# color test
+colortest() {
   T='gYw'   # The test text
 
   echo -e "\n                 40m     41m     42m     43m\
