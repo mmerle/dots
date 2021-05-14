@@ -7,7 +7,7 @@
 # @raycast.packageName System
 
 # Optional parameters:
-# @raycast.icon ??
+# @raycast.icon 🎙️
 
 # Documentation:
 # @raycast.author Matthew Morek
@@ -20,11 +20,11 @@ on getMicrophoneVolume()
 end getMicrophoneVolume
 on disableMicrophone()
 	set volume input volume 0
-	log "Microphone turned off ??"
+	log "Microphone turned off 🔴"
 end disableMicrophone
 on enableMicrophone()
 	set volume input volume 100
-	log "Microphone turned on ??"
+	log "Microphone turned on 🟢"
 end enableMicrophone
 
 if getMicrophoneVolume() is greater than 0 then
