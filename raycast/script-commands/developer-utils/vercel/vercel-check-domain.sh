@@ -58,11 +58,11 @@ case $available in
 		# Extract the price from the JSON-formatted result
 		price=${price%,*}
 		price=${price##*:}
-		echo "🟢 "$1" is available for $"$price"!"
+		echo ""$1" is available for $"$price" 🟢"
 		exit 0
 		;;
 	*"false"*)
-		echo "🔴 "$1" is not available"
+		echo ""$1" is not available 🔴"
 		exit 0
 		;;
 	*"auth"*)
