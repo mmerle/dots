@@ -1,9 +1,0 @@
-{
-  "app.disableTelemerty" : true,
-  "app.hideMenubarIcon" : true,
-  "autocomplete.addStatusToTerminalTitle" : false,
-  "autocomplete.disable" : false,
-  "autocomplete.fuzzySearch" : true,
-  "autocomplete.scrollWrapAround" : true,
-  "userShell" : "\/usr\/local\/bin\/zsh"
-}
