@@ -13,7 +13,7 @@
 # Required parameters:
 # @raycast.schemaVersion 1
 # @raycast.title Check Domain
-# @raycast.mode compact
+# @raycast.mode fullOutput
 
 # Optional parameters:
 # @raycast.icon images/vercel.png
@@ -58,11 +58,11 @@ case $available in
 		# Extract the price from the JSON-formatted result
 		price=${price%,*}
 		price=${price##*:}
-		echo ""$1" is available for $"$price" 🟢"
+		echo -e "\\033[32m$1 is available for \$$price\\033[0m"
 		exit 0
 		;;
 	*"false"*)
-		echo ""$1" is not available 🔴"
+		echo -e "\\033[31m$1 is not available\\033[0m"
 		exit 0
 		;;
 	*"auth"*)
