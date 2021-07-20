@@ -59,18 +59,18 @@ fi
 case $(bw --raw status $session 2> /dev/null | jq --raw-output '.status') in
   unauthenticated)
     delete_token
-    echo "❌  Logged out"
+    echo -e "\\033[31mLogged Out\\033[0m"
     exit 0
     ;;
 
   locked)
     delete_token
-    echo "🔒  Locked"
+    echo -e "\\033[33mLocked\\033[0m"
     exit 0
     ;;
 
   unlocked)
-    echo "✅  Unlocked"
+    echo -e "\\033[32mUnlocked\\033[0m"
     unset token
     exit 0
     ;;
