@@ -13,7 +13,7 @@
 # @raycast.description Show currently playing track in Music.
 
 if application "Music" is not running then
-	log do shell script "echo '\\033[31mNot Playing\\033[0m'"
+	log "Not Playing"
 	return
 end if
 
@@ -32,7 +32,7 @@ end tell
 if playerState is "playing" then
 	log currentTrackName & " - " & currentTrackArtist
 else if playerState is "paused" then
-	log currentTrackName & " - " & currentTrackArtist & do shell script "echo '\\033[33m (Paused)\\033[0m'"
+	log currentTrackName & " - " & currentTrackArtist & " (Paused)"
 else
 	log "Not playing"
 end if
