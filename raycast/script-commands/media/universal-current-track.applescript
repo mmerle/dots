@@ -6,7 +6,7 @@
 # @raycast.refreshTime 10s
 
 # @raycast.packageName Music
-# @raycast.icon ??
+# @raycast.icon ▶️
 
 # @raycast.author mmerle
 # @raycast.authorURL https://github.com/mmerle
