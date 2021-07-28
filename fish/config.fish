@@ -1,14 +1,13 @@
 set fish_greeting
 
 # aliases
-alias la="ls -A"
-alias vim="nvim"
-alias rm="rm -i"
-alias yt-dl="youtube-dl -f 140"
+alias la='ls -A'
+alias vim='nvim'
+alias rm='rm -i'
 
 # git aliases
-alias g="git"
-alias gs="git status"
+alias g='git'
+alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
 alias go='git checkout'
