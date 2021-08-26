@@ -95,5 +95,10 @@
   },
 
   "prettier.singleQuote": true,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.handleKeys": {
+    "<c-d>": true
+  }
 }
