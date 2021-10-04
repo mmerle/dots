@@ -91,5 +91,11 @@
   "vim.hlsearch": true,
   "vim.handleKeys": {
     "<c-d>": true
-  }
+  },
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["p"],
+      "commands": ["editor.action.clipboardPasteAction"]
+    }
+  ]
 }
