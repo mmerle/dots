@@ -76,15 +76,6 @@
   },
 
   // plugin specific
-  "bracket-pair-colorizer-2.activeScopeCSS": [
-    "backgroundColor : #606974",
-    "opacity: 0.35"
-  ],
-  "bracket-pair-colorizer-2.colors": ["#606974", "#606974", "#606974"],
-  "bracket-pair-colorizer-2.highlightActiveScope": true,
-  "bracket-pair-colorizer-2.showBracketsInRuler": false,
-  "bracket-pair-colorizer-2.showHorizontalScopeLine": false,
-  "bracket-pair-colorizer-2.showVerticalScopeLine": false,
   "color-highlight.markRuler": false,
   "color-highlight.markerType": "underline",
   "emmet.excludeLanguages": [],
