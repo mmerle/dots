@@ -22,5 +22,5 @@ alias gm='git merge'
 alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
 
 # config aliases
-alias ,fish='code ~/.config/fish/config.fish'
+alias ,fish='code ~/.config/fish'
 alias ,kitty='code ~/.config/kitty/kitty.conf'
