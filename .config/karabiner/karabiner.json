@@ -151,16 +151,6 @@
       "simple_modifications": [
         {
           "from": {
-            "key_code": "caps_lock"
-          },
-          "to": [
-            {
-              "key_code": "escape"
-            }
-          ]
-        },
-        {
-          "from": {
             "key_code": "escape"
           },
           "to": [
@@ -178,7 +168,53 @@
           "basic.to_if_held_down_threshold_milliseconds": 500,
           "mouse_motion_to_scroll.speed": 100
         },
-        "rules": [{}]
+        "rules": [
+          {
+            "description": "Caps Lock to Escape/Control",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": {
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_control",
+                    "lazy": true
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "key_code": "escape"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Left Control to Hyper",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "left_control",
+                  "modifiers": {
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_option",
+                    "modifiers": ["left_command", "left_control"]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       "virtual_hid_keyboard": {
         "country_code": 0,
