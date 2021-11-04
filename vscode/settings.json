@@ -41,8 +41,7 @@
     "**/node_modules": true,
     "**/.git": true
   },
-  "telemetry.enableTelemetry": false,
-  "telemetry.enableCrashReporter": false,
+  "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "kitty.app",
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.fontSize": 13,
