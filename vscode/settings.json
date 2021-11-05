@@ -86,15 +86,6 @@
 
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
-  "vim.useSystemClipboard": true,
-  "vim.hlsearch": true,
-  "vim.handleKeys": {
-    "<c-d>": true
-  },
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      "before": ["p"],
-      "commands": ["editor.action.clipboardPasteAction"]
-    }
-  ]
+  "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.vim"
 }
