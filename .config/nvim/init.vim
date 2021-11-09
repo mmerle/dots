@@ -12,7 +12,7 @@ call plug#end()
 
 set encoding=UTF-8 nobackup nowritebackup nocursorline splitbelow splitright
 set wildmode=longest:full,full
-set rnu smarttab cindent tabstop=2 shiftwidth=2 expandtab
+set nu smarttab cindent tabstop=2 shiftwidth=2 expandtab
 
 "keybindings
 let mapleader=" "
