@@ -7,19 +7,20 @@
   --white: hsl(0 0% 100%);
   --black: hsl(0 0% 0%);
   --fg: var(--white);
-  --fgA1: 0 0% 100%;
+  --fgAlpha: 0 0% 100%;
   --bg: hsl(0 0% 7% / 0.8);
   --accent: hsl(21 100% 50%);
-  --accentA1: hsl(21 100% 50% / 0.2);
+  --accentAlpha: hsl(21 100% 50% / 0.2);
   --mono: hsl(0 0% 62.8%);
+  --monoAlpha: 0 0% 62.8%;
 
-  --text-xs: 10px;
   --text-sm: 12px;
   --text: 14px;
   --text-lg: 16px;
-  --text-xl: 18px;
-
   --leading: 1.6;
+
+  --border: 1px solid hsl(var(--fgAlpha) / 0.15);
+  --outline: 0.5px solid var(--black);
 
   --radius-sm: 4px;
   --radius: 8px;
@@ -29,13 +30,23 @@
   --blur: blur(20px);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --fg: var(--black);
+    --bg: hsl(0 0% 100% / 0.8);
+
+    --border: 1px solid hsl(var(--monoAlpha) / 0.4);
+    --outline: none;
+  }
+}
+
 /* hints */
 #vimiumHintMarkerContainer div.vimiumHintMarker {
   background: var(--bg);
   backdrop-filter: var(--blur);
   border-radius: var(--radius-sm);
-  border: 1px solid hsl(var(--fgA1) / 0.15);
-  outline: 0.5px solid var(--black);
+  border: var(--border);
+  outline: var(--outline);
   box-shadow: var(--shadow);
   padding: 4px;
 }
@@ -58,8 +69,8 @@ div.vimiumHUD {
   background: var(--bg);
   backdrop-filter: var(--blur);
   border-radius: var(--radius);
-  border: 1px solid hsl(var(--fgA1) / 0.15);
-  outline: 0.5px solid var(--black);
+  border: var(--border);
+  outline: var(--outline);
   box-shadow: var(--shadow);
   bottom: 18px;
 }
@@ -93,8 +104,8 @@ div.vimiumHUD .hud-find {
 #vomnibar {
   background: var(--bg);
   backdrop-filter: var(--blur);
-  border: 1px solid hsl(var(--fgA1) / 0.15);
-  outline: 0.5px solid black;
+  border: var(--border);
+  outline: var(--outline);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
   padding: 0 8px;
@@ -124,7 +135,7 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar #vomnibarInput::selection {
-  color: black;
+  color: var(--black);
   background: var(--fg);
 }
 
@@ -133,7 +144,7 @@ div.vimiumHUD .hud-find {
   border-radius: 0;
   margin: 0;
   padding: 14px 0;
-  border-top: 1px solid hsl(var(--fgA1) / 0.15);
+  border-top: var(--border);
   overflow: hidden;
 }
 
@@ -173,10 +184,10 @@ div.vimiumHUD .hud-find {
 
 #vomnibar li .vomnibarSource {
   color: var(--accent);
-  background: var(--accentA1);
+  background: var(--accentAlpha);
   font-size: inherit;
   margin: 0;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 4px 6px;
   margin-right: 8px;
   display: block;
@@ -215,5 +226,5 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar li.vomnibarSelected {
-  background: hsl(0 0% 50% / 0.2);
+  background: hsl(var(--monoAlpha) / 0.16);
 }
