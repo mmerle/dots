@@ -1,0 +1,219 @@
+:root {
+  --font-mono: 'MD IO 0.3', monospace;
+  --font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  --white: hsl(0 0% 100%);
+  --black: hsl(0 0% 0%);
+  --fg: var(--white);
+  --fgA1: 0 0% 100%;
+  --bg: hsl(0 0% 7% / 0.8);
+  --accent: hsl(21 100% 50%);
+  --accentA1: hsl(21 100% 50% / 0.2);
+  --mono: hsl(0 0% 62.8%);
+
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+
+  --leading: 1.6;
+
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 10px;
+
+  --shadow: rgb(0 0 0 / 20%) 0px 16px 70px;
+  --blur: blur(20px);
+}
+
+/* hints */
+#vimiumHintMarkerContainer div.vimiumHintMarker {
+  background: var(--bg);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius-sm);
+  border: 1px solid hsl(var(--fgA1) / 0.15);
+  outline: 0.5px solid var(--black);
+  box-shadow: var(--shadow);
+  padding: 4px;
+}
+
+#vimiumHintMarkerContainer div.vimiumHintMarker span {
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  text-shadow: none;
+  text-transform: lowercase;
+}
+
+#vimiumHintMarkerContainer div.vimiumHintMarker .matchingCharacter {
+  color: var(--accent);
+}
+
+/* hud */
+div.vimiumHUD {
+  background: var(--bg);
+  backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--fgA1) / 0.15);
+  outline: 0.5px solid var(--black);
+  box-shadow: var(--shadow);
+  bottom: 18px;
+}
+
+div.vimiumHUD div.vimiumHUDSearchArea {
+  background: transparent;
+  padding: 8px;
+}
+
+div.vimiumHUD div.vimiumHUDSearchAreaInner,
+div.vimiumHUD span#hud-find-input {
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text);
+  font-weight: 400;
+  height: fit-content;
+  line-height: inherit;
+}
+
+div.vimiumHUD span#hud-match-count {
+  color: var(--mono);
+  font-size: var(--text);
+}
+
+div.vimiumHUD .hud-find {
+  background: transparent;
+  border: none;
+}
+
+/* vomnibar */
+#vomnibar {
+  background: var(--bg);
+  backdrop-filter: var(--blur);
+  border: 1px solid hsl(var(--fgA1) / 0.15);
+  outline: 0.5px solid black;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 0 8px;
+  width: 640px;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  transform-origin: 50% center;
+}
+
+#vomnibar .vomnibarSearchArea {
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+#vomnibar #vomnibarInput {
+  background: transparent;
+  border: none;
+  padding: 16px 8px;
+  font-size: var(--text-lg);
+  font-family: var(--font-sans);
+  color: var(--fg);
+  box-shadow: none;
+  height: fit-content;
+}
+
+#vomnibar #vomnibarInput::selection {
+  color: black;
+  background: var(--fg);
+}
+
+#vomnibar ul {
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+  padding: 14px 0;
+  border-top: 1px solid hsl(var(--fgA1) / 0.15);
+  overflow: hidden;
+}
+
+#vomnibar li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: none;
+  line-height: 16px;
+}
+
+#vomnibar li .vomnibarTopHalf,
+#vomnibar li .vomnibarBottomHalf {
+  font-size: var(--text);
+  margin: 0;
+  padding: 0;
+}
+
+#vomnibar li .vomnibarTopHalf {
+  display: flex;
+}
+
+#vomnibar li .vomnibarBottomHalf {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#vomnibar li .vomnibarTitle,
+#vomnibar li .vomnibarURL {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: var(--leading);
+}
+
+#vomnibar li .vomnibarSource {
+  color: var(--accent);
+  background: var(--accentA1);
+  font-size: inherit;
+  margin: 0;
+  border-radius: 4px;
+  padding: 4px 6px;
+  margin-right: 8px;
+  display: block;
+  flex-shrink: 0;
+}
+
+#vomnibar li .vomnibarTitle {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: inherit;
+}
+
+#vomnibar li .vomnibarUrl {
+  color: var(--mono);
+  font-size: inherit;
+  font-weight: 400;
+  font-family: var(--font-sans);
+  display: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  padding-left: 8px;
+}
+
+#vomnibar li .vomnibarMatch {
+  font-weight: 400;
+  color: inherit;
+}
+
+#vomnibar li .vomnibarNoInsertText,
+#vomnibar li .vomnibarIcon {
+  display: none;
+}
+
+#vomnibar li.vomnibarSelected {
+  background: hsl(0 0% 50% / 0.2);
+}
