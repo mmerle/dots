@@ -8,7 +8,7 @@
   "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.fontFamily": "'MD IO 0.3', Office Code Pro D, SF Mono",
+  "editor.fontFamily": "'MD IO 0.4', Office Code Pro D, SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
   "editor.formatOnSave": true,
