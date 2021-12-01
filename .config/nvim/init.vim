@@ -5,6 +5,8 @@ Plug 'junegunn/limelight.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 "import lua config
@@ -18,6 +20,7 @@ set nu smarttab cindent tabstop=2 shiftwidth=2 expandtab
 let mapleader=" "
 nnoremap <leader>s :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader><ENTER> :Goyo<CR>
+nnoremap <silent> <C-p> :Files<CR>
 
 "color settings
 :colorscheme flora
