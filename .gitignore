@@ -1,2 +1,3 @@
 .DS_Store
 setup.sh
+.config/fish/functions/_*
