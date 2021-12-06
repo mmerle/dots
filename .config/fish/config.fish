@@ -22,8 +22,9 @@ alias gb='git branch'
 alias gm='git merge'
 alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
 
-alias ,fish='code ~/.config/fish'
-alias ,kitty='code ~/.config/kitty/kitty.conf'
+alias ,fish='nvim ~/.config/fish'
+alias ,kitty='nvim ~/.config/kitty/kitty.conf'
+alias ,nvim='nvim ~/.config/nvim/init.vim'
 
 # abbreviations
 abbr v 'nvim'
