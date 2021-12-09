@@ -3,24 +3,27 @@ local function map(mode, lhs, rhs, opts)
 	return vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-vim.g.mapleader = " "
+vim.g.mapleader = ' '
 
-map("n", "<leader>r", ":source ~/.config/nvim/init.lua<cr>")
-map("n", "<leader>e", ":NvimTreeToggle<cr>")
-map("n", "<leader>p", [[:lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
+map('n', '<leader>r', ':source ~/.config/nvim/init.lua<cr>')
+map('n', '<leader>e', ':NvimTreeToggle<cr>')
+map('n', '<leader>p', [[:lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<leader>s', ':w<cr>') -- quick save
+map('n', '<leader>q', ':q<cr>') -- quick quit
+map('n', 'gt', ':BufferNext<cr>')
+map('n', 'gT', ':BufferPrevious<cr>')
+map('v', '<', '<gv')
+map('v', '>', '>gv')
+map('n', '<leader>w', ':BufferClose<cr>')
+map('n', '<leader>ki', ':PackerInstall<cr>')
+map('n', '<leader>kc', ':PackerCompile<cr>')
+map('n', '<leader>ks', ':PackerSync<cr>')
 
-map("n", "<leader>s", ":w<cr>")
-map("n", "<leader>q", ":q<cr>")
-
-map("n", "gt", ":BufferNext<cr>")
-map("n", "gT", ":BufferPrevious<cr>")
-map("n", "<leader>w", ":BufferClose<cr>")
-
-map("n", "<leader>kc", ":PackerCompile<cr>")
-map("n", "<leader>ks", ":PackerSync<cr>")
-
-vim.opt.mouse = "a"
-vim.opt.clipboard = "unnamedplus"
+vim.opt.mouse = 'a'
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.updatetime = 300
+vim.opt.undofile = true
 vim.opt.scrolloff = 5
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -33,36 +36,51 @@ vim.opt.splitright = true
 vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.title = true
-vim.opt.titlestring = "%t"
+vim.opt.titlestring = '%t'
 vim.opt.laststatus = 0
-vim.opt.statusline = "%f %M %= %l:%c"
-vim.opt.wildmode = "longest:full,full"
+vim.opt.statusline = '%f %M %= %l:%c'
+vim.opt.wildmode = 'longest:full,full'
+vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.updatetime = 300
 vim.opt.pumheight = 10
+vim.opt.completeopt = 'menu,menuone,noselect'
 vim.opt.termguicolors = true
 
-vim.cmd("colorscheme flora")
-
 -- plugins
-require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("tpope/vim-commentary")
-	use("mattn/emmet-vim")
-	use("b0o/schemastore.nvim")
+require('packer').startup(function(use)
+	use('wbthomason/packer.nvim')
+	use('tpope/vim-commentary')
+	use('b0o/schemastore.nvim')
 	use({
-		"nvim-telescope/telescope.nvim",
-		requires = "nvim-lua/plenary.nvim",
+		'mmerle/flora-neovim',
+		as = 'flora',
 		config = function()
-			require("telescope").setup({
+			vim.g.flora_disable_italics = false
+			vim.cmd('colorscheme flora')
+		end,
+	})
+	use({
+		'nvim-telescope/telescope.nvim',
+		requires = 'nvim-lua/plenary.nvim',
+		config = function()
+			local actions = require('telescope.actions')
+			require('telescope').setup({
 				defaults = {
-					file_ignore_patterns = { "node_modules", ".git/", ".next/" },
+					file_ignore_patterns = { 'node_modules', '.git/', '.next/', '.DS_Store' },
 					layout_config = { horizontal = { preview_width = 0.6 } },
+					find_command = { 'rg', '--hidden', '--follow' },
+					mappings = {
+						i = {
+							['<C-j>'] = actions.move_selection_next,
+							['<C-k>'] = actions.move_selection_previous,
+							['<esc>'] = actions.close,
+						},
+					},
 				},
 				pickers = {
 					find_files = {
 						hidden = true,
-						theme = "dropdown",
+						theme = 'dropdown',
 						previewer = false,
 					},
 				},
@@ -70,27 +88,27 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"kyazdani42/nvim-tree.lua",
+		'kyazdani42/nvim-tree.lua',
 		config = function()
 			vim.g.nvim_tree_git_hl = 1
 			vim.g.nvim_tree_icons = {
 				folder = {
-					default = "▶",
-					empty = "▶",
-					symlink = "▶",
-					open = "▼",
-					empty_open = "▼",
-					symlink_open = "▼",
+					default = '▶',
+					empty = '▶',
+					symlink = '▶',
+					open = '▼',
+					empty_open = '▼',
+					symlink_open = '▼',
 				},
 			}
-			vim.g.nvim_tree_symlink_arrow = " → "
+			vim.g.nvim_tree_symlink_arrow = ' → '
 			vim.g.nvim_tree_quit_on_open = 1
 			vim.g.nvim_tree_show_icons = { folders = 1, files = 0 }
 
-			require("nvim-tree").setup({
+			require('nvim-tree').setup({
 				auto_close = true,
 				filters = {
-					custom = { ".git", ".DS_Store" },
+					custom = { '.git', '.DS_Store' },
 				},
 				view = {
 					hide_root_folder = true,
@@ -99,17 +117,17 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate',
 		requires = {
-			"nvim-treesitter/playground",
-			"windwp/nvim-ts-autotag",
-			"JoosepAlviste/nvim-ts-context-commentstring",
+			'nvim-treesitter/playground',
+			'windwp/nvim-ts-autotag',
+			'JoosepAlviste/nvim-ts-context-commentstring',
 		},
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = "maintained",
-				ignore_install = { "haskell" },
+			require('nvim-treesitter.configs').setup({
+				ensure_installed = 'maintained',
+				ignore_install = { 'haskell' },
 				indent = { enable = true },
 				autotag = { enable = true },
 				highlight = { enable = true },
@@ -119,61 +137,62 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"neovim/nvim-lspconfig",
-		requires = { "folke/lua-dev.nvim" },
+		'neovim/nvim-lspconfig',
+		requires = { 'folke/lua-dev.nvim' },
 		config = function()
 			local function on_attach(client, bufnr)
 				client.resolved_capabilities.document_formatting = false
 				client.resolved_capabilities.document_range_formatting = false
 
-				vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 				local function buf_map(mode, lhs, rhs, opts)
 					opts = opts or { noremap = true, silent = true }
 					vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 				end
 
-				buf_map("n", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<cr>")
-				buf_map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>")
-				buf_map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>")
-				buf_map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>")
-				buf_map("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>")
-				buf_map("n", "g[", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
-				buf_map("n", "g]", "<cmd>lua vim.diagnostic.goto_next()<cr>")
-				buf_map("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>")
-				buf_map("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<cr>")
+				buf_map('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+				buf_map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+				buf_map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
+				buf_map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
+				buf_map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+				buf_map('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+				buf_map('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+				buf_map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+				buf_map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
 			end
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-			local lspconfig = require("lspconfig")
-			lspconfig.sumneko_lua.setup(require("lua-dev").setup({
+			local lspconfig = require('lspconfig')
+			lspconfig.sumneko_lua.setup(require('lua-dev').setup({
 				lspconfig = {
 					cmd = {
-						vim.fn.getenv("HOME") .. "/.local/share/lua-language-server/bin/macOS/lua-language-server",
+						vim.fn.getenv('HOME')
+							.. '/.local/share/lua-language-server/bin/macOS/lua-language-server',
 					},
 					on_attach = on_attach,
 					capabilities = capabilities,
 				},
 			}))
 
-			local servers = { "html", "jsonls", "cssls", "tailwindcss", "tsserver", "svelte" }
+			local servers = { 'html', 'jsonls', 'cssls', 'tailwindcss', 'tsserver', 'svelte' }
 			for _, server in ipairs(servers) do
 				local opts = {}
 
-				if server == "jsonls" then
+				if server == 'jsonls' then
 					opts = {
-						filetypes = { "json", "jsonc" },
+						filetypes = { 'json', 'jsonc' },
 						settings = {
 							json = {
-								schemas = require("schemastore").json.schemas(),
+								schemas = require('schemastore').json.schemas(),
 							},
 						},
 					}
 				end
 
-				lspconfig[server].setup(vim.tbl_deep_extend("force", {
+				lspconfig[server].setup(vim.tbl_deep_extend('force', {
 					on_attach = on_attach,
 					capabilities = capabilities,
 				}, opts))
@@ -181,13 +200,13 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		'jose-elias-alvarez/null-ls.nvim',
+		requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
 		config = function()
-			local null_ls = require("null-ls")
+			local null_ls = require('null-ls')
 			local prettier_filetypes = null_ls.builtins.formatting.prettier.filetypes
-			table.insert(prettier_filetypes, "jsonc")
-			table.insert(prettier_filetypes, "svelte")
+			table.insert(prettier_filetypes, 'jsonc')
+			table.insert(prettier_filetypes, 'svelte')
 
 			null_ls.config({
 				sources = {
@@ -195,12 +214,12 @@ require("packer").startup(function(use)
 					null_ls.builtins.formatting.prettierd.with({
 						filetypes = prettier_filetypes,
 					}),
-					null_ls.builtins.formatting.shfmt.with({ filetypes = { "bash", "sh", "zsh" } }),
+					null_ls.builtins.formatting.shfmt.with({ filetypes = { 'bash', 'sh', 'zsh' } }),
 					null_ls.builtins.formatting.stylua,
 				},
 			})
 
-			require("lspconfig")["null-ls"].setup({
+			require('lspconfig')['null-ls'].setup({
 				on_attach = function(client)
 					if client.resolved_capabilities.document_formatting then
 						vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]])
@@ -210,33 +229,33 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"hrsh7th/nvim-cmp",
-		requires = { "L3MON4D3/LuaSnip", "hrsh7th/cmp-nvim-lsp", "windwp/nvim-autopairs" },
+		'hrsh7th/nvim-cmp',
+		requires = { 'L3MON4D3/LuaSnip', 'hrsh7th/cmp-nvim-lsp', 'windwp/nvim-autopairs' },
 		config = function()
-			local cmp = require("cmp")
+			local cmp = require('cmp')
 
-			cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+			cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
+						require('luasnip').lsp_expand(args.body)
 					end,
 				},
 				mapping = {
-					["<c-space>"] = cmp.mapping.complete(),
-					["<cr>"] = cmp.mapping.confirm({
+					['<c-space>'] = cmp.mapping.complete(),
+					['<cr>'] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
 						select = false,
 					}),
-					["<tab>"] = function(fallback)
+					['<tab>'] = function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
 						else
 							fallback()
 						end
 					end,
-					["<s-tab>"] = function(fallback)
+					['<s-tab>'] = function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
 						else
@@ -245,22 +264,28 @@ require("packer").startup(function(use)
 					end,
 				},
 				sources = {
-					{ name = "nvim_lsp" },
+					{ name = 'nvim_lsp' },
 				},
 			})
 		end,
 	})
 	use({
-		"windwp/nvim-autopairs",
+		'windwp/nvim-autopairs',
 		config = function()
-			require("nvim-autopairs").setup()
+			require('nvim-autopairs').setup()
 		end,
 	})
 	use({
-		"norcalli/nvim-colorizer.lua",
+		'mattn/emmet-vim',
 		config = function()
-			require("colorizer").setup({
-				"*",
+			vim.g.user_emmet_leader_key = ','
+		end,
+	})
+	use({
+		'norcalli/nvim-colorizer.lua',
+		config = function()
+			require('colorizer').setup({
+				'*',
 				css = {
 					hsl_fn = true,
 					names = false,
@@ -269,29 +294,36 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"lewis6991/gitsigns.nvim",
-		requires = "nvim-lua/plenary.nvim",
+		'lewis6991/gitsigns.nvim',
+		requires = 'nvim-lua/plenary.nvim',
 		config = function()
-			require("gitsigns").setup()
+			require('gitsigns').setup()
 		end,
 	})
 	use({
-		"lukas-reineke/indent-blankline.nvim",
+		'lukas-reineke/indent-blankline.nvim',
 		config = function()
-			require("indent_blankline").setup({
+			require('indent_blankline').setup({
 				show_end_of_line = true,
+				filetype_exclude = { 'terminal', 'packer', 'help', 'markdown' },
 			})
 		end,
 	})
 	use({
-		"romgrk/barbar.nvim",
+		'romgrk/barbar.nvim',
 		config = function()
 			vim.g.bufferline = {
 				animation = false,
-				icon_close_tab = "x",
-				icon_close_tab_modified = "•",
+				icon_close_tab = 'x',
+				icon_close_tab_modified = '•',
 				icons = false,
 			}
+		end,
+	})
+	use({
+		'folke/which-key.nvim',
+		config = function()
+			require('which-key').setup()
 		end,
 	})
 end)
