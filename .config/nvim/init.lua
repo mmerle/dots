@@ -44,7 +44,7 @@ vim.opt.wildmode = 'longest:full,full'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.pumheight = 10
-vim.opt.completeopt = 'menu,menuone,noselect'
+-- vim.opt.completeopt = 'menu,menuone,noselect'
 vim.opt.termguicolors = true
 
 -- plugins
@@ -52,6 +52,8 @@ require('packer').startup(function(use)
 	use('wbthomason/packer.nvim')
 	use('tpope/vim-commentary')
 	use('b0o/schemastore.nvim')
+	use('tweekmonster/startuptime.vim')
+	-- use('github/copilot.vim')
 	use({
 		'mmerle/flora-neovim',
 		as = 'flora',
@@ -231,9 +233,17 @@ require('packer').startup(function(use)
 	})
 	use({
 		'hrsh7th/nvim-cmp',
-		requires = { 'L3MON4D3/LuaSnip', 'hrsh7th/cmp-nvim-lsp', 'windwp/nvim-autopairs' },
+		requires = {
+			'L3MON4D3/LuaSnip',
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+			'windwp/nvim-autopairs',
+			'onsails/lspkind-nvim',
+		},
 		config = function()
 			local cmp = require('cmp')
+			local lspkind = require('lspkind')
 
 			cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 
@@ -247,16 +257,17 @@ require('packer').startup(function(use)
 					['<c-space>'] = cmp.mapping.complete(),
 					['<cr>'] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
-						select = false,
+						select = true,
 					}),
-					['<tab>'] = function(fallback)
+					['<esc>'] = cmp.mapping.abort(),
+					['<C-j>'] = function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
 						else
 							fallback()
 						end
 					end,
-					['<s-tab>'] = function(fallback)
+					['<C-k>'] = function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
 						else
@@ -264,8 +275,24 @@ require('packer').startup(function(use)
 						end
 					end,
 				},
+				completion = {
+					completeopt = 'menu,menuone,noinsert',
+				},
 				sources = {
-					{ name = 'nvim_lsp' },
+					{ name = 'nvim_lsp', keyword_length = 2 },
+					{ name = 'path' },
+					{ name = 'buffer', keyword_length = 2 },
+				},
+				formatting = {
+					format = lspkind.cmp_format({
+						with_text = true,
+						menu = {
+							buffer = '[buf]',
+							nvim_lsp = '[LSP]',
+							path = '[path]',
+							luasnip = '[snip]',
+						},
+					}),
 				},
 			})
 		end,
