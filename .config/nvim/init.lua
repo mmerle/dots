@@ -9,6 +9,7 @@ map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
 map('n', '<leader>r', ':source ~/.config/nvim/init.lua<cr>')
 map('n', '<leader>e', ':NvimTreeToggle<cr>')
 map('n', '<leader>p', [[:lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<leader><cr>', ':ZenMode<cr>')
 map('n', '<leader>s', ':w<cr>') -- quick save
 map('n', '<leader>q', ':q<cr>') -- quick quit
 map('n', 'gt', ':BufferNext<cr>')
@@ -324,6 +325,21 @@ require('packer').startup(function(use)
 		'folke/which-key.nvim',
 		config = function()
 			require('which-key').setup()
+		end,
+	})
+	use({
+		'folke/zen-mode.nvim',
+		config = function()
+			require('zen-mode').setup({
+				window = {
+					backdrop = 1,
+					height = 0.85,
+					width = 0.8,
+					options = {
+						number = false,
+					},
+				},
+			})
 		end,
 	})
 end)
