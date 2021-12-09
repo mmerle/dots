@@ -24,7 +24,7 @@ alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
 
 alias ,fish='nvim ~/.config/fish'
 alias ,kitty='nvim ~/.config/kitty/kitty.conf'
-alias ,nvim='nvim ~/.config/nvim/init.vim'
+alias ,nvim='nvim ~/.config/nvim/init.lua'
 
 # abbreviations
 abbr v 'nvim'
