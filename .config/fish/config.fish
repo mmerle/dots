@@ -1,4 +1,5 @@
 set fish_greeting
+set -gx EDITOR nvim
 
 # enable vi mode
 fish_vi_key_bindings
@@ -9,6 +10,7 @@ alias la='exa -a'
 alias vim='nvim'
 alias rm='rm -i'
 alias reload='exec $SHELL -l'
+alias r='ranger'
 
 alias g='git'
 alias gs='git status'
@@ -27,5 +29,5 @@ alias ,kitty='nvim ~/.config/kitty/kitty.conf'
 alias ,nvim='nvim ~/.config/nvim/init.lua'
 
 # abbreviations
-abbr v 'nvim'
-abbr y 'yarn'
+abbr v nvim
+abbr y yarn
