@@ -259,7 +259,7 @@ require('packer').startup(function(use)
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }),
-          ['<esc>'] = cmp.mapping.abort(),
+          ['<c-e>'] = cmp.mapping.abort(),
           ['<C-j>'] = function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
