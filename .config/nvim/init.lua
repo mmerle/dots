@@ -44,7 +44,6 @@ vim.opt.wildmode = 'longest:full,full'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.pumheight = 10
--- vim.opt.completeopt = 'menu,menuone,noselect'
 vim.opt.termguicolors = true
 
 -- plugins
