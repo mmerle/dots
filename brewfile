@@ -14,7 +14,7 @@ brew 'git'
 brew 'htop'
 brew 'lazygit'
 brew 'mas'
-brew 'neovim'
+brew 'neovim', args: ['HEAD']
 brew 'node'
 brew 'ranger'
 brew 'yarn'
