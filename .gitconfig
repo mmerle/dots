@@ -1,0 +1,8 @@
+[user]
+	name = mmerle
+	email = 35971019+mmerle@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore
