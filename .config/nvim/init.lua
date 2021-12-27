@@ -210,18 +210,13 @@ require('packer').startup(function(use)
       table.insert(prettier_filetypes, 'jsonc')
       table.insert(prettier_filetypes, 'svelte')
 
-      null_ls.config({
+      null_ls.setup({
         sources = {
           null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.formatting.prettierd.with({
-            filetypes = prettier_filetypes,
-          }),
+          null_ls.builtins.formatting.prettierd.with({ filetypes = prettier_filetypes }),
           null_ls.builtins.formatting.shfmt.with({ filetypes = { 'bash', 'sh', 'zsh' } }),
           null_ls.builtins.formatting.stylua,
         },
-      })
-
-      require('lspconfig')['null-ls'].setup({
         on_attach = function(client)
           if client.resolved_capabilities.document_formatting then
             vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]])
@@ -343,6 +338,8 @@ require('packer').startup(function(use)
         animation = false,
         icon_close_tab = 'x',
         icon_close_tab_modified = '•',
+        icon_separator_active = '',
+        icon_separator_inactive = '',
         icons = false,
       }
     end,
