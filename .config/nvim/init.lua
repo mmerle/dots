@@ -16,8 +16,9 @@ map('n', 'gt', ':BufferNext<cr>')
 map('n', 'gT', ':BufferPrevious<cr>')
 map('v', '<', '<gv')
 map('v', '>', '>gv')
-map('n', '<leader>w', ':BufferClose<cr>')
-map('n', '<leader>ki', ':PackerInstall<cr>')
+map('n', '<leader>w', ':BufferClose<cr>') -- close current buffer
+map('n', '<leader>,', ':bprev<cr>') -- move to previous buffer
+map('n', '<leader>.', ':bnext<cr>') -- move to next buffer
 map('n', '<leader>kc', ':PackerCompile<cr>')
 map('n', '<leader>ks', ':PackerSync<cr>')
 
@@ -50,6 +51,8 @@ vim.opt.termguicolors = true
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
   use('tpope/vim-commentary')
+  use('tpope/vim-surround')
+  use('tpope/vim-repeat')
   use('b0o/schemastore.nvim')
   use('tweekmonster/startuptime.vim')
   -- use('github/copilot.vim')

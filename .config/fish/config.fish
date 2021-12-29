@@ -7,10 +7,13 @@ fish_vi_key_bindings
 # aliases
 alias ls='exa'
 alias la='exa -a'
+alias lla='exa -la'
+alias lt='exa -T --git-ignore'
 alias vim='nvim'
 alias rm='rm -i'
 alias reload='exec $SHELL -l'
 alias r='ranger'
+alias lg='lazygit'
 
 alias g='git'
 alias gs='git status'
