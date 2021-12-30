@@ -7,13 +7,12 @@ vim.g.mapleader = ' '
 
 map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
 map('n', '<leader>r', ':source ~/.config/nvim/init.lua<cr>')
-map('n', '<leader>e', ':NvimTreeToggle<cr>')
-map('n', '<leader>p', [[:lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<leader>e', ':NvimTreeToggle<cr>') -- toggle file explorer
+map('n', '<leader>p', ':Telescope find_files<cr>') -- open telescope find_files
+map('n', '<leader>f', ':Telescope live_grep<cr>') -- open telescope live_grep
 map('n', '<leader><cr>', ':ZenMode<cr>')
 map('n', '<leader>s', ':w<cr>') -- quick save
 map('n', '<leader>q', ':q<cr>') -- quick quit
-map('n', 'gt', ':BufferNext<cr>')
-map('n', 'gT', ':BufferPrevious<cr>')
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 map('n', '<leader>w', ':BufferClose<cr>') -- close current buffer
@@ -83,11 +82,7 @@ require('packer').startup(function(use)
           },
         },
         pickers = {
-          find_files = {
-            hidden = true,
-            theme = 'dropdown',
-            previewer = false,
-          },
+          find_files = { hidden = true, theme = 'dropdown', previewer = false },
         },
       })
     end,
