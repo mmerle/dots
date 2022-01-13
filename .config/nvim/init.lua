@@ -16,8 +16,9 @@ map('n', '<leader>q', ':q<cr>') -- quick quit
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 map('n', '<leader>w', ':BufferClose<cr>') -- close current buffer
-map('n', '<leader>,', ':bprev<cr>') -- move to previous buffer
-map('n', '<leader>.', ':bnext<cr>') -- move to next buffer
+map('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>') -- close all other buffers
+map('n', '<leader>,', ':BufferPrevious<cr>') -- move to previous buffer
+map('n', '<leader>.', ':BufferNext<cr>') -- move to next buffer
 map('n', '<leader>kc', ':PackerCompile<cr>')
 map('n', '<leader>ks', ':PackerSync<cr>')
 
