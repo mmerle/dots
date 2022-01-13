@@ -196,6 +196,19 @@ require('packer').startup(function(use)
           }
         end
 
+        if server == 'cssls' then
+          opts = {
+            filetypes = { 'css', 'scss' },
+            settings = {
+              css = {
+                lint = {
+                  unknownAtRules = 'ignore',
+                },
+              },
+            },
+          }
+        end
+
         lspconfig[server].setup(vim.tbl_deep_extend('force', {
           on_attach = on_attach,
           capabilities = capabilities,
