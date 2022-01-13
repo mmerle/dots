@@ -109,7 +109,10 @@ require('packer').startup(function(use)
       require('nvim-tree').setup({
         auto_close = true,
         filters = {
-          custom = { '.git', '.DS_Store' },
+          custom = { '.git', '.DS_Store', 'node_modules' },
+        },
+        git = {
+          ignore = false,
         },
         view = {
           hide_root_folder = true,
