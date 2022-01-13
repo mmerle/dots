@@ -7,7 +7,7 @@ vim.g.mapleader = ' '
 
 map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
 map('n', '<leader>r', ':source ~/.config/nvim/init.lua<cr>')
-map('n', '<leader>e', ':NvimTreeToggle<cr>') -- toggle file explorer
+map('n', '<leader>e', ':NvimTreeFindFileToggle<cr>') -- toggle file explorer
 map('n', '<leader>p', ':Telescope find_files<cr>') -- open telescope find_files
 map('n', '<leader>f', ':Telescope live_grep<cr>') -- open telescope live_grep
 map('n', '<leader><cr>', ':ZenMode<cr>')
