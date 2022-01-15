@@ -5,16 +5,25 @@ end
 
 vim.g.mapleader = ' '
 
+map('n', 'j', 'gj') -- move by wrapped lines (down)
+map('n', 'k', 'gk') -- move by wrapped lines (up)
+map('n', 'H', '^') -- move to first character of line
+map('n', 'L', 'g_') -- move to last character of line
 map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
-map('n', '<leader>r', ':source ~/.config/nvim/init.lua<cr>')
+map('n', '<c-h>', '<c-w><c-h>') -- move to split (left)
+map('n', '<c-j>', '<c-w><c-j>') -- move to split (down)
+map('n', '<c-k>', '<c-w><c-k>') -- move to split (up)
+map('n', '<c-l>', '<c-w><c-l>') -- move to split (right)
+map('v', '<', '<gv') -- keep selection when indenting
+map('v', '>', '>gv') -- keep selection when unindenting
+map('n', '-', ':m .+1<cr>==') -- bubble line (up)
+map('n', '_', ':m .-2<cr>==') -- bubble line (down)
+map('n', '<leader>s', ':w<cr>') -- quick save
+map('n', '<leader>q', ':q<cr>') -- quick quit
 map('n', '<leader>e', ':NvimTreeFindFileToggle<cr>') -- toggle file explorer
 map('n', '<leader>p', ':Telescope find_files<cr>') -- open telescope find_files
 map('n', '<leader>f', ':Telescope live_grep<cr>') -- open telescope live_grep
-map('n', '<leader><cr>', ':ZenMode<cr>')
-map('n', '<leader>s', ':w<cr>') -- quick save
-map('n', '<leader>q', ':q<cr>') -- quick quit
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+map('n', '<leader><cr>', ':ZenMode<cr>') -- toggle zenmode
 map('n', '<leader>w', ':BufferClose<cr>') -- close current buffer
 map('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>') -- close all other buffers
 map('n', '<leader>,', ':BufferPrevious<cr>') -- move to previous buffer
@@ -22,9 +31,10 @@ map('n', '<leader>.', ':BufferNext<cr>') -- move to next buffer
 map('n', '<leader>kc', ':PackerCompile<cr>')
 map('n', '<leader>ks', ':PackerSync<cr>')
 
-vim.opt.mouse = 'a'
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.mouse = 'a' -- enable mouse
+vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
 vim.opt.updatetime = 300
+vim.opt.shortmess:append('c')
 vim.opt.undofile = true
 vim.opt.scrolloff = 5
 vim.opt.tabstop = 2
@@ -35,17 +45,18 @@ vim.opt.breakindent = true
 vim.opt.cindent = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.number = true
-vim.opt.cursorline = true
 vim.opt.title = true
-vim.opt.titlestring = '%t'
-vim.opt.laststatus = 0
+vim.opt.titlestring = '%t — nvim'
+vim.opt.termguicolors = true
+vim.opt.number = true
+vim.opt.signcolumn = 'yes'
+vim.opt.cursorline = true
 vim.opt.statusline = '%f %M %= %l:%c'
+vim.opt.laststatus = 0
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.pumheight = 10
-vim.opt.termguicolors = true
 
 -- plugins
 require('packer').startup(function(use)
@@ -155,7 +166,7 @@ require('packer').startup(function(use)
           vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
         end
 
-        buf_map('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+        -- buf_map('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
         buf_map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
         buf_map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
         buf_map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
@@ -253,9 +264,7 @@ require('packer').startup(function(use)
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')
-
       cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
-
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -268,7 +277,6 @@ require('packer').startup(function(use)
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }),
-          ['<c-e>'] = cmp.mapping.abort(),
           ['<C-j>'] = function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -362,7 +370,11 @@ require('packer').startup(function(use)
   use({
     'folke/which-key.nvim',
     config = function()
-      require('which-key').setup()
+      require('which-key').setup({
+        window = {
+          margin = { 0, 0, 0, 0 },
+        },
+      })
     end,
   })
   use({
