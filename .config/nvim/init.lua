@@ -61,7 +61,6 @@ vim.opt.pumheight = 10
 -- plugins
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
-  use('tpope/vim-commentary')
   use('tpope/vim-surround')
   use('tpope/vim-repeat')
   use('b0o/schemastore.nvim')
@@ -137,7 +136,6 @@ require('packer').startup(function(use)
     requires = {
       'nvim-treesitter/playground',
       'windwp/nvim-ts-autotag',
-      'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
       require('nvim-treesitter.configs').setup({
@@ -146,7 +144,6 @@ require('packer').startup(function(use)
         indent = { enable = true },
         autotag = { enable = true },
         highlight = { enable = true },
-        context_commentstring = { enable = true, enable_autocmd = false },
         playground = { enable = true },
       })
     end,
@@ -314,6 +311,12 @@ require('packer').startup(function(use)
     'windwp/nvim-autopairs',
     config = function()
       require('nvim-autopairs').setup()
+    end,
+  })
+  use({
+    'numToStr/Comment.nvim',
+    config = function()
+      require('comment').setup()
     end,
   })
   use({
