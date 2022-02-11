@@ -1,0 +1,9 @@
+gui:
+  theme:
+    selectedRangeBgColor:
+      - reverse
+    activeBorderColor:
+      - white
+      - bold
+    inactiveBorderColor:
+      - '#606974'
