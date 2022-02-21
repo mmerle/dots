@@ -68,13 +68,13 @@ require('packer').startup(function(use)
   use('tpope/vim-surround')
   use('tpope/vim-repeat')
   use('b0o/schemastore.nvim')
-  -- use('tweekmonster/startuptime.vim')
+  use('fladson/vim-kitty')
   -- use('github/copilot.vim')
   use({
     'mmerle/flora-neovim',
     as = 'flora',
     config = function()
-      vim.g.flora_disable_italics = false
+      vim.g.flora = false
       vim.cmd('colorscheme flora')
     end,
   })
@@ -85,8 +85,15 @@ require('packer').startup(function(use)
       local actions = require('telescope.actions')
       require('telescope').setup({
         defaults = {
+          selection_caret = ' ',
+          column_indent = 0,
+          sorting_strategy = 'ascending',
+          layout_strategy = 'horizontal',
           file_ignore_patterns = { 'node_modules', '.git/', '.next/', '.DS_Store' },
-          layout_config = { horizontal = { preview_width = 0.6 } },
+          layout_config = {
+            prompt_position = 'top',
+            horizontal = { preview_width = 0.6, height = 0.6 },
+          },
           find_command = { 'fd', '--type', '--hidden', 'f', '--strip-cwd-prefix' },
           mappings = {
             i = {
