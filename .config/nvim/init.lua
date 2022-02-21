@@ -56,7 +56,7 @@ vim.opt.statusline = ' %f %M %= [%{expand(&filetype)}] %l:%c '
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.pumheight = 10
+vim.opt.pumheight = 5
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = '·' }
 
@@ -121,7 +121,6 @@ require('packer').startup(function(use)
       vim.g.nvim_tree_show_icons = { folders = 1, files = 0 }
 
       require('nvim-tree').setup({
-        disable_netrw = true,
         auto_close = true,
         filters = {
           custom = { '.git', '.DS_Store', 'node_modules' },
