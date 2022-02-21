@@ -6,4 +6,6 @@ gui:
       - white
       - bold
     inactiveBorderColor:
-      - '#606974'
+      - '#606975'
+  authorColors:
+    '*': '#606975'
