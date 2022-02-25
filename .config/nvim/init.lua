@@ -62,6 +62,10 @@ vim.opt.listchars = { tab = '  ', trail = '·' }
 
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=o')
 
+local isterm = function()
+  return vim.fn.exists('g:vscode') == 0
+end
+
 -- plugins
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
@@ -73,6 +77,7 @@ require('packer').startup(function(use)
   use({
     'mmerle/flora-neovim',
     as = 'flora',
+    cond = { isterm },
     config = function()
       vim.g.flora = false
       vim.cmd('colorscheme flora')
@@ -81,6 +86,7 @@ require('packer').startup(function(use)
   use({
     'nvim-telescope/telescope.nvim',
     requires = 'nvim-lua/plenary.nvim',
+    cond = { isterm },
     config = function()
       local actions = require('telescope.actions')
       require('telescope').setup({
@@ -111,6 +117,7 @@ require('packer').startup(function(use)
   })
   use({
     'kyazdani42/nvim-tree.lua',
+    cond = { isterm },
     config = function()
       vim.g.nvim_tree_git_hl = 1
       vim.g.nvim_tree_icons = {
@@ -323,6 +330,7 @@ require('packer').startup(function(use)
   })
   use({
     'norcalli/nvim-colorizer.lua',
+    cond = { isterm },
     config = function()
       require('colorizer').setup({
         '*',
@@ -336,12 +344,14 @@ require('packer').startup(function(use)
   use({
     'lewis6991/gitsigns.nvim',
     requires = 'nvim-lua/plenary.nvim',
+    cond = { isterm },
     config = function()
       require('gitsigns').setup()
     end,
   })
   use({
     'lukas-reineke/indent-blankline.nvim',
+    cond = { isterm },
     config = function()
       require('indent_blankline').setup({
         show_end_of_line = true,
@@ -364,6 +374,7 @@ require('packer').startup(function(use)
   })
   use({
     'folke/which-key.nvim',
+    cond = { isterm },
     config = function()
       require('which-key').setup({
         window = {
@@ -374,6 +385,7 @@ require('packer').startup(function(use)
   })
   use({
     'folke/zen-mode.nvim',
+    cond = { isterm },
     config = function()
       require('zen-mode').setup({
         window = {
