@@ -91,7 +91,7 @@ require('packer').startup(function(use)
       local actions = require('telescope.actions')
       require('telescope').setup({
         defaults = {
-          selection_caret = ' ',
+          selection_caret = '  ',
           column_indent = 0,
           sorting_strategy = 'ascending',
           layout_strategy = 'horizontal',
@@ -139,12 +139,8 @@ require('packer').startup(function(use)
         filters = {
           custom = { '.git', '.DS_Store', 'node_modules' },
         },
-        git = {
-          ignore = false,
-        },
-        view = {
-          hide_root_folder = true,
-        },
+        git = { ignore = false },
+        view = { hide_root_folder = true },
       })
     end,
   })
