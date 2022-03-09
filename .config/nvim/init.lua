@@ -131,11 +131,11 @@ require('packer').startup(function(use)
         },
       }
       vim.g.nvim_tree_symlink_arrow = ' → '
-      vim.g.nvim_tree_quit_on_open = 1
       vim.g.nvim_tree_show_icons = { folders = 1, files = 0 }
 
       require('nvim-tree').setup({
         auto_close = true,
+        actions = { open_file = { quit_on_open = true } },
         filters = {
           custom = { '.git', '.DS_Store', 'node_modules' },
         },
