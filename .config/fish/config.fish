@@ -16,6 +16,7 @@ alias rm='rm -i'
 alias reload='exec $SHELL -l'
 alias r='ranger'
 alias lg='lazygit'
+alias code='code-insiders'
 
 alias g='git'
 alias gs='git status'
@@ -29,9 +30,9 @@ alias gb='git branch'
 alias gm='git merge'
 alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
 
-alias ,fish='nvim ~/.config/fish'
-alias ,kitty='nvim ~/.config/kitty/kitty.conf'
-alias ,nvim='nvim ~/.config/nvim/init.lua'
+alias ,fish='$EDITOR ~/.config/fish'
+alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
+alias ,nvim='$EDITOR ~/.config/nvim/init.lua'
 
 # abbreviations
 abbr v nvim
