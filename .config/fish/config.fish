@@ -3,6 +3,9 @@ set fish_greeting
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx EDITOR nvim
 
+fish_add_path /opt/homebrew/bin
+fish_add_path $HOME/.cargo/bin
+
 # enable vi mode
 fish_vi_key_bindings
 
