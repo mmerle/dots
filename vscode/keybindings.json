@@ -87,5 +87,14 @@
   {
     "key": "ctrl+s",
     "command": "workbench.action.moveEditorToNextGroup"
+  },
+  // better tab navigation
+  {
+    "key": "ctrl+.",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+,",
+    "command": "workbench.action.previousEditor"
   }
 ]
