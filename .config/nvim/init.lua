@@ -1,68 +1,91 @@
-local function map(mode, lhs, rhs, opts)
-  opts = opts or { noremap = true, silent = true }
-  return vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
+local opts = { silent = true }
 
 vim.g.mapleader = ' '
+vim.keymap.set('n', '<space>', '<nop>', opts)
 
-map('n', 'j', 'gj') -- move by wrapped lines (down)
-map('n', 'k', 'gk') -- move by wrapped lines (up)
-map('n', 'H', '^') -- move to first character of line
-map('n', 'L', 'g_') -- move to last character of line
-map('n', '<esc>', ':noh<cr>') -- clear match highlights on escape
-map('n', '<c-h>', '<c-w><c-h>') -- move to split (left)
-map('n', '<c-j>', '<c-w><c-j>') -- move to split (down)
-map('n', '<c-k>', '<c-w><c-k>') -- move to split (up)
-map('n', '<c-l>', '<c-w><c-l>') -- move to split (right)
-map('v', '<', '<gv') -- keep selection when indenting
-map('v', '>', '>gv') -- keep selection when unindenting
-map('n', '-', ':m .+1<cr>==') -- bubble line (up)
-map('n', '_', ':m .-2<cr>==') -- bubble line (down)
-map('n', '<leader>s', ':w<cr>') -- quick save
-map('n', '<leader>q', ':q<cr>') -- quick quit
-map('n', '<leader>e', ':NvimTreeFindFileToggle<cr>') -- toggle file explorer
-map('n', '<leader>p', ':Telescope find_files<cr>') -- open telescope find_files
-map('n', '<leader>f', ':Telescope live_grep<cr>') -- open telescope live_grep
-map('n', '<leader><cr>', ':ZenMode<cr>') -- toggle zenmode
-map('n', '<leader>w', ':BufferClose<cr>') -- close current buffer
-map('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>') -- close all other buffers
-map('n', '<leader>,', ':BufferPrevious<cr>') -- move to previous buffer
-map('n', '<leader>.', ':BufferNext<cr>') -- move to next buffer
-map('n', '<leader>kc', ':PackerCompile<cr>')
-map('n', '<leader>ks', ':PackerSync<cr>')
+--- KEYMAPS
+vim.keymap.set({ 'n', 'v' }, 'j', 'gj', opts) -- move through wrapped lines
+vim.keymap.set({ 'n', 'v' }, 'k', 'gk', opts) -- move through wrapped lines
+vim.keymap.set('v', '<', '<gv', opts) -- unindent (keep selection)
+vim.keymap.set('v', '>', '>gv', opts) -- indent (keep selection)
+vim.keymap.set('n', 'H', '^', opts) -- jump to first character of line
+vim.keymap.set('n', 'L', 'g_', opts) -- jump to last character of line
+vim.keymap.set('n', '<leader>s', ':w<cr>', opts) -- quick save
+vim.keymap.set('n', '<leader>q', ':q<cr>', opts) -- quick quit
 
-vim.opt.mouse = 'a' -- enable mouse
+vim.keymap.set('n', '<esc>', ':noh<cr>', opts) -- clear search highlights
+vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
+vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
+
+vim.keymap.set('n', '<leader>p', ':Telescope find_files<cr>', opts) -- searh files
+vim.keymap.set('n', '<leader>f', ':Telescope live_grep<cr>', opts) -- searh text
+vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<cr>', opts) -- toggle file explorer
+vim.keymap.set('n', '<leader><cr>', ':ZenMode<cr>', opts) -- toggle zenmode
+
+-- window
+vim.keymap.set('n', '<c-h>', '<c-w><c-h>', opts) -- jump to split left
+vim.keymap.set('n', '<c-j>', '<c-w><c-j>', opts) -- jump to split below
+vim.keymap.set('n', '<c-k>', '<c-w><c-k>', opts) -- jump to split above
+vim.keymap.set('n', '<c-l>', '<c-w><c-l>', opts) -- jump to split right
+vim.keymap.set('n', '<c-r>', '<c-w><c-r>', opts) -- swap split positions
+
+-- goto
+vim.keymap.set('n', 'g.', '`.', opts) -- goto last modification
+vim.keymap.set('n', 'gp', ':bprev<cr>', opts) -- goto previous buffer
+vim.keymap.set('n', 'gn', ':bnext<cr>', opts) -- goto next buffer
+vim.keymap.set('n', 'gm', '%', opts) -- goto matching character: '()', '{}', '[]'
+
+vim.keymap.set('n', '<leader>kc', ':PackerCompile<cr>', opts)
+vim.keymap.set('n', '<leader>ks', ':PackerSync<cr>', opts)
+
+vim.keymap.set('n', '<leader>w', ':BufferClose<cr>', opts) -- close current buffer
+vim.keymap.set('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
+
+--- OPTIONS
 vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
 vim.opt.updatetime = 300
-vim.opt.shortmess:append('c')
-vim.opt.undofile = true
-vim.opt.scrolloff = 5
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.breakindent = true
-vim.opt.cindent = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.title = true
-vim.opt.titlestring = '%t — nvim'
+
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
+vim.opt.laststatus = 3
 vim.opt.statusline = ' %f %M %= [%{expand(&filetype)}] %l:%c '
--- vim.opt.laststatus = 0
-vim.opt.wildmode = 'longest:full,full'
+vim.opt.shortmess:append('c')
+
+vim.opt.mouse = 'a' -- enable mouse
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.undofile = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.scrolloff = 5
+
+vim.opt.expandtab = true
+vim.opt.breakindent = true
+vim.opt.cindent = true
+
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+vim.opt.wildmode = 'longest:full,full'
 vim.opt.pumheight = 5
+vim.opt.completeopt = 'menu,menuone,noinsert'
+
+vim.opt.title = true
+vim.opt.titlestring = '%t — nvim'
+
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = '·' }
 
-vim.cmd('autocmd BufEnter * setlocal formatoptions-=o')
+-- Stop 'o' continuing comments
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  command = 'setlocal formatoptions-=o',
+})
 
--- plugins
+--- PLUGINS
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
   use('tpope/vim-surround')
@@ -274,9 +297,6 @@ require('packer').startup(function(use)
               fallback()
             end
           end,
-        },
-        completion = {
-          completeopt = 'menu,menuone,noinsert',
         },
         sources = {
           { name = 'nvim_lsp', keyword_length = 2 },
