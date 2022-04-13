@@ -62,10 +62,6 @@ vim.opt.listchars = { tab = '  ', trail = '·' }
 
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=o')
 
-local isterm = function()
-  return vim.fn.exists('g:vscode') == 0
-end
-
 -- plugins
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
@@ -77,7 +73,6 @@ require('packer').startup(function(use)
   use({
     'mmerle/flora-neovim',
     as = 'flora',
-    cond = { isterm },
     config = function()
       vim.g.flora = false
       vim.cmd('colorscheme flora')
@@ -86,7 +81,6 @@ require('packer').startup(function(use)
   use({
     'nvim-telescope/telescope.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    cond = { isterm },
     config = function()
       local actions = require('telescope.actions')
       require('telescope').setup({
@@ -117,7 +111,6 @@ require('packer').startup(function(use)
   })
   use({
     'kyazdani42/nvim-tree.lua',
-    cond = { isterm },
     config = function()
       vim.g.nvim_tree_git_hl = 1
       vim.g.nvim_tree_icons = {
@@ -134,7 +127,6 @@ require('packer').startup(function(use)
       vim.g.nvim_tree_show_icons = { folders = 1, files = 0 }
 
       require('nvim-tree').setup({
-        auto_close = true,
         actions = { open_file = { quit_on_open = true } },
         filters = {
           custom = { '.git', '.DS_Store', 'node_modules' },
@@ -150,8 +142,8 @@ require('packer').startup(function(use)
     requires = { 'nvim-treesitter/playground', 'windwp/nvim-ts-autotag' },
     config = function()
       require('nvim-treesitter.configs').setup({
-        ensure_installed = 'maintained',
-        ignore_install = { 'haskell' },
+        ensure_installed = 'all',
+        ignore_install = { 'phpdoc' },
         indent = { enable = true },
         autotag = { enable = true },
         highlight = { enable = true },
@@ -326,7 +318,6 @@ require('packer').startup(function(use)
   })
   use({
     'norcalli/nvim-colorizer.lua',
-    cond = { isterm },
     config = function()
       require('colorizer').setup({
         '*',
@@ -340,14 +331,12 @@ require('packer').startup(function(use)
   use({
     'lewis6991/gitsigns.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    cond = { isterm },
     config = function()
       require('gitsigns').setup()
     end,
   })
   use({
     'lukas-reineke/indent-blankline.nvim',
-    cond = { isterm },
     config = function()
       require('indent_blankline').setup({
         show_end_of_line = true,
@@ -370,7 +359,6 @@ require('packer').startup(function(use)
   })
   use({
     'folke/which-key.nvim',
-    cond = { isterm },
     config = function()
       require('which-key').setup({
         window = {
@@ -381,7 +369,6 @@ require('packer').startup(function(use)
   })
   use({
     'folke/zen-mode.nvim',
-    cond = { isterm },
     config = function()
       require('zen-mode').setup({
         window = {
