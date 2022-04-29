@@ -137,13 +137,7 @@ require('packer').startup(function(use)
     config = function()
       vim.g.nvim_tree_git_hl = 1
       vim.g.nvim_tree_icons = {
-        folder = {
-          default = '▶',
-          empty = '▶',
-          symlink = '▶',
-          open = '▼',
-          empty_open = '▼',
-          symlink_open = '▼',
+        folder = { default = '●', empty = '◌', symlink = '●', open = '○', empty_open = '○', symlink_open = '○',
         },
       }
       vim.g.nvim_tree_symlink_arrow = ' → '
