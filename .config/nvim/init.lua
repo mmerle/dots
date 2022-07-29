@@ -135,14 +135,6 @@ require('packer').startup(function(use)
   use({
     'kyazdani42/nvim-tree.lua',
     config = function()
-      vim.g.nvim_tree_git_hl = 1
-      vim.g.nvim_tree_icons = {
-        folder = { default = '●', empty = '◌', symlink = '●', open = '○', empty_open = '○', symlink_open = '○',
-        },
-      }
-      vim.g.nvim_tree_symlink_arrow = ' → '
-      vim.g.nvim_tree_show_icons = { folders = 1, files = 0 }
-
       require('nvim-tree').setup({
         actions = { open_file = { quit_on_open = true } },
         filters = {
@@ -150,6 +142,28 @@ require('packer').startup(function(use)
         },
         git = { ignore = false },
         view = { hide_root_folder = true },
+        renderer = {
+          highlight_git = true,
+          icons = {
+            symlink_arrow = ' → ',
+            show = {
+              file = false,
+              folder = true,
+              folder_arrow = false,
+              git = false,
+            },
+            glyphs = {
+              folder = {
+                default = '●',
+                empty = '◌',
+                symlink = '●',
+                open = '○',
+                empty_open = '○',
+                symlink_open = '○',
+              },
+            },
+          },
+        },
       })
     end,
   })
@@ -172,80 +186,73 @@ require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = 'folke/lua-dev.nvim',
     config = function()
-      local function on_attach(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-
-        local function map_buffer(mode, lhs, rhs, opts)
-          opts = opts or { noremap = true, silent = true }
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-        end
-
-        -- map_buffer('i', '<c-k>', vim.lsp.buf.signature_help, 'signature help')
-        map_buffer('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
-        map_buffer('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
-        map_buffer('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
-        map_buffer('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
-        map_buffer('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-        map_buffer('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<cr>')
-        map_buffer('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
-        map_buffer('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+      local function on_attach(_, bufnr)
+        local b_opts = { buffer = bufnr, silent = true }
+        -- vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, b_opts)
+        vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, b_opts)
+        vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, b_opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, b_opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, b_opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, b_opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, b_opts)
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+      -- Improve compatibility with nvim-cmp completions
+      local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      if has_cmp_nvim_lsp then
+        capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+      end
 
       local lspconfig = require('lspconfig')
       lspconfig.sumneko_lua.setup(require('lua-dev').setup({
-        lspconfig = { on_attach = on_attach, capabilities = capabilities },
+        lspconfig = {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        },
       }))
 
-      local servers = {
-        'html',
-        'jsonls',
-        'cssls',
-        'tailwindcss',
-        'tsserver',
-        'svelte',
-      }
-
+      -- Language servers to setup. Servers must be available in your path.
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+      local servers = { 'cssls', 'html', 'jsonls', 'svelte', 'tailwindcss', 'tsserver' }
       for _, server in ipairs(servers) do
-        lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+        lspconfig[server].setup({
+          on_attach = on_attach,
+          capabilities = capabilities,
+        })
       end
-
-      lspconfig.cssls.setup({
-        filetypes = { 'css', 'scss' },
-        settings = {
-          css = {
-            lint = {
-              unknownAtRules = 'ignore',
-            },
-          },
-        },
-      })
     end,
   })
   use({
     'jose-elias-alvarez/null-ls.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
+    requires = 'nvim-lua/plenary.nvim',
     config = function()
       local null_ls = require('null-ls')
-      local formatting = null_ls.builtins.formatting
-
       null_ls.setup({
         sources = {
-          formatting.fish_indent,
-          formatting.prettierd.with({
+          null_ls.builtins.formatting.fish_indent,
+          null_ls.builtins.formatting.prettierd.with({
             extra_filetypes = { 'svelte', 'jsonc' },
             env = {
               PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json'),
             },
           }),
-          formatting.shfmt.with({ extra_filetypes = { 'bash', 'sh', 'zsh' } }),
-          formatting.stylua,
+          null_ls.builtins.formatting.stylua,
         },
-        on_attach = function(client)
-          if client.resolved_capabilities.document_formatting then
-            vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]])
+        on_attach = function(client, bufnr)
+          if client.supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format({
+                  bufnr = bufnr,
+                  filter = function(lsp_client)
+                    return lsp_client.name == 'null-ls'
+                  end,
+                })
+              end,
+            })
           end
         end,
       })
