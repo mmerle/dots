@@ -112,12 +112,12 @@ require('packer').startup(function(use)
           column_indent = 0,
           sorting_strategy = 'ascending',
           layout_strategy = 'horizontal',
-          file_ignore_patterns = { 'node_modules', '.git/', '.next/', '.DS_Store' },
+          file_ignore_patterns = { '^.git$', 'node_modules', '.next', '.DS_Store' },
           layout_config = {
             prompt_position = 'top',
             horizontal = { preview_width = 0.6, height = 0.6 },
           },
-          find_command = { 'fd', '--type', '--hidden', 'f', '--strip-cwd-prefix' },
+          find_command = { 'fd', '--type', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
           mappings = {
             i = {
               ['<C-j>'] = actions.move_selection_next,
@@ -138,10 +138,13 @@ require('packer').startup(function(use)
       require('nvim-tree').setup({
         actions = { open_file = { quit_on_open = true } },
         filters = {
-          custom = { '.git', '.DS_Store', 'node_modules' },
+          custom = { '^.git$', '.DS_Store', '^node_modules$' },
         },
         git = { ignore = false },
-        view = { hide_root_folder = true },
+        view = {
+          hide_root_folder = true,
+          side = 'right',
+        },
         renderer = {
           highlight_git = true,
           icons = {
@@ -368,14 +371,14 @@ require('packer').startup(function(use)
   use({
     'romgrk/barbar.nvim',
     config = function()
-      vim.g.bufferline = {
+      require('bufferline').setup({
         animation = false,
         icon_close_tab = 'x',
         icon_close_tab_modified = '•',
         icon_separator_active = '',
         icon_separator_inactive = '',
         icons = false,
-      }
+      })
     end,
   })
   use({
