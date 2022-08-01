@@ -79,10 +79,17 @@ vim.opt.titlestring = '%t — nvim'
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = '·' }
 
+--- AUTOCOMMANDS
 -- Stop 'o' continuing comments
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*',
   command = 'setlocal formatoptions-=o',
+})
+
+-- Highlight copied text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 --- PLUGINS
