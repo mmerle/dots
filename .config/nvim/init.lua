@@ -47,6 +47,7 @@ vim.opt.updatetime = 300
 
 vim.opt.termguicolors = true
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
@@ -60,7 +61,7 @@ vim.opt.shiftwidth = 2
 vim.opt.undofile = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.scrolloff = 5
+vim.opt.scrolloff = 3
 
 vim.opt.expandtab = true
 vim.opt.breakindent = true
@@ -411,6 +412,12 @@ require('packer').startup(function(use)
           },
         },
       })
+    end,
+  })
+  use({
+    'phaazon/hop.nvim',
+    config = function()
+      require('hop').setup()
     end,
   })
 end)
