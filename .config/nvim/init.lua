@@ -96,11 +96,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --- PLUGINS
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
-  use('tpope/vim-surround')
   use('tpope/vim-repeat')
   use('b0o/schemastore.nvim')
   use('fladson/vim-kitty')
-  -- use('github/copilot.vim')
   use({
     'mmerle/flora-neovim',
     as = 'flora',
@@ -418,6 +416,12 @@ require('packer').startup(function(use)
     'phaazon/hop.nvim',
     config = function()
       require('hop').setup()
+    end,
+  })
+  use({
+    'kylechui/nvim-surround',
+    config = function()
+      require('nvim-surround').setup()
     end,
   })
 end)
