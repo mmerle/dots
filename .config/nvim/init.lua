@@ -18,7 +18,7 @@ vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
 vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
 
 vim.keymap.set('n', '<leader>p', ':Telescope find_files<cr>', opts) -- searh files
-vim.keymap.set('n', '<leader>f', ':Telescope live_grep<cr>', opts) -- searh text
+vim.keymap.set('n', '<leader>/', ':Telescope live_grep<cr>', opts) -- searh text
 vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<cr>', opts) -- toggle file explorer
 vim.keymap.set('n', '<leader><cr>', ':ZenMode<cr>', opts) -- toggle zenmode
 
@@ -40,6 +40,8 @@ vim.keymap.set('n', '<leader>ks', ':PackerSync<cr>', opts)
 
 vim.keymap.set('n', '<leader>w', ':BufferClose<cr>', opts) -- close current buffer
 vim.keymap.set('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
+
+vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts)
 
 --- OPTIONS
 vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
@@ -97,7 +99,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
   use('tpope/vim-repeat')
-  use('b0o/schemastore.nvim')
   use('fladson/vim-kitty')
   use({
     'mmerle/flora-neovim',
@@ -315,7 +316,7 @@ require('packer').startup(function(use)
         },
         formatting = {
           format = lspkind.cmp_format({
-            with_text = true,
+            mode = 'text',
             menu = {
               buffer = '[buf]',
               nvim_lsp = '[LSP]',
@@ -407,6 +408,7 @@ require('packer').startup(function(use)
           width = 0.8,
           options = {
             number = false,
+            relativenumber = false,
           },
         },
       })
