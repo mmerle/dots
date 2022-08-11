@@ -1,10 +1,4 @@
 # dots
 
-personal dotfiles for my macOS setup, includes config for the following
+personal dotfiles for my dev environment
 
-- kitty
-- fish
-- neovim
-- yabai
-- karabiner
-- vscode
