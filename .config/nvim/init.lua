@@ -150,7 +150,6 @@ require('packer').startup(function(use)
         git = { ignore = false },
         view = {
           hide_root_folder = true,
-          side = 'right',
         },
         renderer = {
           highlight_git = true,
