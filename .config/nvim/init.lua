@@ -179,15 +179,14 @@ require('packer').startup(function(use)
   use({
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    requires = { 'nvim-treesitter/playground', 'windwp/nvim-ts-autotag' },
+    requires = { 'windwp/nvim-ts-autotag' },
     config = function()
       require('nvim-treesitter.configs').setup({
+        highlight = { enable = true },
         ensure_installed = 'all',
         ignore_install = { 'phpdoc' },
         indent = { enable = true },
         autotag = { enable = true },
-        highlight = { enable = true },
-        playground = { enable = true },
       })
     end,
   })
@@ -203,6 +202,7 @@ require('packer').startup(function(use)
     config = function()
       require('mason').setup()
       require('mason-tool-installer').setup({})
+      require('neodev').setup({})
 
       local function on_attach(_, bufnr)
         local b_opts = { buffer = bufnr, silent = true }
@@ -226,37 +226,22 @@ require('packer').startup(function(use)
       -- Setup servers installed via `:MasonInstall`
       require('mason-lspconfig').setup_handlers({
         function(server_name)
-          -- if server_name == 'sumneko_lua' then
-          --   require('lspconfig')[server_name].setup(require('neodev').setup({
-          --     on_attach = on_attach,
-          --     capabilities = capabilities,
-          --   }))
-          -- else
-          require('lspconfig')[server_name].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-          })
-          -- end
+          if server_name == 'sumneko_lua' then
+            require('lspconfig')[server_name].setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+              settings = {
+                Lua = { diagnostics = { globals = { 'vim' } } },
+              },
+            })
+          else
+            require('lspconfig')[server_name].setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+            })
+          end
         end,
       })
-
-      -- local lspconfig = require('lspconfig')
-      -- lspconfig.sumneko_lua.setup(require('lua-dev').setup({
-      --   lspconfig = {
-      --     on_attach = on_attach,
-      --     capabilities = capabilities,
-      --   },
-      -- }))
-
-      -- Language servers to setup. Servers must be available in your path.
-      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      -- local servers = { 'cssls', 'html', 'jsonls', 'svelte', 'tailwindcss', 'tsserver', 'astro' }
-      -- for _, server in ipairs(servers) do
-      --   lspconfig[server].setup({
-      --     on_attach = on_attach,
-      --     capabilities = capabilities,
-      --   })
-      -- end
     end,
   })
   use({
