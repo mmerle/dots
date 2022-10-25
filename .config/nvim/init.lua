@@ -191,10 +191,19 @@ require('packer').startup(function(use)
       })
     end,
   })
+  -- lsp
   use({
     'neovim/nvim-lspconfig',
-    requires = 'folke/lua-dev.nvim',
+    requires = {
+      'folke/neodev.nvim',
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    },
     config = function()
+      require('mason').setup()
+      require('mason-tool-installer').setup({})
+
       local function on_attach(_, bufnr)
         local b_opts = { buffer = bufnr, silent = true }
         -- vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, b_opts)
@@ -211,26 +220,43 @@ require('packer').startup(function(use)
       -- Improve compatibility with nvim-cmp completions
       local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
       if has_cmp_nvim_lsp then
-        capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
       end
 
-      local lspconfig = require('lspconfig')
-      lspconfig.sumneko_lua.setup(require('lua-dev').setup({
-        lspconfig = {
-          on_attach = on_attach,
-          capabilities = capabilities,
-        },
-      }))
+      -- Setup servers installed via `:MasonInstall`
+      require('mason-lspconfig').setup_handlers({
+        function(server_name)
+          -- if server_name == 'sumneko_lua' then
+          --   require('lspconfig')[server_name].setup(require('neodev').setup({
+          --     on_attach = on_attach,
+          --     capabilities = capabilities,
+          --   }))
+          -- else
+          require('lspconfig')[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+          })
+          -- end
+        end,
+      })
+
+      -- local lspconfig = require('lspconfig')
+      -- lspconfig.sumneko_lua.setup(require('lua-dev').setup({
+      --   lspconfig = {
+      --     on_attach = on_attach,
+      --     capabilities = capabilities,
+      --   },
+      -- }))
 
       -- Language servers to setup. Servers must be available in your path.
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      local servers = { 'cssls', 'html', 'jsonls', 'svelte', 'tailwindcss', 'tsserver', 'astro' }
-      for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-        })
-      end
+      -- local servers = { 'cssls', 'html', 'jsonls', 'svelte', 'tailwindcss', 'tsserver', 'astro' }
+      -- for _, server in ipairs(servers) do
+      --   lspconfig[server].setup({
+      --     on_attach = on_attach,
+      --     capabilities = capabilities,
+      --   })
+      -- end
     end,
   })
   use({
@@ -242,7 +268,7 @@ require('packer').startup(function(use)
         sources = {
           null_ls.builtins.formatting.fish_indent,
           null_ls.builtins.formatting.prettierd.with({
-            extra_filetypes = { 'svelte', 'astro' },
+            extra_filetypes = { 'astro', 'svelte' },
             env = {
               PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json'),
             },
