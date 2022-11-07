@@ -1,8 +1,9 @@
 set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx XDG_DATA_HOME $HOME/.local/share
-
 set -gx EDITOR nvim
+set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
 
 fish_add_path /opt/homebrew/bin
 fish_add_path $HOME/.cargo/bin
@@ -31,9 +32,10 @@ alias la='exa -a'
 alias lla='exa -la'
 alias lt='exa -T --git-ignore'
 alias vim='nvim'
-alias rm='rm -i'
+alias rm='trash'
 alias reload='exec $SHELL -l'
 alias code='code-insiders'
+alias connect="kitty +kitten ssh"
 
 alias g='git'
 alias gs='git status'
