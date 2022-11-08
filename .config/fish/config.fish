@@ -49,7 +49,7 @@ alias gb='git branch'
 alias gm='git merge'
 alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
 
-alias ,fish='$EDITOR ~/.config/fish'
+alias ,fish='$EDITOR ~/.config/fish/config.fish'
 alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
 alias ,nvim='$EDITOR ~/.config/nvim/init.lua'
 
