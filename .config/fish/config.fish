@@ -11,7 +11,13 @@ fish_add_path $HOME/.cargo/bin
 # enable vi mode
 fish_vi_key_bindings
 
+# disable fish greeting
 set fish_greeting
+
+function fish_prompt
+    set -g fish_prompt_pwd_dir_length 0
+    printf '%s%s> ' (prompt_pwd)
+end
 
 function fish_right_prompt
     set -g __fish_git_prompt_showupstream verbose
