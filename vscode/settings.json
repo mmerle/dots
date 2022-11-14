@@ -4,6 +4,7 @@
   "editor.accessibilitySupport": "off",
   "editor.autoClosingQuotes": "always",
   "editor.bracketPairColorization.enabled": false,
+  "editor.colorDecorators": false,
   "editor.cursorBlinking": "smooth",
   "editor.cursorSurroundingLines": 5,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -13,7 +14,9 @@
   "editor.fontSize": 13,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "editor.guides.indentation": false,
   "editor.lineHeight": 22,
+  "editor.lineNumbers": "relative",
   "editor.matchBrackets": "never",
   "editor.minimap.enabled": false,
   "editor.padding.bottom": 20,
@@ -21,9 +24,9 @@
   "editor.renderLineHighlightOnlyWhenFocus": true,
   "editor.roundedSelection": false,
   "editor.scrollBeyondLastLine": false,
-  "editor.smoothScrolling": true,
   "editor.tabSize": 2,
-  "editor.wordWrap": "bounded",
+  "editor.wordWrap": "off",
+  "editor.wordWrapColumn": 120,
   "explorer.compactFolders": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
@@ -47,8 +50,11 @@
     "**/node_modules": true,
     "**/.git": true
   },
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
   "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "kitty.app",
+  "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.defaultProfile.osx": "fish",
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.gpuAcceleration": "on",
@@ -58,14 +64,14 @@
   "window.title": "${activeEditorShort} ${separator} ${activeFolderShort}",
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Flora",
-  "workbench.editor.decorations.badges": false,
   "workbench.editor.decorations.colors": false,
+  "workbench.editor.decorations.badges": false,
   "workbench.editor.pinnedTabSizing": "compact",
   "workbench.fontAliasing": "auto",
-  "workbench.iconTheme": "quill-icons",
+  "workbench.iconTheme": null,
   "workbench.layoutControl.enabled": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
-  "workbench.settings.useSplitJSON": true,
+  // "workbench.settings.useSplitJSON": true,
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "workbench.tree.indent": 18,
@@ -75,7 +81,6 @@
   "css.validate": false,
   "css.lint.unknownAtRules": "ignore",
   "scss.lint.unknownAtRules": "ignore",
-  "html.completion.attributeDefaultValue": "empty",
   "javascript.suggest.autoImports": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "[markdown]": {
@@ -84,29 +89,25 @@
       "strings": true
     }
   },
+  "svelte.enable-ts-plugin": true,
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
 
   // plugin specific
   "color-highlight.markRuler": false,
   "color-highlight.markerType": "underline",
+  "color-highlight.matchRgbWithNoFunction": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "markdown": "html"
   },
+  "emmet.triggerExpansionOnTab": true,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "html.completion.attributeDefaultValue": "empty",
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
-  "vim.useSystemClipboard": true,
-  "vim.highlightedyank.enable": true,
-  "vim.history": 100,
-  "vim.hlsearch": true,
-  "vim.handleKeys": {
-    "<c-d>": true
-  },
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      "before": ["p"],
-      "commands": ["editor.action.clipboardPasteAction"]
-    }
-  ],
-  "vim.vimrc.enable": true,
-  "vim.vimrc.path": "$HOME/Developer/env/dots/vscode/init.vim"
+  "prettier.printWidth": 120,
+  "vscode-neovim.logOutputToConsole": true,
+  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim"
 }
