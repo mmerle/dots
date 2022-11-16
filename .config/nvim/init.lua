@@ -96,6 +96,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 --- PLUGINS
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  vim.fn.execute('!git clone --depth 1 https://github.com/wbthomason/packer.nvim ' .. install_path)
+end
+
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
   use('tpope/vim-repeat')
@@ -106,6 +111,7 @@ require('packer').startup(function(use)
     config = function()
       vim.g.flora = false
       vim.cmd('colorscheme flora')
+      -- vim.cmd('colorscheme blank')
     end,
   })
   use({
@@ -178,15 +184,20 @@ require('packer').startup(function(use)
   })
   use({
     'nvim-treesitter/nvim-treesitter',
+    opt = true,
+    cond = function()
+      return vim.g.vscode == nil
+    end,
     run = ':TSUpdate',
-    requires = { 'windwp/nvim-ts-autotag' },
+    requires = { 'nvim-treesitter/playground', 'windwp/nvim-ts-autotag' },
     config = function()
       require('nvim-treesitter.configs').setup({
-        highlight = { enable = true },
         ensure_installed = 'all',
         ignore_install = { 'phpdoc' },
+        highlight = { enable = true },
         indent = { enable = true },
         autotag = { enable = true },
+        playground = { enable = true },
       })
     end,
   })
@@ -226,20 +237,24 @@ require('packer').startup(function(use)
       -- Setup servers installed via `:MasonInstall`
       require('mason-lspconfig').setup_handlers({
         function(server_name)
-          if server_name == 'sumneko_lua' then
-            require('lspconfig')[server_name].setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-              settings = {
-                Lua = { diagnostics = { globals = { 'vim' } } },
-              },
-            })
-          else
-            require('lspconfig')[server_name].setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-            })
-          end
+          require('lspconfig')[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+          })
+          -- if server_name == 'sumneko_lua' then
+          --   require('lspconfig')[server_name].setup({
+          --     on_attach = on_attach,
+          --     capabilities = capabilities,
+          --     settings = {
+          --       Lua = { diagnostics = { globals = { 'vim' } } },
+          --     },
+          --   })
+          -- else
+          --   require('lspconfig')[server_name].setup({
+          --     on_attach = on_attach,
+          --     capabilities = capabilities,
+          --   })
+          -- end
         end,
       })
     end,
@@ -253,7 +268,7 @@ require('packer').startup(function(use)
         sources = {
           null_ls.builtins.formatting.fish_indent,
           null_ls.builtins.formatting.prettierd.with({
-            extra_filetypes = { 'astro', 'svelte' },
+            extra_filetypes = { 'astro', 'svelte', 'jsonc' },
             env = {
               PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json'),
             },
@@ -291,15 +306,15 @@ require('packer').startup(function(use)
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')
-      cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
+      -- cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
       cmp.setup({
         snippet = {
           expand = function(args)
             require('luasnip').lsp_expand(args.body)
           end,
         },
-        mapping = {
-          ['<c-space>'] = cmp.mapping.complete(),
+        mapping = cmp.mapping.preset.insert({
+          ['<c-space>'] = cmp.mapping.complete({ select = false }),
           ['<cr>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -318,9 +333,9 @@ require('packer').startup(function(use)
               fallback()
             end
           end,
-        },
+        }),
         sources = {
-          { name = 'nvim_lsp', keyword_length = 2 },
+          { name = 'nvim_lsp' },
           { name = 'path' },
           { name = 'buffer', keyword_length = 2 },
         },
@@ -342,19 +357,6 @@ require('packer').startup(function(use)
     'windwp/nvim-autopairs',
     config = function()
       require('nvim-autopairs').setup()
-    end,
-  })
-  use({
-    'numToStr/Comment.nvim',
-    config = function()
-      require('comment').setup()
-    end,
-  })
-  use({
-    'mattn/emmet-vim',
-    config = function()
-      vim.g.user_emmet_mode = 'n'
-      vim.g.user_emmet_leader_key = ','
     end,
   })
   use({
@@ -399,6 +401,25 @@ require('packer').startup(function(use)
     end,
   })
   use({
+    'numToStr/Comment.nvim',
+    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
+    config = function()
+      local has_treesitter_configs, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+      if has_treesitter_configs then
+        treesitter_configs.setup({
+          context_commentstring = {
+            enable = true,
+            enable_autocmd = false,
+          },
+        })
+      end
+
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      })
+    end,
+  })
+  use({
     'folke/which-key.nvim',
     config = function()
       require('which-key').setup({
@@ -422,12 +443,6 @@ require('packer').startup(function(use)
           },
         },
       })
-    end,
-  })
-  use({
-    'phaazon/hop.nvim',
-    config = function()
-      require('hop').setup()
     end,
   })
   use({
