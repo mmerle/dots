@@ -103,8 +103,12 @@ end
 
 require('packer').startup(function(use)
   use('wbthomason/packer.nvim')
-  use('tpope/vim-repeat')
-  use('fladson/vim-kitty')
+  use({
+    'kylechui/nvim-surround',
+    config = function()
+      require('nvim-surround').setup()
+    end,
+  })
   use({
     'mmerle/flora-neovim',
     as = 'flora',
@@ -150,13 +154,11 @@ require('packer').startup(function(use)
     config = function()
       require('nvim-tree').setup({
         actions = { open_file = { quit_on_open = true } },
+        trash = { cmd = 'trash' },
         filters = {
           custom = { '^.git$', '.DS_Store', '^node_modules$' },
         },
         git = { ignore = false },
-        view = {
-          hide_root_folder = true,
-        },
         renderer = {
           highlight_git = true,
           icons = {
@@ -176,6 +178,15 @@ require('packer').startup(function(use)
                 empty_open = '○',
                 symlink_open = '○',
               },
+            },
+          },
+        },
+        view = {
+          hide_root_folder = true,
+          mappings = {
+            list = {
+              { key = 'd', action = 'trash' },
+              { key = 'D', action = 'remove' },
             },
           },
         },
@@ -201,6 +212,103 @@ require('packer').startup(function(use)
       })
     end,
   })
+  use({
+    'numToStr/Comment.nvim',
+    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
+    config = function()
+      local has_treesitter_configs, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+      if has_treesitter_configs then
+        treesitter_configs.setup({
+          context_commentstring = {
+            enable = true,
+            enable_autocmd = false,
+          },
+        })
+      end
+
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      })
+    end,
+  })
+  use({
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup()
+    end,
+  })
+  use({
+    'lewis6991/gitsigns.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end,
+  })
+  use({
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require('indent_blankline').setup({
+        show_end_of_line = true,
+        filetype_exclude = { 'terminal', 'packer', 'help', 'markdown' },
+      })
+    end,
+  })
+  use({
+    'romgrk/barbar.nvim',
+    config = function()
+      require('bufferline').setup({
+        animation = false,
+        icon_close_tab = 'x',
+        icon_close_tab_modified = '•',
+        icon_separator_active = '',
+        icon_separator_inactive = '',
+        icons = false,
+      })
+    end,
+  })
+  use({
+    'norcalli/nvim-colorizer.lua',
+    opt = true,
+    cond = function()
+      return vim.g.vscode == nil
+    end,
+    config = function()
+      require('colorizer').setup({
+        '*',
+        css = {
+          hsl_fn = true,
+          names = false,
+        },
+      })
+    end,
+  })
+  use({
+    'folke/which-key.nvim',
+    config = function()
+      require('which-key').setup({
+        window = {
+          margin = { 0, 0, 0, 0 },
+        },
+      })
+    end,
+  })
+  use({
+    'folke/zen-mode.nvim',
+    config = function()
+      require('zen-mode').setup({
+        window = {
+          backdrop = 1,
+          height = 0.85,
+          width = 0.8,
+          options = {
+            number = false,
+            relativenumber = false,
+          },
+        },
+      })
+    end,
+  })
+
   -- lsp
   use({
     'neovim/nvim-lspconfig',
@@ -293,6 +401,8 @@ require('packer').startup(function(use)
       })
     end,
   })
+
+  -- autocomplete
   use({
     'hrsh7th/nvim-cmp',
     requires = {
@@ -351,104 +461,6 @@ require('packer').startup(function(use)
           }),
         },
       })
-    end,
-  })
-  use({
-    'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup()
-    end,
-  })
-  use({
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup({
-        '*',
-        css = {
-          hsl_fn = true,
-          names = false,
-        },
-      })
-    end,
-  })
-  use({
-    'lewis6991/gitsigns.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end,
-  })
-  use({
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      require('indent_blankline').setup({
-        show_end_of_line = true,
-        filetype_exclude = { 'terminal', 'packer', 'help', 'markdown' },
-      })
-    end,
-  })
-  use({
-    'romgrk/barbar.nvim',
-    config = function()
-      require('bufferline').setup({
-        animation = false,
-        icon_close_tab = 'x',
-        icon_close_tab_modified = '•',
-        icon_separator_active = '',
-        icon_separator_inactive = '',
-        icons = false,
-      })
-    end,
-  })
-  use({
-    'numToStr/Comment.nvim',
-    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
-    config = function()
-      local has_treesitter_configs, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
-      if has_treesitter_configs then
-        treesitter_configs.setup({
-          context_commentstring = {
-            enable = true,
-            enable_autocmd = false,
-          },
-        })
-      end
-
-      require('Comment').setup({
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      })
-    end,
-  })
-  use({
-    'folke/which-key.nvim',
-    config = function()
-      require('which-key').setup({
-        window = {
-          margin = { 0, 0, 0, 0 },
-        },
-      })
-    end,
-  })
-  use({
-    'folke/zen-mode.nvim',
-    config = function()
-      require('zen-mode').setup({
-        window = {
-          backdrop = 1,
-          height = 0.85,
-          width = 0.8,
-          options = {
-            number = false,
-            relativenumber = false,
-          },
-        },
-      })
-    end,
-  })
-  use({
-    'kylechui/nvim-surround',
-    config = function()
-      require('nvim-surround').setup()
     end,
   })
 end)
