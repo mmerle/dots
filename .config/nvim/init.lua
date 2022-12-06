@@ -17,6 +17,11 @@ vim.keymap.set('n', '<esc>', ':noh<cr>', opts) -- clear search highlights
 vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
 vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
 
+-- block movement
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+
+-- plugin maps
 vim.keymap.set('n', '<leader>p', ':Telescope find_files<cr>', opts) -- searh files
 vim.keymap.set('n', '<leader>/', ':Telescope live_grep<cr>', opts) -- searh text
 vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<cr>', opts) -- toggle file explorer
@@ -39,7 +44,7 @@ vim.keymap.set('n', '<leader>kc', ':PackerCompile<cr>', opts)
 vim.keymap.set('n', '<leader>ks', ':PackerSync<cr>', opts)
 
 vim.keymap.set('n', '<leader>w', ':BufferClose<cr>', opts) -- close current buffer
-vim.keymap.set('n', '<leader>bo', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
+vim.keymap.set('n', '<leader>W', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
 
 vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts)
 
@@ -93,6 +98,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+-- Hide cursorline on inactive split
+local bgHighlight = vim.api.nvim_create_augroup('BgHighlight', { clear = true })
+vim.api.nvim_create_autocmd('WinEnter', {
+  group = bgHighlight,
+  command = 'set cul',
+  pattern = '*',
+})
+vim.api.nvim_create_autocmd('WinLeave', {
+  group = bgHighlight,
+  command = 'set nocul',
+  pattern = '*',
 })
 
 --- PLUGINS
