@@ -16,16 +16,23 @@ vim.keymap.set('n', '<leader>q', ':q<cr>', opts) -- quick quit
 vim.keymap.set('n', '<esc>', ':noh<cr>', opts) -- clear search highlights
 vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
 vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
+vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts) -- replace selection
 
 -- block movement
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+
+-- center vertical movement
+vim.keymap.set('n', '<c-d>', '<c-d>zz', opts)
+vim.keymap.set('n', '<c-u>', '<c-u>zz', opts)
 
 -- plugin maps
 vim.keymap.set('n', '<leader>p', ':Telescope find_files<cr>', opts) -- searh files
 vim.keymap.set('n', '<leader>/', ':Telescope live_grep<cr>', opts) -- searh text
 vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<cr>', opts) -- toggle file explorer
 vim.keymap.set('n', '<leader><cr>', ':ZenMode<cr>', opts) -- toggle zenmode
+vim.keymap.set('n', '<leader>kc', ':PackerCompile<cr>', opts)
+vim.keymap.set('n', '<leader>ks', ':PackerSync<cr>', opts)
 
 -- window
 vim.keymap.set('n', '<c-h>', '<c-w><c-h>', opts) -- jump to split left
@@ -35,18 +42,13 @@ vim.keymap.set('n', '<c-l>', '<c-w><c-l>', opts) -- jump to split right
 vim.keymap.set('n', '<c-r>', '<c-w><c-r>', opts) -- swap split positions
 
 -- goto
-vim.keymap.set('n', 'g.', '`.', opts) -- goto last modification
+vim.keymap.set('n', 'go', '<c-o>', opts) -- goto previous position
+vim.keymap.set('n', 'gm', '%', opts) -- goto matching character: '()', '{}', '[]'
 vim.keymap.set('n', 'gp', ':bprev<cr>', opts) -- goto previous buffer
 vim.keymap.set('n', 'gn', ':bnext<cr>', opts) -- goto next buffer
-vim.keymap.set('n', 'gm', '%', opts) -- goto matching character: '()', '{}', '[]'
-
-vim.keymap.set('n', '<leader>kc', ':PackerCompile<cr>', opts)
-vim.keymap.set('n', '<leader>ks', ':PackerSync<cr>', opts)
 
 vim.keymap.set('n', '<leader>w', ':BufferClose<cr>', opts) -- close current buffer
 vim.keymap.set('n', '<leader>W', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
-
-vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts)
 
 --- OPTIONS
 vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
@@ -147,12 +149,12 @@ require('packer').startup(function(use)
           column_indent = 0,
           sorting_strategy = 'ascending',
           layout_strategy = 'horizontal',
-          file_ignore_patterns = { '^.git$', 'node_modules', '.next', '.DS_Store' },
+          file_ignore_patterns = { '.git', 'node_modules', '.next', '.DS_Store' },
           layout_config = {
             prompt_position = 'top',
             horizontal = { preview_width = 0.6, height = 0.6 },
           },
-          find_command = { 'fd', '--type', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
+          find_command = { 'fd', '-t', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
           mappings = {
             i = {
               ['<C-j>'] = actions.move_selection_next,
