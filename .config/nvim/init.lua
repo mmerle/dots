@@ -102,19 +102,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Hide cursorline on inactive split
-local bgHighlight = vim.api.nvim_create_augroup('BgHighlight', { clear = true })
-vim.api.nvim_create_autocmd('WinEnter', {
-  group = bgHighlight,
-  command = 'set cul',
-  pattern = '*',
-})
-vim.api.nvim_create_autocmd('WinLeave', {
-  group = bgHighlight,
-  command = 'set nocul',
-  pattern = '*',
-})
-
 --- PLUGINS
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
