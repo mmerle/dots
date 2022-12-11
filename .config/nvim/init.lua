@@ -320,7 +320,6 @@ require('packer').startup(function(use)
   use({
     'neovim/nvim-lspconfig',
     requires = {
-      'folke/neodev.nvim',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -328,7 +327,7 @@ require('packer').startup(function(use)
     config = function()
       require('mason').setup()
       require('mason-tool-installer').setup({})
-      require('neodev').setup({})
+      require('mason-lspconfig').setup({})
 
       local function on_attach(_, bufnr)
         local b_opts = { buffer = bufnr, silent = true }
@@ -336,7 +335,9 @@ require('packer').startup(function(use)
         vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, b_opts)
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, b_opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, b_opts)
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, b_opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, b_opts)
+        vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, b_opts)
         vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, b_opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, b_opts)
       end
@@ -356,56 +357,54 @@ require('packer').startup(function(use)
             on_attach = on_attach,
             capabilities = capabilities,
           })
-          -- if server_name == 'sumneko_lua' then
-          --   require('lspconfig')[server_name].setup({
-          --     on_attach = on_attach,
-          --     capabilities = capabilities,
-          --     settings = {
-          --       Lua = { diagnostics = { globals = { 'vim' } } },
-          --     },
-          --   })
-          -- else
-          --   require('lspconfig')[server_name].setup({
-          --     on_attach = on_attach,
-          --     capabilities = capabilities,
-          --   })
-          -- end
+        end,
+
+        ['sumneko_lua'] = function()
+          require('lspconfig').sumneko_lua.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+              Lua = { diagnostics = { globals = { 'vim' } } },
+            },
+          })
         end,
       })
     end,
   })
   use({
     'jose-elias-alvarez/null-ls.nvim',
-    requires = 'nvim-lua/plenary.nvim',
+    requires = { 'nvim-lua/plenary.nvim', 'jayp0521/mason-null-ls.nvim' },
     config = function()
-      local null_ls = require('null-ls')
-      null_ls.setup({
+      local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+      local function format_on_save(client, bufnr)
+        if client.supports_method('textDocument/formatting') then
+          vim.api.nvim_clear_autocmds({
+            group = augroup,
+            buffer = bufnr,
+          })
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            group = augroup,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr })
+            end,
+          })
+        end
+      end
+
+      require('mason-null-ls').setup({ automatic_setup = true })
+      require('null-ls').setup({
         sources = {
-          null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.formatting.prettierd.with({
-            extra_filetypes = { 'astro', 'svelte', 'jsonc' },
-            env = {
-              PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json'),
-            },
+          require('null-ls').builtins.formatting.prettierd.with({
+            extra_filetypes = { 'jsonc', 'astro', 'svelte' },
+            env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json') },
           }),
-          null_ls.builtins.formatting.stylua,
+          require('null-ls').builtins.formatting.stylua,
+          require('null-ls').builtins.formatting.fish_indent,
         },
-        on_attach = function(client, bufnr)
-          if client.supports_method('textDocument/formatting') then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format({
-                  bufnr = bufnr,
-                  filter = function(lsp_client)
-                    return lsp_client.name == 'null-ls'
-                  end,
-                })
-              end,
-            })
-          end
-        end,
+        on_attach = format_on_save,
       })
+      require('mason-null-ls').setup_handlers()
     end,
   })
 
