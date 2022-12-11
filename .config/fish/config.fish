@@ -34,8 +34,7 @@ end
 
 # aliases
 alias ls='exa'
-alias la='exa -a'
-alias lla='exa -la'
+alias la='exa -la'
 alias lt='exa -T --git-ignore'
 alias vim='nvim'
 alias rm='trash'
