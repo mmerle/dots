@@ -19,8 +19,8 @@ vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search
 vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts) -- replace selection
 
 -- block movement
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv", opts)
+vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv", opts)
 
 -- center vertical movement
 vim.keymap.set('n', '<c-d>', '<c-d>zz', opts)
@@ -60,7 +60,7 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
-vim.opt.statusline = ' %f %M %= [%{expand(&filetype)}] %l:%c '
+-- vim.opt.statusline = ' %f %M %= [%{expand(&filetype)}] %l:%c '
 vim.opt.shortmess:append('c')
 
 vim.opt.mouse = 'a' -- enable mouse
@@ -102,6 +102,45 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+------------
+
+local reset_group = vim.api.nvim_create_augroup('reset_group', {
+  clear = false,
+})
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'FocusGained' }, {
+  callback = function()
+    if vim.fn.isdirectory('.git') ~= 0 then
+      local branch = vim.fn.system("git branch --show-current | tr -d '\n'")
+      vim.b.branch_name = '[' .. branch .. ']'
+    end
+
+    local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+    if num_errors > 0 then
+      vim.b.errors = ' *' .. num_errors .. ' '
+      return
+    end
+
+    local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+    if num_warnings > 0 then
+      vim.b.errors = ' !' .. num_warnings .. ' '
+      return
+    end
+    vim.b.errors = ''
+  end,
+  group = reset_group,
+})
+
+vim.opt.statusline = ' %{get(b:, "branch_name", "")} %f %m %= %{get(b:, "errors", "")} %y %l:%c '
+------------
+
+-- Use circles for diagnostics
+local signs = { 'Error', 'Warn', 'Hint', 'Info' }
+for _, type in pairs(signs) do
+  local hl = string.format('DiagnosticSign%s', type)
+  vim.fn.sign_define(hl, { text = '●', texthl = hl, numhl = hl })
+end
+
 --- PLUGINS
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -121,8 +160,8 @@ require('packer').startup(function(use)
     as = 'flora',
     config = function()
       vim.g.flora = false
-      vim.cmd('colorscheme flora')
-      -- vim.cmd('colorscheme blank')
+      -- vim.cmd('colorscheme flora')
+      vim.cmd('colorscheme blank')
     end,
   })
   use({
@@ -296,6 +335,9 @@ require('packer').startup(function(use)
         window = {
           margin = { 0, 0, 0, 0 },
         },
+        plugins = {
+          spelling = { enabled = true },
+        },
       })
     end,
   })
@@ -397,7 +439,7 @@ require('packer').startup(function(use)
         sources = {
           require('null-ls').builtins.formatting.prettierd.with({
             extra_filetypes = { 'jsonc', 'astro', 'svelte' },
-            env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.prettierrc.json') },
+            env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/.prettierrc.json') },
           }),
           require('null-ls').builtins.formatting.stylua,
           require('null-ls').builtins.formatting.fish_indent,
