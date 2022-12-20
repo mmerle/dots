@@ -161,7 +161,7 @@ require('packer').startup(function(use)
     config = function()
       vim.g.flora = false
       -- vim.cmd('colorscheme flora')
-      vim.cmd('colorscheme blank')
+      vim.cmd.colorscheme('blank')
     end,
   })
   use({
