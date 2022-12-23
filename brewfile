@@ -20,22 +20,21 @@ brew 'pnpm'
 brew 'ranger'
 brew 'yarn'
 
+cask 'arc'
 cask 'bitwarden'
-cask 'discord-canary'
-cask 'figma-beta'
-cask 'firefox-beta'
-cask 'google-drive'
+cask 'discord'
+cask 'figma'
 cask 'iina'
-cask 'kap'
 cask 'karabiner-elements'
 cask 'kitty'
 cask 'linear-linear'
-cask 'notion'
 cask 'obsidian'
 cask 'raycast'
 cask 'spotify'
 cask 'utm'
-cask 'visual-studio-code'
+cask 'visual-studio-code-insiders'
 
 mas 'Pandan', id: 1569600264
 mas 'The Unarchiver', id: 425424353
+
+# vim:filetype=ruby
