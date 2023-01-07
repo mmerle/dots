@@ -9,11 +9,12 @@ vim.g.colors_name = 'blank'
 
 local variants = {
   light = {
-    error = '#b4637a',
-    warn = '#ea9d34',
-    hint = '#56949f',
-    info = '#907aa9',
-    accent = '#d7827e',
+    error = '#e94b2e',
+    warn = '#eba91f',
+    hint = '#5288f7',
+    info = '#2aac64',
+    accent = '#e087af',
+    other = '#a9cee4',
     on_accent = '#faf4ed',
     b_low = '#faf4ed',
     b_med = '#fffaf3',
@@ -36,7 +37,7 @@ local variants = {
     b_high = '#1e1e1e',
     f_low = '#525252',
     f_med = '#837e7e',
-    f_high = '#ffffff',
+    f_high = '#eeeeee',
     none = 'NONE',
   },
 }
@@ -73,7 +74,7 @@ h('IncSearch', { bg = p.accent, fg = p.on_accent })
 h('LineNr', { fg = p.f_low })
 h('MatchParen', { bg = p.accent, fg = p.on_accent })
 h('NonText', { fg = p.f_low })
-h('Normal', { bg = p.b_low, fg = p.f_med })
+h('Normal', { bg = p.b_low, fg = p.f_high })
 h('Pmenu', { bg = p.b_med, fg = p.f_med })
 h('PmenuSbar', { bg = p.b_high })
 h('PmenuSel', { bg = p.b_high, fg = p.f_high })
@@ -103,6 +104,8 @@ h('Error', { fg = p.error })
 h('Exception', { fg = p.f_low })
 h('Float', { fg = p.f_low })
 h('Function', { fg = p.error })
+h('FoldColumn', { fg = p.error })
+h('Folded', { fg = p.f_med })
 h('Identifier', { fg = p.f_med })
 h('Include', { fg = p.hint })
 h('Keyword', { fg = p.hint })
@@ -158,11 +161,17 @@ h('TSWarning', { fg = p.warn })
 
 h('@constructor', { fg = p.other })
 h('@parameter', { fg = p.warn })
-h('@property', { fg = p.f_high })
+h('@property', { fg = p.other })
 h('@tag', { fg = p.other, italic = false })
 h('@tag.attribute', { fg = p.accent })
-h('@type', { fg = p.accent })
+h('@type', { fg = p.f_high, italic = true })
+h('@function', { fg = p.error })
+h('@number', { fg = p.accent })
+h('@text', { fg = p.f_high })
+h('@type.definition', { fg = p.warn })
 h('@variable', { fg = p.f_high, italic = true })
+h('@conditional.ternary', { link = 'Operator' })
+
 -- h('@variablebuiltin', { fg = p.warn, italic = true })
 
 --- Diagnostics
@@ -187,7 +196,7 @@ h('GitSignsChange', { link = 'SignChange' })
 h('GitSignsDelete', { link = 'SignDelete' })
 
 -- indent-blankline.nvim
-h('IndentBlanklineChar', { fg = p.b_med })
+h('IndentBlanklineChar', { fg = p.b_high })
 
 -- barbar.nvim
 h('BufferTabPageFill', { bg = p.b_low })
@@ -229,3 +238,16 @@ h('TelescopeTitle', { fg = p.f_low })
 h('TelescopeSelection', { fg = p.f_high, bg = p.b_high })
 h('TelescopePromptNormal', { fg = p.f_high })
 h('TelescopePromptPrefix', { fg = p.f_med })
+
+-- nvim-cmp
+h('CmpItemKind', { fg = p.accent })
+h('CmpItemAbbr', { fg = p.f_med })
+h('CmpItemAbbrMatch', { fg = p.f_high, bold = true })
+h('CmpItemAbbrMatchFuzzy', { link = 'CmpItemAbbrMatch' })
+h('CmpItemAbbrDeprecated', { fg = p.f_low, strikethrough = true })
+h('CmpItemKindVariable', { fg = p.other })
+h('CmpItemKindClass', { fg = p.warn })
+h('CmpItemKindInterface', { fg = p.warn })
+h('CmpItemKindFunction', { fg = p.hint })
+h('CmpItemKindMethod', { fg = p.hint })
+h('CmpItemKindSnippet', { fg = p.hint })
