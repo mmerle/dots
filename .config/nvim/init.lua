@@ -16,9 +16,11 @@ vim.keymap.set('n', '<leader>q', ':q<cr>', opts) -- quick quit
 vim.keymap.set('n', '<esc>', ':noh<cr>', opts) -- clear search highlights
 vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
 vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
-vim.keymap.set('n', 'S', ':%s/<c-r><c-w>/', opts) -- replace selection
+vim.keymap.set('n', 'S', ':%s/<c-r><c-w>//g<left><left>', { silent = false }) -- replace selection
 
 -- block movement
+vim.keymap.set('n', 'J', ':m .+1<cr>==', opts)
+vim.keymap.set('n', 'K', ':m .-2<cr>==', opts)
 vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv", opts)
 vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv", opts)
 
@@ -160,7 +162,7 @@ require('packer').startup(function(use)
     as = 'flora',
     config = function()
       vim.g.flora = false
-      -- vim.cmd('colorscheme flora')
+      -- vim.cmd.colorscheme('flora')
       vim.cmd.colorscheme('blank')
     end,
   })
@@ -376,7 +378,7 @@ require('packer').startup(function(use)
         -- vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, b_opts)
         vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, b_opts)
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, b_opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, b_opts)
+        -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, b_opts)
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, b_opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, b_opts)
         vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, b_opts)
@@ -443,6 +445,7 @@ require('packer').startup(function(use)
           }),
           require('null-ls').builtins.formatting.stylua,
           require('null-ls').builtins.formatting.fish_indent,
+          require('null-ls').builtins.completion.spell,
         },
         on_attach = format_on_save,
       })
@@ -472,7 +475,7 @@ require('packer').startup(function(use)
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<c-space>'] = cmp.mapping.complete({ select = false }),
+          ['<c-space>'] = cmp.mapping.complete({ select = true }),
           ['<cr>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
