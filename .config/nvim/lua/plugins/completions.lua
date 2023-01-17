@@ -10,7 +10,7 @@ return {
       'windwp/nvim-autopairs',
       'onsails/lspkind-nvim',
     },
-    event = 'BufReadPre',
+    event = 'InsertEnter',
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')

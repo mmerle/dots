@@ -125,6 +125,7 @@ return {
   },
   {
     'kyazdani42/nvim-tree.lua',
+    lazy = false,
     keys = {
       {
         '<leader>e',
@@ -174,19 +175,46 @@ return {
       },
     },
   },
+  -- {
+  --   'romgrk/barbar.nvim',
+  --   event = 'BufReadPre',
+  --   config = function()
+  --     require('bufferline').setup({
+  --       animation = false,
+  --       icons = false,
+  --       icon_close_tab = '×',
+  --       icon_close_tab_modified = '*',
+  --       icon_separator_active = '',
+  --       icon_separator_inactive = '',
+  --     })
+  --   end,
+  -- },
   {
-    'romgrk/barbar.nvim',
-    event = 'BufReadPre',
-    config = function()
-      require('bufferline').setup({
-        animation = false,
-        icon_close_tab = '×',
-        icon_close_tab_modified = '*',
-        icon_separator_active = '',
-        icon_separator_inactive = '',
-        icons = false,
-      })
+    'akinsho/nvim-bufferline.lua',
+    event = 'VeryLazy',
+    init = function()
+      vim.keymap.set('n', '<s-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev Buffer' })
+      vim.keymap.set('n', '<s-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next Buffer' })
+      vim.keymap.set('n', '<leader>b[', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous' })
+      vim.keymap.set('n', '<leader>b]', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next' })
     end,
+    opts = {
+      options = {
+        buffer_close_icon = '×',
+        modified_icon = '*',
+        close_icon = '×',
+        -- always_show_bufferline = false,
+        show_buffer_icons = false,
+        offsets = {
+          {
+            filetype = 'NvimTree',
+            text = 'File Explorer',
+            highlight = 'Directory',
+            text_align = 'left',
+          },
+        },
+      },
+    },
   },
   {
     'norcalli/nvim-colorizer.lua',
@@ -203,7 +231,7 @@ return {
   },
   {
     'folke/which-key.nvim',
-    event = 'BufReadPre',
+    event = 'VeryLazy',
     config = function()
       require('which-key').setup({
         window = {
