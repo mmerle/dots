@@ -1,6 +1,6 @@
-require('user/package')
-require('user/options')
-require('user/keymaps')
+require('config/package')
+require('config/options')
+require('config/keymaps')
 
 require('lazy').setup('plugins', {
   install = { colorscheme = { 'blank' } },
