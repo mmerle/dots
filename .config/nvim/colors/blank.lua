@@ -37,7 +37,7 @@ local variants = {
     b_high = '#1e1e1e',
     f_low = '#525252',
     f_med = '#837e7e',
-    f_high = '#eeeeee',
+    f_high = '#C2C2C2',
     none = 'NONE',
   },
 }
@@ -105,7 +105,7 @@ h('Exception', { fg = p.f_low })
 h('Float', { fg = p.f_low })
 h('Function', { fg = p.error })
 h('FoldColumn', { fg = p.error })
-h('Folded', { fg = p.f_med })
+h('Folded', { fg = p.f_med, bg = p.b_med })
 h('Identifier', { fg = p.f_med })
 h('Include', { fg = p.hint })
 h('Keyword', { fg = p.hint })
@@ -251,3 +251,9 @@ h('CmpItemKindInterface', { fg = p.warn })
 h('CmpItemKindFunction', { fg = p.hint })
 h('CmpItemKindMethod', { fg = p.hint })
 h('CmpItemKindSnippet', { fg = p.hint })
+
+-- nvim-ufo
+h('UfoFoldedBg', { bg = p.b_med })
+h('UfoFoldedLine', { link = 'CursorLine' })
+
+
