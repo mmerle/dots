@@ -36,7 +36,7 @@ vim.keymap.set('n', '<c-h>', '<c-w><c-h>', opts) -- jump to split left
 vim.keymap.set('n', '<c-j>', '<c-w><c-j>', opts) -- jump to split below
 vim.keymap.set('n', '<c-k>', '<c-w><c-k>', opts) -- jump to split above
 vim.keymap.set('n', '<c-l>', '<c-w><c-l>', opts) -- jump to split right
-vim.keymap.set('n', '<c-r>', '<c-w><c-r>', opts) -- swap split positions
+-- vim.keymap.set('n', '<c-r>', '<c-w><c-r>', opts) -- swap split positions
 
 -- goto
 vim.keymap.set('n', 'go', '<c-o>', opts) -- goto previous position
