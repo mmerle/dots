@@ -43,7 +43,7 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
 
-vim.opt.lazyredraw = true
+-- vim.opt.lazyredraw = true
 
 -- Stop 'o' continuing comments
 vim.api.nvim_create_autocmd('BufEnter', {
