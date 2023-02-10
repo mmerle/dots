@@ -1,16 +1,15 @@
 :root {
   --vim-font-mono: 'MD IO 0.5', monospace;
-  --vim-font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  --vim-font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
   --vim-white: hsl(0 0% 100%);
   --vim-black: hsl(0 0% 0%);
   --vim-fg: var(--vim-white);
   --vim-fgAlpha: 0 0% 100%;
   --vim-bg: hsl(0 0% 7% / 0.8);
-  --vim-accent: hsl(21 100% 50%);
-  --vim-accentAlpha: hsl(21 100% 50% / 0.2);
+  --vim-accent: hsl(220 80% 76%);
+  --vim-accentAlpha: hsl(220 80% 76% / 0.2);
   --vim-mono: hsl(0 0% 62.8%);
   --vim-monoAlpha: 0 0% 62.8%;
 
@@ -28,7 +27,7 @@
   --vim-radius-lg: 10px;
 
   --vim-shadow: rgb(0 0 0 / 20%) 0px 16px 70px;
-  --vim-blur: blur(20px);
+  --vim-blur: blur(40px);
 }
 
 @media (prefers-color-scheme: light) {
@@ -67,6 +66,9 @@
 
 /* hud */
 div.vimiumHUD {
+  width: fit-content;
+  left: auto;
+  right: 0;
   background: var(--vim-bg);
   backdrop-filter: var(--vim-blur);
   border-radius: var(--vim-radius);
@@ -153,11 +155,20 @@ div.vimiumHUD .hud-find {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  height: 48px;
-  padding: 0 16px;
+  height: 42px;
+  padding: 0 8px;
   border-radius: 8px;
   border: none;
   line-height: 16px;
+  gap: 8px;
+}
+
+#vomnibar li:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+#vomnibar li:hover {
+  background: hsl(var(--vim-monoAlpha) / 0.08);
 }
 
 #vomnibar li .vomnibarTopHalf,
@@ -169,6 +180,13 @@ div.vimiumHUD .hud-find {
 
 #vomnibar li .vomnibarTopHalf {
   display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#vomnibar li .vomnibarTopHalf::after {
+  content: '—';
+  color: var(--vim-mono);
 }
 
 #vomnibar li .vomnibarBottomHalf {
@@ -177,7 +195,7 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar li .vomnibarTitle,
-#vomnibar li .vomnibarURL {
+#vomnibar li .vomnibarUrl {
   font-family: var(--vim-font-sans);
   font-weight: 400;
   line-height: var(--vim-leading);
@@ -190,7 +208,6 @@ div.vimiumHUD .hud-find {
   margin: 0;
   border-radius: var(--vim-radius-sm);
   padding: 4px 6px;
-  margin-right: 8px;
   display: block;
   flex-shrink: 0;
 }
@@ -203,6 +220,10 @@ div.vimiumHUD .hud-find {
   font-size: inherit;
 }
 
+#vomnibar li .vomnibarTitle:empty {
+  display: none;
+}
+
 #vomnibar li .vomnibarUrl {
   color: var(--vim-mono);
   font-size: inherit;
@@ -213,7 +234,6 @@ div.vimiumHUD .hud-find {
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
-  padding-left: 8px;
 }
 
 #vomnibar li .vomnibarMatch {
@@ -226,6 +246,15 @@ div.vimiumHUD .hud-find {
   display: none;
 }
 
+#vomnibar li .vomnibarInsertText {
+  display: none;
+}
+
 #vomnibar li.vomnibarSelected {
   background: hsl(var(--vim-monoAlpha) / 0.16);
+}
+
+.vomnibarFrame #vomnibar {
+  background: red !important;
+  color: red !important;
 }
