@@ -14,6 +14,10 @@ fish_vi_key_bindings
 # disable fish greeting
 set fish_greeting
 
+function fish_title
+    echo (string split -- / $PWD)[-1]
+end
+
 function fish_prompt
     set -g fish_prompt_pwd_dir_length 0
     printf '%s%s> ' (prompt_pwd)
