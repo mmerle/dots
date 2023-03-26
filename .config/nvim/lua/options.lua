@@ -1,47 +1,44 @@
-vim.cmd.colorscheme('blank')
+local indent = 2
+local scrolloff = 3
 
 vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
-vim.opt.updatetime = 250
-
-vim.opt.termguicolors = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.signcolumn = 'yes'
-vim.opt.cursorline = true
-vim.opt.laststatus = 3
--- vim.opt.statusline = ' %f %M %= [%{expand(&filetype)}] %l:%c '
-vim.opt.shortmess:append('c')
-
+vim.opt.cursorline = true -- highlight current line
+vim.opt.updatetime = 250 -- faster update time
+vim.opt.shiftwidth = indent
+vim.opt.tabstop = indent
+vim.opt.scrolloff = scrolloff
+vim.opt.sidescrolloff = scrolloff
+vim.opt.termguicolors = true -- support for true colour
+vim.opt.number = true -- show line numbers
+vim.opt.relativenumber = true -- line numbers relative to cursor
+vim.opt.signcolumn = 'yes' -- always show signcolumn
 vim.opt.mouse = 'a' -- enable mouse
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-vim.opt.tabstop = 2
-vim.opt.undofile = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.scrolloff = 3
-
+vim.opt.undofile = true -- unable undo
+vim.opt.shortmess:append('c') -- shorter messages
+vim.opt.splitbelow = true -- split new window below of current
+vim.opt.splitright = true -- split new window right of current
 vim.opt.expandtab = true
 vim.opt.breakindent = true
 vim.opt.cindent = true
-
+vim.opt.laststatus = 3
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
-vim.opt.wildmode = 'longest:full,full'
-vim.opt.pumheight = 6
+vim.opt.smartcase = true -- only case sensitive when alternate case is used
+vim.opt.wildmode = 'longest:full,full' -- commandline completion settings
+vim.opt.pumheight = 6 -- commandline completion height
 vim.opt.completeopt = 'menu,menuone,noinsert'
-
-vim.opt.title = true
-vim.opt.titlestring = '%t — nvim'
-
+-- vim.opt.title = true
+-- vim.opt.titlestring = '%t — nvim'
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = '·' }
+-- vim.opt.cmdheight = 0
 
+-- settings for ufo compatibility
 vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
+
+vim.cmd.colorscheme('flora')
 
 -- Stop 'o' continuing comments
 vim.api.nvim_create_autocmd('BufEnter', {
@@ -61,6 +58,13 @@ for _, type in pairs(signs) do
   local hl = string.format('DiagnosticSign%s', type)
   vim.fn.sign_define(hl, { text = '●', texthl = hl, numhl = hl })
 end
+
+-- open nvim-tree on startup
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    require('nvim-tree.api').tree.open()
+  end,
+})
 
 -- custom statusline
 local reset_group = vim.api.nvim_create_augroup('reset_group', {

@@ -16,20 +16,6 @@ vim.opt.runtimepath:prepend(lazypath)
 local plugins = {
   -- interface
   {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    branch = 'canary',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require('rose-pine').setup({
-        disable_italics = true,
-        disable_float_background = true,
-      })
-      vim.cmd.colorscheme('flora')
-    end,
-  },
-  {
     'numToStr/Comment.nvim',
     event = 'BufReadPre',
     dependencies = {
@@ -85,7 +71,7 @@ local plugins = {
       })
 
       require('ufo').setup({
-        provider_selector = function(bufnr, filetype, buftype)
+        provider_selector = function()
           return { 'treesitter', 'indent' }
         end,
       })
@@ -106,6 +92,16 @@ local plugins = {
         ':Telescope live_grep<cr>',
         desc = 'Find text',
       },
+      {
+        '<leader>d',
+        ':Telescope diagnostics<cr>',
+        desc = 'Diagnostics',
+      },
+      {
+        '<leader>b',
+        ':Telescope buffers<cr>',
+        desc = 'Diagnostics',
+      },
     },
     config = function()
       local actions = require('telescope.actions')
@@ -115,7 +111,7 @@ local plugins = {
           column_indent = 0,
           sorting_strategy = 'ascending',
           layout_strategy = 'horizontal',
-          file_ignore_patterns = { '.git', 'node_modules', '.next', '.DS_Store' },
+          file_ignore_patterns = { '.git/', 'node_modules' },
           layout_config = {
             prompt_position = 'top',
             horizontal = { preview_width = 0.6, height = 0.6 },
@@ -130,7 +126,13 @@ local plugins = {
           },
         },
         pickers = {
-          find_files = { hidden = true, theme = 'dropdown', previewer = false },
+          find_files = {
+            theme = 'dropdown',
+            previewer = false,
+            disable_devicons = true,
+            hidden = true,
+          },
+          buffers = { theme = 'dropdown', previewer = false, disable_devicons = true },
         },
       })
     end,
@@ -160,6 +162,7 @@ local plugins = {
     event = 'BufReadPre',
     config = function()
       require('indent_blankline').setup({
+        show_current_context = true,
         show_end_of_line = true,
         filetype_exclude = { 'terminal', 'packer', 'help', 'markdown' },
       })
@@ -217,46 +220,15 @@ local plugins = {
       },
     },
   },
-  -- {
-  --     'romgrk/barbar.nvim',
-  --     event = 'BufReadPre',
-  --     config = function()
-  --       require('bufferline').setup({
-  --           animation = false,
-  --           icons = false,
-  --           icon_close_tab = '×',
-  --           icon_close_tab_modified = '*',
-  --           icon_separator_active = '',
-  --           icon_separator_inactive = '',
-  --       })
-  --     end,
-  -- },
   {
-    'akinsho/nvim-bufferline.lua',
+    'echasnovski/mini.tabline',
+    version = false,
     event = 'VeryLazy',
-    init = function()
-      vim.keymap.set('n', '<s-h>', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Prev Buffer' })
-      vim.keymap.set('n', '<s-l>', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next Buffer' })
-      vim.keymap.set('n', '<leader>b[', '<cmd>BufferLineCyclePrev<cr>', { desc = 'Previous' })
-      vim.keymap.set('n', '<leader>b]', '<cmd>BufferLineCycleNext<cr>', { desc = 'Next' })
+    config = function()
+      require('mini.tabline').setup({
+        show_icons = false,
+      })
     end,
-    opts = {
-      options = {
-        buffer_close_icon = '×',
-        modified_icon = '*',
-        close_icon = '×',
-        -- always_show_bufferline = false,
-        show_buffer_icons = false,
-        offsets = {
-          {
-            filetype = 'NvimTree',
-            text = 'File Explorer',
-            highlight = 'Directory',
-            text_align = 'left',
-          },
-        },
-      },
-    },
   },
   {
     'norcalli/nvim-colorizer.lua',
@@ -285,6 +257,13 @@ local plugins = {
       })
     end,
   },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      require('toggleterm').setup()
+    end,
+  },
 
   -- lsp
   {
@@ -295,7 +274,6 @@ local plugins = {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
-
     config = function()
       require('mason').setup()
       require('mason-tool-installer').setup({})
@@ -398,7 +376,7 @@ local plugins = {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer', keyword_length = 2 },
+          { name = 'buffer',  keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
