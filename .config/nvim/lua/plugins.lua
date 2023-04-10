@@ -374,9 +374,10 @@ local plugins = {
           end,
         }),
         sources = {
+          { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer',  keyword_length = 2 },
+          { name = 'buffer', keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -399,7 +400,7 @@ local plugins = {
     event = 'BufReadPre',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'jayp0521/mason-null-ls.nvim',
+      'jay-babu/mason-null-ls.nvim',
     },
     config = function()
       local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -419,7 +420,6 @@ local plugins = {
         end
       end
 
-      require('mason-null-ls').setup({ automatic_setup = true })
       require('null-ls').setup({
         sources = {
           require('null-ls').builtins.formatting.prettierd.with({
@@ -432,7 +432,13 @@ local plugins = {
         },
         on_attach = format_on_save,
       })
-      require('mason-null-ls').setup_handlers()
+
+      require('mason-null-ls').setup({
+        automatic_setup = true,
+        handlers = {
+          function() end,
+        },
+      })
     end,
   },
 }
