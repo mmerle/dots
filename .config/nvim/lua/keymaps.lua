@@ -7,18 +7,18 @@ vim.g.mapleader = ' '
 vim.keymap.set({ 'n', 'v' }, 'j', 'gj', opts)
 vim.keymap.set({ 'n', 'v' }, 'k', 'gk', opts)
 
-vim.keymap.set('v', '<', '<gv', opts)            -- unindent (keep selection)
-vim.keymap.set('v', '>', '>gv', opts)            -- indent (keep selection)
-vim.keymap.set('n', 'H', '^', opts)              -- jump to first character of line
-vim.keymap.set('n', 'L', 'g_', opts)             -- jump to last character of line
-vim.keymap.set('n', '<leader>s', ':w<cr>', opts) -- quick save
-vim.keymap.set('n', '<leader>q', ':q<cr>', opts) -- quick quit
+vim.keymap.set('v', '<', '<gv', opts)                                        -- unindent (keep selection)
+vim.keymap.set('v', '>', '>gv', opts)                                        -- indent (keep selection)
+vim.keymap.set('n', 'H', '^', opts)                                          -- jump to first character of line
+vim.keymap.set('n', 'L', 'g_', opts)                                         -- jump to last character of line
+vim.keymap.set('n', '<leader>s', ':w<cr>', { desc = 'Write file' }, opts)    -- quick save
+vim.keymap.set('n', '<leader>q', ':q<cr>', { desc = 'Quit instance' }, opts) -- quick quit
 
 -- search
-vim.keymap.set('n', '<esc>', ':noh<cr>', opts)                                -- clear search highlights
-vim.keymap.set('n', '*', '*N', opts)                                          -- search word under cursor (keep position)
-vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts)        -- search selection (keep position)
-vim.keymap.set('n', 'S', ':%s/<c-r><c-w>//g<left><left>', { silent = false }) -- replace selection
+vim.keymap.set('n', '<esc>', ':noh<cr>', opts)                         -- clear search highlights
+vim.keymap.set('n', '*', '*N', opts)                                   -- search word under cursor (keep position)
+vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
+-- vim.keymap.set('n', 'S', ':%s/<c-r><c-w>//g<left><left>', { silent = false }) -- replace selection
 
 -- block movement
 vim.keymap.set('n', 'J', ':m .+1<cr>==', opts)
