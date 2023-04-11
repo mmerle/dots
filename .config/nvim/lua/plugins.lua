@@ -12,11 +12,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+local not_vscode = not vim.g.vscode
+
 -- plugin configs
 local plugins = {
   -- interface
   {
     'numToStr/Comment.nvim',
+    enabled = not_vscode,
     event = 'BufReadPre',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
@@ -37,25 +40,38 @@ local plugins = {
   },
   {
     'kylechui/nvim-surround',
-    event = 'BufReadPre',
+    event = 'VeryLazy',
     config = function()
-      require('nvim-surround').setup()
+      require('nvim-surround').setup({
+        keymaps = {
+          insert = '<C-g>z',
+          insert_line = 'gC-ggZ',
+          normal = 'gz',
+          normal_cur = 'gZ',
+          normal_line = 'gzgz',
+          normal_cur_line = 'gZgZ',
+          visual = 'gz',
+          visual_line = 'gZ',
+          delete = 'gzd',
+          change = 'gzc',
+        },
+      })
     end,
   },
   {
     'windwp/nvim-autopairs',
+    enabled = not_vscode,
     event = 'BufReadPre',
     config = function()
       require('nvim-autopairs').setup()
     end,
   },
-
   {
     'nvim-treesitter/nvim-treesitter',
+    enabled = not_vscode,
     build = ':TSUpdate',
     event = 'BufReadPost',
     dependencies = {
-      'nvim-treesitter/playground',
       'windwp/nvim-ts-autotag',
       'kevinhwang91/nvim-ufo',
       'kevinhwang91/promise-async',
@@ -67,7 +83,6 @@ local plugins = {
         highlight = { enable = true },
         indent = { enable = true },
         autotag = { enable = true },
-        playground = { enable = true },
       })
 
       require('ufo').setup({
@@ -79,6 +94,7 @@ local plugins = {
   },
   {
     'nvim-telescope/telescope.nvim',
+    enabled = not_vscode,
     dependencies = 'nvim-lua/plenary.nvim',
     cmd = 'Telescope',
     keys = {
@@ -100,7 +116,7 @@ local plugins = {
       {
         '<leader>b',
         ':Telescope buffers<cr>',
-        desc = 'Diagnostics',
+        desc = 'Find buffers',
       },
     },
     config = function()
@@ -139,6 +155,7 @@ local plugins = {
   },
   {
     'lewis6991/gitsigns.nvim',
+    enabled = not_vscode,
     dependencies = 'nvim-lua/plenary.nvim',
     event = 'BufReadPre',
     keys = {
@@ -159,6 +176,7 @@ local plugins = {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
+    enabled = not_vscode,
     event = 'BufReadPre',
     config = function()
       require('indent_blankline').setup({
@@ -170,6 +188,7 @@ local plugins = {
   },
   {
     'nvim-tree/nvim-tree.lua',
+    enabled = not_vscode,
     lazy = false,
     keys = {
       {
@@ -222,6 +241,7 @@ local plugins = {
   },
   {
     'echasnovski/mini.tabline',
+    enabled = not_vscode,
     version = false,
     event = 'VeryLazy',
     config = function()
@@ -232,6 +252,7 @@ local plugins = {
   },
   {
     'norcalli/nvim-colorizer.lua',
+    enabled = not_vscode,
     event = 'BufReadPre',
     config = function()
       require('colorizer').setup({
@@ -245,6 +266,7 @@ local plugins = {
   },
   {
     'folke/which-key.nvim',
+    enabled = not_vscode,
     event = 'VeryLazy',
     config = function()
       require('which-key').setup({
@@ -259,6 +281,7 @@ local plugins = {
   },
   {
     'akinsho/toggleterm.nvim',
+    enabled = not_vscode,
     version = '*',
     config = function()
       require('toggleterm').setup()
@@ -268,6 +291,7 @@ local plugins = {
   -- lsp
   {
     'neovim/nvim-lspconfig',
+    enabled = not_vscode,
     event = 'BufReadPre',
     dependencies = {
       'williamboman/mason.nvim',
@@ -334,6 +358,7 @@ local plugins = {
   -- completions
   {
     'hrsh7th/nvim-cmp',
+    enabled = not_vscode,
     dependencies = {
       'L3MON4D3/LuaSnip',
       'hrsh7th/cmp-nvim-lsp',
@@ -377,7 +402,7 @@ local plugins = {
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer', keyword_length = 2 },
+          { name = 'buffer',  keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -397,6 +422,7 @@ local plugins = {
   -- formatters
   {
     'jose-elias-alvarez/null-ls.nvim',
+    enabled = not_vscode,
     event = 'BufReadPre',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -436,10 +462,41 @@ local plugins = {
       require('mason-null-ls').setup({
         automatic_setup = true,
         handlers = {
-          function() end,
+          function()
+          end,
         },
       })
     end,
+  },
+
+  -- other
+  {
+    'ggandor/leap.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('leap').add_default_mappings(true)
+    end,
+  },
+  {
+    'folke/zen-mode.nvim',
+    enabled = not_vscode,
+    cmd = 'ZenMode',
+    keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen mode' } },
+    opts = {
+      window = {
+        backdrop = 1,
+        width = 0.85,
+        height = 0.85,
+        options = {
+          number = false,
+          relativenumber = false,
+        },
+      },
+      plugins = {
+        gitsigns = true,
+        kitty = { enabled = false, font = '+2' },
+      },
+    },
   },
 }
 
