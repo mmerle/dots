@@ -11,6 +11,7 @@ brew 'fsouza/prettierd/prettierd'
 brew 'fzf'
 brew 'gh'
 brew 'git'
+brew 'glow'
 brew 'lazygit'
 brew 'lf'
 brew 'mas'
@@ -39,8 +40,8 @@ cask 'spotify'
 cask 'utm'
 cask 'visual-studio-code-insiders'
 
-mas 'Pandan', id: 1569600264
+mas 'Pandan',         id: 1569600264
 mas 'The Unarchiver', id: 425424353
-mas 'Xcode', id: 497799835
+mas 'Xcode',          id: 497799835
 
 # vim:filetype=ruby
