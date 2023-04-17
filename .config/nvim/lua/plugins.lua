@@ -207,6 +207,7 @@ local plugins = {
       git = { ignore = false },
       trash = { cmd = 'trash' },
       renderer = {
+        root_folder_label = false,
         highlight_git = true,
         icons = {
           symlink_arrow = ' → ',
@@ -229,7 +230,6 @@ local plugins = {
         },
       },
       view = {
-        hide_root_folder = true,
         mappings = {
           list = {
             { key = 'd', action = 'trash' },
@@ -402,7 +402,7 @@ local plugins = {
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer',  keyword_length = 2 },
+          { name = 'buffer', keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -462,8 +462,7 @@ local plugins = {
       require('mason-null-ls').setup({
         automatic_setup = true,
         handlers = {
-          function()
-          end,
+          function() end,
         },
       })
     end,
