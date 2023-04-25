@@ -8,7 +8,6 @@
   },
   "profiles": [
     {
-      "name": "merle",
       "complex_modifications": {
         "parameters": {
           "basic.simultaneous_threshold_milliseconds": 50,
@@ -315,6 +314,7 @@
           ]
         }
       ],
+      "name": "merle",
       "parameters": {
         "delay_milliseconds_before_open_device": 1000
       },
@@ -358,7 +358,6 @@
       }
     },
     {
-      "name": "normie",
       "complex_modifications": {
         "parameters": {
           "basic.simultaneous_threshold_milliseconds": 50,
@@ -521,6 +520,7 @@
           ]
         }
       ],
+      "name": "normie",
       "parameters": {
         "delay_milliseconds_before_open_device": 1000
       },
