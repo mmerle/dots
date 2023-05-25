@@ -197,47 +197,45 @@ local plugins = {
         desc = 'Toggle file tree',
       },
     },
-    opts = {
-      actions = {
-        open_file = { quit_on_open = true },
-      },
-      filters = {
-        custom = { '^.git$', '.DS_Store', '^node_modules$' },
-      },
-      git = { ignore = false },
-      trash = { cmd = 'trash' },
-      renderer = {
-        root_folder_label = false,
-        highlight_git = true,
-        icons = {
-          symlink_arrow = ' → ',
-          show = {
-            file = false,
-            folder = true,
-            folder_arrow = false,
-            git = false,
-          },
-          glyphs = {
-            folder = {
-              default = '●',
-              empty = '◌',
-              symlink = '●',
-              open = '○',
-              empty_open = '○',
-              symlink_open = '○',
+    config = function()
+      require('nvim-tree').setup({
+        on_attach = function(bufnr)
+          local api = require('nvim-tree.api')
+          api.config.mappings.default_on_attach(bufnr)
+          vim.keymap.set('n', 'd', api.fs.trash, { buffer = bufnr })
+        end,
+        actions = { open_file = { quit_on_open = true } },
+        filters = {
+          custom = { '^.git$', '.DS_Store', '^node_modules$' },
+        },
+        git = { ignore = false },
+        renderer = {
+          root_folder_label = false,
+          highlight_git = true,
+          icons = {
+            symlink_arrow = ' → ',
+            show = {
+              file = false,
+              folder = true,
+              folder_arrow = false,
+              git = false,
+            },
+            glyphs = {
+              folder = {
+                default = '●',
+                empty = '◌',
+                symlink = '●',
+                open = '○',
+                empty_open = '○',
+                symlink_open = '○',
+              },
             },
           },
         },
-      },
-      view = {
-        mappings = {
-          list = {
-            { key = 'd', action = 'trash' },
-            { key = 'D', action = 'remove' },
-          },
-        },
-      },
-    },
+        trash = { cmd = 'trash' },
+        view = { side = 'right' },
+      })
+    end,
   },
   {
     'echasnovski/mini.tabline',
