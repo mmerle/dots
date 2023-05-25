@@ -44,6 +44,7 @@ vim.keymap.set('n', 'gp', ':bprev<cr>', { desc = 'Goto previous buffer' }, opts)
 vim.keymap.set('n', 'gn', ':bnext<cr>', { desc = 'Goto next buffer' }, opts)     -- goto next buffer
 
 vim.keymap.set('n', '<leader>w', ':bdelete<cr>', opts)                           -- close current buffer
+vim.keymap.set('n', '<leader>i', ':Inspect<cr>', opts)
 -- vim.keymap.set('n', '<leader>W', ':BufferCloseAllButCurrent<cr>', opts) -- close all but current buffer
 
 vim.keymap.set('n', '<leader>lg', function()
