@@ -11,7 +11,7 @@ local variants = {
   light = {
     error = '#f8876a',
     warn = '#f3c770',
-    hint = '#9dd5d9',
+    hint = '#64929D',
     info = '#bc8de5',
     accent = '#2f98a3',
     other = '#e29ebb',
@@ -43,7 +43,8 @@ local variants = {
 }
 
 -- Set palette based on variant
-local p = vim.o.background == 'light' and variants.light or variants.dark
+-- local p = vim.o.background == 'light' and variants.light or variants.dark
+local p = variants.dark
 
 local h = function(group, color)
   return vim.api.nvim_set_hl(0, group, color)
@@ -106,7 +107,7 @@ h('Float', { fg = p.f_low })
 h('Function', { fg = p.error })
 h('FoldColumn', { fg = p.error })
 h('Folded', { fg = p.f_med, bg = p.b_med })
-h('Identifier', { fg = p.f_med })
+h('Identifier', { fg = p.f_high })
 h('Include', { fg = p.accent })
 h('Keyword', { fg = p.accent })
 h('Label', { fg = p.hint })
@@ -201,6 +202,7 @@ h('GitSignsDelete', { link = 'SignDelete' })
 
 -- indent-blankline.nvim
 h('IndentBlanklineChar', { fg = p.b_high })
+h('IndentBlanklineContextChar', { fg = p.f_low })
 
 -- barbar.nvim
 h('BufferTabPageFill', { bg = p.b_low })
@@ -216,6 +218,19 @@ h('BufferVisible', { link = 'BufferInactive' })
 h('BufferVisibleIndex', { link = 'BufferInactiveIndex' })
 h('BufferVisibleMod', { link = 'BufferInactiveMod' })
 h('BufferVisibleSign', { link = 'BufferInactiveSign' })
+
+h('MiniTablineCurrent', { fg = p.f_high, bg = p.b_high })
+h('MiniTablineVisible', { link = 'MiniTablineCurrent' })
+h('MiniTablineHidden', { fg = p.f_low, bg = p.b_low })
+h('MiniTablineModifiedCurrent', { fg = p.f_high, bg = p.b_high, italic = true })
+h('MiniTablineModifiedVisible', { link = 'MiniTablineModifiedCurrent' })
+h('MiniTablineModifiedHidden', { fg = p.f_low, bg = p.b_low, italic = true })
+
+-- * `MiniTablineModifiedCurrent` - buffer is modified and current.
+-- * `MiniTablineModifiedVisible` - buffer is modified and visible.
+-- * `MiniTablineModifiedHidden` - buffer is modified and hidden.
+-- * `MiniTablineFill` - unused right space of tabline.
+-- * `MiniTablineTabpagesection` - section with tabpage information.
 
 -- nvim-tree.lua
 h('NvimTreeSpecialFile', { link = 'Normal' })
@@ -260,4 +275,8 @@ h('CmpItemKindSnippet', { fg = p.hint })
 h('UfoFoldedBg', { bg = p.b_med })
 h('UfoFoldedLine', { link = 'CursorLine' })
 
+-- bufferline.nvim
+h('BufferLineFill', { bg = p.none })
 
+-- leap.nvim
+h('LeapLabelPrimary', { fg = p.on_accent, bg = p.f_high })
