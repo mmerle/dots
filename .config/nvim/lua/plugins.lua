@@ -14,30 +14,26 @@ vim.opt.runtimepath:prepend(lazypath)
 
 local not_vscode = not vim.g.vscode
 
--- plugin configs
 local plugins = {
+  --------------------------------------------------------------------------------------------------
   -- interface
+  --------------------------------------------------------------------------------------------------
+
+  -- comment (https://github.com/numToStr/Comment.nvim)
   {
     'numToStr/Comment.nvim',
     enabled = not_vscode,
-    event = 'BufReadPre',
+    event = 'VeryLazy',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
-      require('nvim-treesitter.configs').setup({
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
-      })
-
       require('Comment').setup({
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       })
     end,
   },
+  -- nvim-surround (https://github.com/kylechui/nvim-surround)
   {
     'kylechui/nvim-surround',
     event = 'VeryLazy',
@@ -58,6 +54,12 @@ local plugins = {
       })
     end,
   },
+  -- vim-repeat (https://github.com/tpope/vim-repeat)
+  {
+    'tpope/vim-repeat',
+    event = 'VeryLazy',
+  },
+  -- nvim-autopairs (https://github.com/windwp/nvim-autopairs)
   {
     'windwp/nvim-autopairs',
     enabled = not_vscode,
@@ -66,6 +68,7 @@ local plugins = {
       require('nvim-autopairs').setup()
     end,
   },
+  -- nvim-treesitter (https://github.com/nvim-treesitter/nvim-treesitter)
   {
     'nvim-treesitter/nvim-treesitter',
     enabled = not_vscode,
@@ -78,6 +81,10 @@ local plugins = {
     },
     config = function()
       require('nvim-treesitter.configs').setup({
+        context_commentstring = {
+          enable = true,
+          enable_autocmd = false,
+        },
         ensure_installed = 'all',
         ignore_install = { 'phpdoc' },
         highlight = { enable = true },
@@ -107,16 +114,6 @@ local plugins = {
         '<leader>/',
         ':Telescope live_grep<cr>',
         desc = 'Find text',
-      },
-      {
-        '<leader>d',
-        ':Telescope diagnostics<cr>',
-        desc = 'Diagnostics',
-      },
-      {
-        '<leader>b',
-        ':Telescope buffers<cr>',
-        desc = 'Find buffers',
       },
       {
         '<leader>fr',
@@ -168,6 +165,11 @@ local plugins = {
         ':Telescope vim_options<cr>',
         desc = 'Options',
       },
+      {
+        '<leader>ft',
+        ':Telescope builtin<cr>',
+        desc = 'Options',
+      },
     },
     config = function()
       local actions = require('telescope.actions')
@@ -182,7 +184,8 @@ local plugins = {
             prompt_position = 'top',
             horizontal = { preview_width = 0.6, height = 0.6 },
           },
-          find_command = { 'fd', '-t', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
+          -- find_command = { 'fd', '-t', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
+          find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
           mappings = {
             i = {
               ['<C-j>'] = actions.move_selection_next,
@@ -198,7 +201,13 @@ local plugins = {
             disable_devicons = true,
             hidden = true,
           },
-          buffers = { theme = 'dropdown', previewer = false, disable_devicons = true },
+          buffers = {
+            theme = 'dropdown',
+            previewer = false,
+            disable_devicons = true,
+            ignore_current_buffer = true,
+            sort_lastused = true,
+          },
         },
       })
     end,
@@ -323,8 +332,9 @@ local plugins = {
           margin = { 0, 0, 0, 0 },
         },
         plugins = {
-          spelling = { enabled = true },
+          spelling = true,
         },
+        show_help = false,
       })
     end,
   },
@@ -337,7 +347,10 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------------------------------------
   -- lsp
+  --------------------------------------------------------------------------------------------------
+
   {
     'neovim/nvim-lspconfig',
     enabled = not_vscode,
@@ -404,7 +417,10 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------------------------------------
   -- completions
+  --------------------------------------------------------------------------------------------------
+
   {
     'hrsh7th/nvim-cmp',
     enabled = not_vscode,
@@ -420,6 +436,7 @@ local plugins = {
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')
+
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -468,7 +485,10 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------------------------------------
   -- formatters
+  --------------------------------------------------------------------------------------------------
+
   {
     'jose-elias-alvarez/null-ls.nvim',
     enabled = not_vscode,
@@ -517,7 +537,10 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------------------------------------
   -- other
+  --------------------------------------------------------------------------------------------------
+
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
@@ -592,6 +615,7 @@ local plugins = {
   },
   {
     'petertriho/nvim-scrollbar',
+    enabled = not_vscode,
     event = 'BufReadPre',
     config = function()
       require('scrollbar').setup({
@@ -609,4 +633,32 @@ local plugins = {
   },
 }
 
-require('lazy').setup(plugins, { change_detection = { notify = false } })
+require('lazy').setup(plugins, {
+  defaults = { lazy = true },
+  change_detection = { notify = false },
+  ui = {
+    icons = {
+      cmd = '⚡︎ ',
+      config = '⚡︎',
+      event = '⚡︎',
+      ft = '⚡︎ ',
+      init = '! ',
+      import = '! ',
+      keys = '! ',
+      lazy = '! ',
+      loaded = '●',
+      not_loaded = '○',
+      plugin = '! ',
+      runtime = '! ',
+      source = '! ',
+      start = '!',
+      task = '✔ ',
+      list = {
+        '●',
+        '➜',
+        '★',
+        '‒',
+      },
+    },
+  },
+})
