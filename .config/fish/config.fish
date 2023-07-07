@@ -49,24 +49,12 @@ alias code='code-insiders'
 alias connect='kitty +kitten ssh'
 alias tmr='transmission-remote'
 
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit -m'
-alias gca='git commit -am'
-alias go='git checkout'
-alias gu='git push'
-alias gp='git pull'
-alias gb='git branch'
-alias gm='git merge'
-alias gl='git log -n 10 --graph --decorate --oneline --no-merges'
-
 alias ,fish='$EDITOR ~/.config/fish/config.fish'
 alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
 alias ,nvim='$EDITOR ~/.config/nvim/init.lua'
 
 # abbreviations
-abbr -a v nvim
-abbr -a lg lazygit
-abbr -a y yarn
-abbr -a p pnpm
+abbr g git
+abbr v nvim
+abbr lg lazygit
+abbr p pnpm
