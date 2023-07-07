@@ -99,6 +99,7 @@ local plugins = {
       })
     end,
   },
+  -- nvim-telescope (https://github.com/nvim-telescope/telescope.nvim)
   {
     'nvim-telescope/telescope.nvim',
     enabled = not_vscode,
@@ -212,6 +213,7 @@ local plugins = {
       })
     end,
   },
+  -- gitsigns.nvim (https://github.com/lewis6991/gitsigns.nvim)
   {
     'lewis6991/gitsigns.nvim',
     enabled = not_vscode,
@@ -234,6 +236,7 @@ local plugins = {
       require('scrollbar.handlers.gitsigns').setup()
     end,
   },
+  -- indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
   {
     'lukas-reineke/indent-blankline.nvim',
     enabled = not_vscode,
@@ -246,6 +249,7 @@ local plugins = {
       })
     end,
   },
+  -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
   {
     'nvim-tree/nvim-tree.lua',
     enabled = not_vscode,
@@ -297,54 +301,84 @@ local plugins = {
       })
     end,
   },
+  -- barbar.nvim (https://github.com/romgrk/barbar.nvim)
   {
-    'echasnovski/mini.tabline',
+    'romgrk/barbar.nvim',
     enabled = not_vscode,
-    version = false,
     event = 'VeryLazy',
-    config = function()
-      require('mini.tabline').setup({
-        show_icons = false,
-      })
-    end,
+    opts = {
+      animation = false,
+      auto_hide = true,
+      icons = {
+        filetype = { enabled = false },
+        button = '×',
+        modified = { button = '*' },
+        separator = { left = '', right = '' },
+        separator_at_end = false,
+        maximum_length = 10,
+        inactive = {
+          separator = { left = '', right = '' },
+        },
+      },
+      sidebar_filetypes = { NvimTree = true },
+    },
   },
+  -- nvim-colorizer (https://github.com/norcalli/nvim-colorizer.lua)
   {
     'norcalli/nvim-colorizer.lua',
     enabled = not_vscode,
     event = 'BufReadPre',
-    config = function()
-      require('colorizer').setup({
-        '*',
-        css = {
-          hsl_fn = true,
-          names = false,
-        },
-      })
-    end,
+    opts = {
+      '*',
+      css = {
+        hsl_fn = true,
+        names = false,
+      },
+    },
   },
+  -- which-key (https://github.com/folke/which-key.nvim)
   {
     'folke/which-key.nvim',
     enabled = not_vscode,
     event = 'VeryLazy',
-    config = function()
-      require('which-key').setup({
-        window = {
-          margin = { 0, 0, 0, 0 },
-        },
-        plugins = {
-          spelling = true,
-        },
-        show_help = false,
-      })
-    end,
+    opts = {
+      window = {
+        margin = { 0, 0, 0, 0 },
+      },
+      plugins = {
+        spelling = { enabled = true },
+      },
+      show_help = false,
+    },
   },
+  -- toggleterm (https://github.com/akinsho/toggleterm.nvim)
   {
     'akinsho/toggleterm.nvim',
     enabled = not_vscode,
-    version = '*',
-    config = function()
-      require('toggleterm').setup()
-    end,
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>gh',
+        function()
+          local Terminal = require('toggleterm.terminal').Terminal
+          local lazygit = Terminal:new({
+            cmd = 'lazygit',
+            hidden = true,
+            direction = 'float',
+            float_opts = {
+              border = 'none',
+            },
+            on_open = function(_)
+              vim.cmd('startinsert!')
+            end,
+            on_close = function(_) end,
+            count = 99,
+          })
+          lazygit:toggle()
+        end,
+        desc = 'LazyGit',
+      },
+    },
   },
 
   --------------------------------------------------------------------------------------------------
@@ -541,6 +575,7 @@ local plugins = {
   -- other
   --------------------------------------------------------------------------------------------------
 
+  -- flash.nvim (https://github.com/folke/flash.nvim)
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
@@ -592,6 +627,7 @@ local plugins = {
       },
     },
   },
+  -- zen-mode.nvim (https://github.com/folke/zen-mode.nvim)
   {
     'folke/zen-mode.nvim',
     enabled = not_vscode,
@@ -608,28 +644,35 @@ local plugins = {
         },
       },
       plugins = {
-        gitsigns = true,
+        gitsigns = { enabled = true },
         kitty = { enabled = false, font = '+2' },
       },
+      on_open = function()
+        vim.cmd('ScrollbarHide')
+        vim.cmd('IndentBlanklineDisable')
+      end,
+      on_close = function()
+        vim.cmd('ScrollbarShow')
+        vim.cmd('IndentBlanklineEnable')
+      end,
     },
   },
+  -- nvim-scrollbar (https://github.com/petertriho/nvim-scrollbar)
   {
     'petertriho/nvim-scrollbar',
     enabled = not_vscode,
     event = 'BufReadPre',
-    config = function()
-      require('scrollbar').setup({
-        set_highlights = false,
-        marks = {
-          Cursor = {
-            text = '',
-          },
+    opts = {
+      set_highlights = false,
+      marks = {
+        Cursor = {
+          text = '',
         },
-        handlers = {
-          cursor = false,
-        },
-      })
-    end,
+      },
+      handlers = {
+        cursor = false,
+      },
+    },
   },
 }
 
@@ -638,27 +681,18 @@ require('lazy').setup(plugins, {
   change_detection = { notify = false },
   ui = {
     icons = {
-      cmd = '⚡︎ ',
-      config = '⚡︎',
-      event = '⚡︎',
-      ft = '⚡︎ ',
-      init = '! ',
-      import = '! ',
-      keys = '! ',
-      lazy = '! ',
-      loaded = '●',
-      not_loaded = '○',
-      plugin = '! ',
-      runtime = '! ',
-      source = '! ',
-      start = '!',
-      task = '✔ ',
-      list = {
-        '●',
-        '➜',
-        '★',
-        '‒',
-      },
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
     },
   },
 })
