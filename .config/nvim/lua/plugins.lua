@@ -118,6 +118,56 @@ local plugins = {
         ':Telescope buffers<cr>',
         desc = 'Find buffers',
       },
+      {
+        '<leader>fr',
+        ':Telescope oldfiles<cr>',
+        desc = 'Find recent files',
+      },
+      {
+        '<leader>fb',
+        ':Telescope current_buffer_fuzzy_find<cr>',
+        desc = 'Buffer',
+      },
+      {
+        '<leader>fc',
+        ':Telescope command_history<cr>',
+        desc = 'Command History',
+      },
+      {
+        '<leader>fC',
+        ':Telescope commands<cr>',
+        desc = 'Commands',
+      },
+      {
+        '<leader>fd',
+        ':Telescope diagnostics<cr>',
+        desc = 'Diagnostics',
+      },
+      {
+        '<leader>fh',
+        ':Telescope help_tags<cr>',
+        desc = 'Help Pages',
+      },
+      {
+        '<leader>fH',
+        ':Telescope highlights<cr>',
+        desc = 'Highlight Groups',
+      },
+      {
+        '<leader>fk',
+        ':Telescope keymaps<cr>',
+        desc = 'Key Maps',
+      },
+      {
+        '<leader>fM',
+        ':Telescope man_pages<cr>',
+        desc = 'Man Pages',
+      },
+      {
+        '<leader>fo',
+        ':Telescope vim_options<cr>',
+        desc = 'Options',
+      },
     },
     config = function()
       local actions = require('telescope.actions')
@@ -172,6 +222,7 @@ local plugins = {
     },
     config = function()
       require('gitsigns').setup()
+      require('scrollbar.handlers.gitsigns').setup()
     end,
   },
   {
@@ -540,12 +591,21 @@ local plugins = {
     },
   },
   {
-    'm4xshen/hardtime.nvim',
-    event = 'VeryLazy',
-    opts = {
-      max_count = 5,
-      disable_mouse = false,
-    },
+    'petertriho/nvim-scrollbar',
+    event = 'BufReadPre',
+    config = function()
+      require('scrollbar').setup({
+        set_highlights = false,
+        marks = {
+          Cursor = {
+            text = '',
+          },
+        },
+        handlers = {
+          cursor = false,
+        },
+      })
+    end,
   },
 }
 
