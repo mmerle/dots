@@ -1,46 +1,55 @@
 local indent = 2
 local scrolloff = 3
 
-vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
-vim.opt.cursorline = true         -- highlight current line
-vim.opt.updatetime = 250          -- faster update time
-vim.opt.shiftwidth = indent
-vim.opt.tabstop = indent
-vim.opt.scrolloff = scrolloff
-vim.opt.sidescrolloff = scrolloff
-vim.opt.termguicolors = true  -- support for true colour
-vim.opt.number = true         -- show line numbers
-vim.opt.relativenumber = true -- line numbers relative to cursor
-vim.opt.signcolumn = 'yes'    -- always show signcolumn
-vim.opt.mouse = 'a'           -- enable mouse
-vim.opt.undofile = true       -- unable undo
-vim.opt.shortmess:append('c') -- shorter messages
-vim.opt.splitbelow = true     -- split new window below of current
-vim.opt.splitright = true     -- split new window right of current
-vim.opt.expandtab = true
+vim.opt.autoindent = true -- good auto indent
 vim.opt.breakindent = true
-vim.opt.cindent = true
-vim.opt.laststatus = 3
-vim.opt.ignorecase = true
-vim.opt.smartcase = true               -- only case sensitive when alternate case is used
-vim.opt.wildmode = 'longest:full,full' -- commandline completion settings
-vim.opt.pumheight = 6                  -- commandline completion height
-vim.opt.completeopt = 'menu,menuone,noinsert'
--- vim.opt.title = true
--- vim.opt.titlestring = '%t — nvim'
-vim.opt.list = true
-vim.opt.listchars = { tab = '  ', trail = '·' }
--- vim.opt.cmdheight = 0
-
--- settings for ufo compatibility
+vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
+vim.opt.cursorline = true -- highlight current line
+vim.opt.expandtab = true -- expand tabs into spaces
 vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
+vim.opt.hidden = true -- handle multiple buffers better
+vim.opt.ignorecase = true
+vim.opt.laststatus = 3 -- global statusline
+vim.opt.list = true
+vim.opt.listchars = { tab = '  ', trail = '·' }
+vim.opt.mouse = 'a' -- enable mouse
+vim.opt.number = true -- show line numbers
+vim.opt.pumheight = 6 -- commandline completion height
+vim.opt.relativenumber = true -- line numbers relative to cursor
+vim.opt.scrolloff = scrolloff -- always show at least x lines above/below cursor
+vim.opt.sidescrolloff = scrolloff -- always show at least x lines left/right cursor
+vim.opt.shiftround = true -- round indent
+vim.opt.shiftwidth = indent -- size of indent
+vim.opt.showmode = false -- Hide redundant mode
+vim.opt.shortmess = 'Iac'
+vim.opt.signcolumn = 'yes' -- always show signcolumn
+vim.opt.smartcase = true -- only case sensitive when alternate case is used
+vim.opt.smartindent = true
+vim.opt.splitbelow = true -- split new window below current
+vim.opt.splitright = true -- split new window right of current
+vim.opt.swapfile = false -- disable swapfiles
+vim.opt.tabstop = indent -- size of tab
+vim.opt.termguicolors = true -- support for true colour
+vim.opt.timeoutlen = 300
+vim.opt.undofile = true -- unable undo
+vim.opt.updatetime = 250 -- faster update time
+vim.opt.visualbell = true -- disable beeping
+vim.opt.wildmode = 'longest:full,full' -- commandline completion settings
+vim.opt.completeopt = 'menu,menuone,noinsert'
+
+-- settings for ufo compatibility
+
+-- When using fish, set shell to bash
+if vim.env.SHELL:match('fish$') then
+  vim.opt.shell = '/bin/bash'
+end
 
 if not vim.g.vscode then
   -- apply local colorscheme
-  vim.cmd.colorscheme('flora')
+  vim.cmd.colorscheme('yolk')
 
   -- stop 'o' continuing comments
   vim.api.nvim_create_autocmd('BufEnter', {
@@ -50,7 +59,7 @@ if not vim.g.vscode then
   -- highlight copied text
   vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
-      vim.highlight.on_yank()
+      vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
     end,
   })
 
@@ -97,4 +106,23 @@ if not vim.g.vscode then
   })
 
   vim.opt.statusline = ' %{get(b:, "branch_name", "")} %f %m %= %{get(b:, "errors", "")} %y %l:%c '
+
+  -- Switch between relative and absolute line numbers based on mode
+  local number_toggle = vim.api.nvim_create_augroup('number_toggle', { clear = true })
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
+    callback = function()
+      if vim.opt.number:get() == true then
+        vim.opt.relativenumber = true
+      end
+    end,
+    group = number_toggle,
+  })
+  vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+    callback = function()
+      if vim.opt.number:get() == true then
+        vim.opt.relativenumber = false
+      end
+    end,
+    group = number_toggle,
+  })
 end
