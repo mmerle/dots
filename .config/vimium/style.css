@@ -1,10 +1,10 @@
 :root {
-  --vim-font-mono: 'MD IO 0.6', monospace;
+  --vim-font-mono: 'MD IO', monospace;
   --vim-font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
-  --vim-white: hsl(0 0% 100%);
-  --vim-black: hsl(0 0% 0%);
+  --vim-white: #fff;
+  --vim-black: #000;
   --vim-fg: var(--vim-white);
   --vim-fgAlpha: 0 0% 100%;
   --vim-bg: hsl(0 0% 7% / 0.8);
@@ -17,7 +17,7 @@
   --vim-text-sm: 12px;
   --vim-text: 14px;
   --vim-text-lg: 16px;
-  --vim-leading: 1.6;
+  --vim-leading: 1.5;
 
   --vim-border: 1px solid hsl(var(--vim-fgAlpha) / 0.15);
   --vim-outline: 0.5px solid var(--vim-black);
@@ -52,16 +52,26 @@
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker span {
-  color: var(--vim-fg);
+  color: inherit;
   font-family: var(--vim-font-mono);
-  font-size: var(--vim-text-xs);
-  font-weight: 400;
+  font-size: var(--vim-text-sm);
+  font-weight: inherit;
   text-shadow: none;
   text-transform: lowercase;
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker .matchingCharacter {
-  color: var(--vim-accent);
+  color: gray;
+  font-weight: 400;
+}
+
+#vimiumHintMarkerContainer div.vimiumHintMarker {
+  color: var(--vim-fg);
+}
+
+#vimiumHintMarkerContainer div.vimiumHintMarker:has(.matchingCharacter) {
+  color: yellow;
+  font-weight: 800;
 }
 
 /* hud */
