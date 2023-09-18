@@ -74,6 +74,7 @@ local plugins = {
       'windwp/nvim-ts-autotag',
       'kevinhwang91/nvim-ufo',
       'kevinhwang91/promise-async',
+      'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
       require('nvim-treesitter.configs').setup({
@@ -86,6 +87,16 @@ local plugins = {
         highlight = { enable = true },
         indent = { enable = true },
         autotag = { enable = true },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+            },
+          },
+        },
       })
 
       require('ufo').setup({
