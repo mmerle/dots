@@ -37,22 +37,20 @@ local plugins = {
   {
     'kylechui/nvim-surround',
     event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup({
-        keymaps = {
-          insert = '<C-g>z',
-          insert_line = 'gC-ggZ',
-          normal = 'gz',
-          normal_cur = 'gZ',
-          normal_line = 'gzgz',
-          normal_cur_line = 'gZgZ',
-          visual = 'gz',
-          visual_line = 'gZ',
-          delete = 'gzd',
-          change = 'gzc',
-        },
-      })
-    end,
+    opts = {
+      keymaps = {
+        insert = '<C-g>z',
+        insert_line = '<C-g>gZ',
+        normal = 'gz',
+        normal_cur = 'gZ',
+        normal_line = 'gzgz',
+        normal_cur_line = 'gZgZ',
+        visual = 'gz',
+        visual_line = 'gZ',
+        delete = 'gzd',
+        change = 'gzc',
+      },
+    },
   },
   -- vim-repeat (https://github.com/tpope/vim-repeat)
   {
@@ -63,10 +61,8 @@ local plugins = {
   {
     'windwp/nvim-autopairs',
     enabled = not_vscode,
-    event = 'BufReadPre',
-    config = function()
-      require('nvim-autopairs').setup()
-    end,
+    event = 'InsertEnter',
+    opts = {},
   },
   -- nvim-treesitter (https://github.com/nvim-treesitter/nvim-treesitter)
   {
@@ -110,6 +106,11 @@ local plugins = {
         '<leader>p',
         ':Telescope find_files<cr>',
         desc = 'Find files',
+      },
+      {
+        '<leader>b',
+        ':Telescope buffers<cr>',
+        desc = 'Find Buffers',
       },
       {
         '<leader>/',
@@ -233,7 +234,7 @@ local plugins = {
     },
     config = function()
       require('gitsigns').setup()
-      require('scrollbar.handlers.gitsigns').setup()
+      -- require('scrollbar.handlers.gitsigns').setup()
     end,
   },
   -- indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
@@ -241,19 +242,17 @@ local plugins = {
     'lukas-reineke/indent-blankline.nvim',
     enabled = not_vscode,
     event = 'BufReadPre',
-    config = function()
-      require('indent_blankline').setup({
-        show_current_context = true,
-        show_end_of_line = true,
-        filetype_exclude = { 'terminal', 'packer', 'help', 'markdown' },
-      })
-    end,
+    opts = {
+      show_current_context = true,
+      show_end_of_line = true,
+      filetype_exclude = { 'terminal', 'help', 'markdown' },
+    },
   },
   -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
   {
     'nvim-tree/nvim-tree.lua',
     enabled = not_vscode,
-    lazy = false,
+    lazy = true,
     keys = {
       {
         '<leader>e',
@@ -261,54 +260,64 @@ local plugins = {
         desc = 'Toggle file tree',
       },
     },
-    config = function()
-      require('nvim-tree').setup({
-        on_attach = function(bufnr)
-          local api = require('nvim-tree.api')
-          api.config.mappings.default_on_attach(bufnr)
-          vim.keymap.set('n', 'd', api.fs.trash, { buffer = bufnr })
-        end,
-        actions = { open_file = { quit_on_open = true } },
-        filters = {
-          custom = { '^.git$', '.DS_Store', '^node_modules$' },
-        },
-        git = { ignore = false },
-        renderer = {
-          root_folder_label = false,
-          highlight_git = true,
-          icons = {
-            symlink_arrow = ' → ',
-            show = {
-              file = false,
-              folder = true,
-              folder_arrow = false,
-              git = false,
-            },
-            glyphs = {
-              folder = {
-                default = '●',
-                empty = '◌',
-                symlink = '●',
-                open = '○',
-                empty_open = '○',
-                symlink_open = '○',
-              },
+    opts = {
+      on_attach = function(bufnr)
+        local api = require('nvim-tree.api')
+        api.config.mappings.default_on_attach(bufnr)
+        vim.keymap.set('n', 'd', api.fs.trash, { buffer = bufnr })
+      end,
+      actions = { open_file = { quit_on_open = true } },
+      filters = {
+        custom = { '^.git$', '.DS_Store', '^node_modules$' },
+      },
+      git = { ignore = false },
+      renderer = {
+        root_folder_label = false,
+        highlight_git = true,
+        icons = {
+          symlink_arrow = ' → ',
+          show = {
+            file = false,
+            folder = true,
+            folder_arrow = false,
+            git = false,
+          },
+          glyphs = {
+            folder = {
+              default = '●',
+              empty = '◌',
+              symlink = '●',
+              open = '○',
+              empty_open = '○',
+              symlink_open = '○',
             },
           },
         },
-        trash = { cmd = 'trash' },
-        view = { side = 'right' },
-      })
-    end,
+      },
+      trash = { cmd = 'trash' },
+      view = { side = 'right' },
+    },
   },
   -- barbar.nvim (https://github.com/romgrk/barbar.nvim)
   {
     'romgrk/barbar.nvim',
     enabled = not_vscode,
     event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>w',
+        ':BufferDelete<cr>',
+        desc = 'Close current buffer',
+      },
+      {
+        '<leader>W',
+        ':BufferCloseAllButCurrent<cr>',
+        desc = 'Close all but current buffer',
+      },
+    },
     opts = {
       animation = false,
-      auto_hide = true,
+      auto_hide = 1,
       icons = {
         filetype = { enabled = false },
         button = '×',
@@ -377,6 +386,27 @@ local plugins = {
           lazygit:toggle()
         end,
         desc = 'LazyGit',
+      },
+      {
+        '<leader>md',
+        function()
+          local Terminal = require('toggleterm.terminal').Terminal
+          local glow = Terminal:new({
+            cmd = 'glow',
+            hidden = true,
+            direction = 'float',
+            float_opts = {
+              border = 'none',
+            },
+            on_open = function(_)
+              vim.cmd('startinsert!')
+            end,
+            on_close = function(_) end,
+            count = 99,
+          })
+          glow:toggle()
+        end,
+        desc = 'Glow',
       },
     },
   },
@@ -447,6 +477,21 @@ local plugins = {
             },
           })
         end,
+        ['emmet_ls'] = function()
+          require('lspconfig').emmet_ls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            filetypes = { 'html', 'javascript', 'javascriptreact', 'svelte' },
+            init_options = {
+              javascript = {
+                options = {
+                  jsx = { enabled = true },
+                  ['markup.attributes'] = { class = 'className' },
+                },
+              },
+            },
+          })
+        end,
       })
     end,
   },
@@ -502,7 +547,7 @@ local plugins = {
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer', keyword_length = 2 },
+          { name = 'buffer',  keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -658,22 +703,86 @@ local plugins = {
     },
   },
   -- nvim-scrollbar (https://github.com/petertriho/nvim-scrollbar)
+  -- {
+  --   'petertriho/nvim-scrollbar',
+  --   enabled = not_vscode,
+  --   event = 'BufReadPre',
+  --   opts = {
+  --     set_highlights = false,
+  --     marks = {
+  --       Cursor = {
+  --         text = '',
+  --       },
+  --       Error = {
+  --         text = { '●', '●' },
+  --       },
+  --       Warn = {
+  --         text = { '●', '●' },
+  --       },
+  --       Info = {
+  --         text = { '●', '●' },
+  --       },
+  --       Hint = {
+  --         text = { '●', '●' },
+  --       },
+  --       GitAdd = {
+  --         text = '│',
+  --       },
+  --       GitChange = {
+  --         text = '│',
+  --       },
+  --       GitDelete = {
+  --         text = '▁',
+  --       },
+  --     },
+  --     handlers = {
+  --       cursor = false,
+  --       gitsigns = true,
+  --     },
+  --   },
+  -- },
+  -- vim-illuminate (https://github.com/RRethy/vim-illuminate)
   {
-    'petertriho/nvim-scrollbar',
+    'RRethy/vim-illuminate',
     enabled = not_vscode,
-    event = 'BufReadPre',
+    event = 'VeryLazy',
     opts = {
-      set_highlights = false,
-      marks = {
-        Cursor = {
-          text = '',
-        },
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { 'lsp' },
       },
-      handlers = {
-        cursor = false,
+    },
+    config = function(_, opts)
+      require('illuminate').configure(opts)
+    end,
+  },
+  {
+    'echasnovski/mini.files',
+    event = 'VeryLazy',
+    keys = {
+
+      {
+        '<leader>mf',
+        mode = 'n',
+        'MiniFiles.open',
+        desc = 'Open Mini Files',
       },
     },
   },
+  -- mulitcursors.nvim (https://github.com/smoka7/multicursors.nvim)
+  -- {
+  --   'smoka7/multicursors.nvim',
+  --   event = 'VeryLazy',
+  --   opts = {},
+  --   keys = {
+  --     {
+  --       '<leader>m',
+  --       ':MCstart<cr>',
+  --       desc = 'Start multicursor for word',
+  --     },
+  --   },
+  -- },
 }
 
 require('lazy').setup(plugins, {
@@ -682,17 +791,17 @@ require('lazy').setup(plugins, {
   ui = {
     icons = {
       cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
+      config = '',
+      event = '→',
+      ft = '',
       init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
+      keys = '',
+      plugin = '◍',
+      runtime = '',
+      source = '',
+      start = '',
+      task = '',
+      lazy = '',
     },
   },
 })
