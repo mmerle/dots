@@ -9,7 +9,7 @@
   "editor.cursorSurroundingLines": 5,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.find.addExtraSpaceOnTop": false,
-  "editor.fontFamily": "'MD IO 0.6', SF Mono",
+  "editor.fontFamily": "'MD IO', SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
   "editor.formatOnPaste": true,
