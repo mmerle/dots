@@ -3,7 +3,7 @@ tap 'homebrew/cask-versions'
 
 brew 'bat'
 brew 'bitwarden-cli'
-brew 'exa'
+brew 'eza'
 brew 'fd'
 brew 'ffmpeg'
 brew 'fish'
