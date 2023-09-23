@@ -62,6 +62,7 @@
   "terminal.integrated.tabs.enabled": false,
   "update.mode": "start",
   "window.title": "${activeEditorShort} ${separator} ${activeFolderShort}",
+  "window.commandCenter": false,
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Flora",
   "workbench.editor.decorations.colors": false,
@@ -72,6 +73,7 @@
   "workbench.layoutControl.enabled": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
   // "workbench.settings.useSplitJSON": true,
+  "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "workbench.tree.indent": 18,
@@ -89,10 +91,15 @@
       "strings": true
     }
   },
-  "svelte.enable-ts-plugin": true,
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
+  "svelte.enable-ts-plugin": true,
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  },
+  "stylua.styluaPath": "/opt/homebrew/bin/stylua",
+  "stylua.searchParentDirectories": true,
 
   // plugin specific
   "color-highlight.markRuler": false,
