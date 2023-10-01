@@ -253,10 +253,11 @@ local plugins = {
     'lukas-reineke/indent-blankline.nvim',
     enabled = not_vscode,
     event = 'BufReadPre',
+    main = 'ibl',
     opts = {
-      show_current_context = true,
-      show_end_of_line = true,
-      filetype_exclude = { 'terminal', 'help', 'markdown' },
+      indent = { char = '▏' },
+      scope = { enabled = true },
+      exclude = { filetypes = { 'terminal', 'help', 'markdown' } },
     },
   },
   -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
@@ -558,7 +559,7 @@ local plugins = {
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'path' },
-          { name = 'buffer',  keyword_length = 2 },
+          { name = 'buffer', keyword_length = 2 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -638,6 +639,9 @@ local plugins = {
     opts = {
       prompt = {
         enabled = false,
+      },
+      modes = {
+        search = { enabled = false },
       },
     },
     keys = {
@@ -768,32 +772,22 @@ local plugins = {
       require('illuminate').configure(opts)
     end,
   },
+  -- mini.files (https://github.com/echasnovski/mini.files)
   {
     'echasnovski/mini.files',
     event = 'VeryLazy',
     keys = {
-
       {
         '<leader>mf',
         mode = 'n',
-        'MiniFiles.open',
+        '<cmd>lua MiniFiles.open()<cr>',
         desc = 'Open Mini Files',
       },
     },
+    opts = {
+      content = { prefix = function() end },
+    },
   },
-  -- mulitcursors.nvim (https://github.com/smoka7/multicursors.nvim)
-  -- {
-  --   'smoka7/multicursors.nvim',
-  --   event = 'VeryLazy',
-  --   opts = {},
-  --   keys = {
-  --     {
-  --       '<leader>m',
-  --       ':MCstart<cr>',
-  --       desc = 'Start multicursor for word',
-  --     },
-  --   },
-  -- },
 }
 
 require('lazy').setup(plugins, {

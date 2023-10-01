@@ -201,8 +201,8 @@ h('GitSignsChange', { link = 'SignChange' })
 h('GitSignsDelete', { link = 'SignDelete' })
 
 -- indent-blankline.nvim
-h('IndentBlanklineChar', { fg = p.b_high })
-h('IndentBlanklineContextChar', { fg = p.f_low })
+h('IblIndent', { fg = p.b_high })
+h('IblScope', { fg = p.f_low })
 
 -- barbar.nvim
 h('BufferTabPageFill', { bg = p.b_low })
@@ -225,12 +225,6 @@ h('MiniTablineHidden', { fg = p.f_low, bg = p.b_low })
 h('MiniTablineModifiedCurrent', { fg = p.f_high, bg = p.b_high, italic = true })
 h('MiniTablineModifiedVisible', { link = 'MiniTablineModifiedCurrent' })
 h('MiniTablineModifiedHidden', { fg = p.f_low, bg = p.b_low, italic = true })
-
--- * `MiniTablineModifiedCurrent` - buffer is modified and current.
--- * `MiniTablineModifiedVisible` - buffer is modified and visible.
--- * `MiniTablineModifiedHidden` - buffer is modified and hidden.
--- * `MiniTablineFill` - unused right space of tabline.
--- * `MiniTablineTabpagesection` - section with tabpage information.
 
 -- nvim-tree.lua
 h('NvimTreeSpecialFile', { link = 'Normal' })
@@ -280,3 +274,8 @@ h('BufferLineFill', { bg = p.none })
 
 -- leap.nvim
 h('LeapLabelPrimary', { fg = p.on_accent, bg = p.f_high })
+
+-- vim-illuminate
+-- h('IlluminatedWordText', { bg = p.b_high, underline = false })
+-- h('IlluminatedWordRead', { bg = p.b_high, underline = false })
+-- h('IlluminatedWordWrite', { bg = p.b_high, underline = false })
