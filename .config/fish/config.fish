@@ -1,9 +1,11 @@
 set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx XDG_DATA_HOME $HOME/.local/share
+set -gx XDG_STATE_HOME $HOME/.local/state
 
 set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
+set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 set -gx EDITOR nvim
 
@@ -47,9 +49,10 @@ function fish_mode_prompt
 end
 
 # aliases
-alias ls='eza'
-alias la='eza -la'
-alias lt='eza -T --git-ignore'
+alias ls='eza --group-directories-first'
+alias la='eza --group-directories-first -a'
+alias ll='eza --group-directories-first -la'
+alias lt='eza --git-ignore -Ta'
 alias vim='nvim'
 alias rm='trash'
 alias reload='exec $SHELL -l'
@@ -66,3 +69,4 @@ abbr g git
 abbr v nvim
 abbr lg lazygit
 abbr p pnpm
+abbr mkdir 'mkdir -vp'
