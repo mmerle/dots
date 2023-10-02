@@ -8,7 +8,7 @@
   --vim-fg: var(--vim-white);
   --vim-fgAlpha: 0 0% 100%;
   --vim-bg: hsl(0 0% 7% / 0.8);
-  --vim-accent: hsl(220 80% 76%);
+  --vim-accent: #6f9aec;
   --vim-accentAlpha: hsl(220 80% 76% / 0.2);
   --vim-mono: hsl(0 0% 62.8%);
   --vim-monoAlpha: 0 0% 62.8%;
@@ -22,7 +22,7 @@
   --vim-border: 1px solid hsl(var(--vim-fgAlpha) / 0.15);
   --vim-outline: 0.5px solid var(--vim-black);
 
-  --vim-radius-sm: 4px;
+  --vim-radius-sm: 6px;
   --vim-radius: 8px;
   --vim-radius-lg: 10px;
 
@@ -48,7 +48,8 @@
   border: var(--vim-border);
   outline: var(--vim-outline);
   box-shadow: var(--vim-shadow);
-  padding: 4px;
+  box-shadow: inset 0 -1px 0 hsl(var(--vim-fgAlpha) / 0.15);
+  padding: 3px 5px;
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker span {
@@ -58,6 +59,7 @@
   font-weight: inherit;
   text-shadow: none;
   text-transform: lowercase;
+  line-height: 10px;
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker .matchingCharacter {
@@ -70,8 +72,8 @@
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker:has(.matchingCharacter) {
-  color: yellow;
-  font-weight: 800;
+  color: var(--vim-accent);
+  font-weight: 700;
 }
 
 /* hud */
