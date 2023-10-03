@@ -253,37 +253,76 @@ local plugins = {
   {
     'lewis6991/gitsigns.nvim',
     enabled = not_vscode,
-    dependencies = 'nvim-lua/plenary.nvim',
-    event = 'BufReadPre',
+    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       {
-        '<leader>gsp',
+        '<leader>ghp',
         ':Gitsigns preview_hunk<cr>',
         desc = 'Git preview hunk',
       },
       {
-        '<leader>gsr',
+        '<leader>ghr',
         ':Gitsigns reset_hunk<cr>',
         desc = 'Git reset hunk',
+        mode = { 'n', 'v' },
+      },
+      {
+        '<leader>ghs',
+        ':Gitsigns stage_hunk<cr>',
+        desc = 'Git stage hunk',
+        mode = { 'n', 'v' },
       },
     },
-    config = function()
-      require('gitsigns').setup()
-      -- require('scrollbar.handlers.gitsigns').setup()
-    end,
+    opts = {},
   },
   -- indent-blankline (https://github.com/lukas-reineke/indent-blankline.nvim)
   {
     'lukas-reineke/indent-blankline.nvim',
     enabled = not_vscode,
-    event = 'BufReadPre',
+    event = { 'BufReadPre', 'BufNewFile' },
     main = 'ibl',
     opts = {
-      indent = { char = '▏' },
-      scope = { enabled = true },
-      exclude = { filetypes = { 'terminal', 'help', 'markdown' } },
+      -- indent = { char = '▏' },
+      indent = { char = '│' },
+      scope = { enabled = false }, -- disable in favour of mini-indentscope
+      exclude = {
+        filetypes = {
+          'help',
+          'terminal',
+          'toggleterm',
+          'lazy',
+          'mason',
+          'markdown',
+        },
+      },
     },
   },
+  -- mini-indentscope (https://github.com/echasnovski/mini.indentscope)
+  {
+    'echasnovski/mini.indentscope',
+    -- version = false,
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {
+      symbol = '│',
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = {
+          'help',
+          'terminal',
+          'toggleterm',
+          'lazy',
+          'mason',
+          'markdown',
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
+  },
+
   -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
   {
     'nvim-tree/nvim-tree.lua',
@@ -403,7 +442,7 @@ local plugins = {
     event = 'VeryLazy',
     keys = {
       {
-        '<leader>gh',
+        '<leader>lg',
         function()
           local Terminal = require('toggleterm.terminal').Terminal
           local lazygit = Terminal:new({
@@ -454,7 +493,7 @@ local plugins = {
   {
     'neovim/nvim-lspconfig',
     enabled = not_vscode,
-    event = 'BufReadPre',
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -539,15 +578,14 @@ local plugins = {
   {
     'hrsh7th/nvim-cmp',
     enabled = not_vscode,
+    event = 'InsertEnter',
     dependencies = {
       'L3MON4D3/LuaSnip',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      'windwp/nvim-autopairs',
       'onsails/lspkind-nvim',
     },
-    event = 'InsertEnter',
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')
@@ -580,10 +618,10 @@ local plugins = {
           end,
         }),
         sources = {
-          { name = 'luasnip' },
           { name = 'nvim_lsp' },
-          { name = 'path' },
+          { name = 'luasnip' },
           { name = 'buffer', keyword_length = 2 },
+          { name = 'path' },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -716,7 +754,7 @@ local plugins = {
     'folke/zen-mode.nvim',
     enabled = not_vscode,
     cmd = 'ZenMode',
-    keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen mode' } },
+    keys = { { '<leader>z', ':ZenMode<cr>', desc = 'Zen mode' } },
     opts = {
       window = {
         backdrop = 1,
@@ -732,12 +770,14 @@ local plugins = {
         kitty = { enabled = false, font = '+2' },
       },
       on_open = function()
-        vim.cmd('ScrollbarHide')
-        vim.cmd('IndentBlanklineDisable')
+        -- vim.cmd('ScrollbarHide')
+        vim.cmd('IBLDisable')
+        vim.b.miniindentscope_disable = true
       end,
       on_close = function()
-        vim.cmd('ScrollbarShow')
-        vim.cmd('IndentBlanklineEnable')
+        -- vim.cmd('ScrollbarShow')
+        vim.cmd('IBLEnable')
+        vim.b.miniindentscope_disable = false
       end,
     },
   },
