@@ -110,8 +110,11 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim',
     enabled = not_vscode,
-    dependencies = 'nvim-lua/plenary.nvim',
     cmd = 'Telescope',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'debugloop/telescope-undo.nvim',
+    },
     keys = {
       {
         '<leader>p',
@@ -181,24 +184,44 @@ local plugins = {
       {
         '<leader>ft',
         ':Telescope builtin<cr>',
-        desc = 'Options',
+        desc = 'Builtin',
+      },
+
+      {
+        '<leader>U',
+        ':Telescope undo<cr>',
+        desc = 'Undo history',
       },
     },
-    config = function()
+    opts = function()
+      local telescope = require('telescope')
       local actions = require('telescope.actions')
-      require('telescope').setup({
+      telescope.load_extension('undo')
+
+      return {
         defaults = {
+          prompt_prefix = ' ',
           selection_caret = '  ',
+          results_title = false,
           column_indent = 0,
           sorting_strategy = 'ascending',
           layout_strategy = 'horizontal',
-          file_ignore_patterns = { '.git/', 'node_modules' },
           layout_config = {
             prompt_position = 'top',
             horizontal = { preview_width = 0.6, height = 0.6 },
           },
-          -- find_command = { 'fd', '-t', 'f', '-H', '-E', '.git', '--strip-cwd-prefix' },
-          find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
+          vimgrep_arguments = {
+            'rg',
+            '--column',
+            '-g',
+            '!.git',
+            '--hidden',
+            '--line-number',
+            '--no-heading',
+            '--smart-case',
+            '--with-filename',
+            '--trim',
+          },
           mappings = {
             i = {
               ['<C-j>'] = actions.move_selection_next,
@@ -213,6 +236,7 @@ local plugins = {
             previewer = false,
             disable_devicons = true,
             hidden = true,
+            find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
           },
           buffers = {
             theme = 'dropdown',
@@ -222,7 +246,7 @@ local plugins = {
             sort_lastused = true,
           },
         },
-      })
+      }
     end,
   },
   -- gitsigns.nvim (https://github.com/lewis6991/gitsigns.nvim)
