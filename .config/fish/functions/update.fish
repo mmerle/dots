@@ -10,9 +10,9 @@ function update
     and echo "[update] Global packages"
     and pnpm update -g
 
-    and echo "[update] Fish plugins"
-    and fisher update
+    # and echo "[update] Fish plugins"
+    # and fisher update
 
     and echo "[update] Mac App Store"
-    and fisher update
+    and mas upgrade
 end
