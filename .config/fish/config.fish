@@ -65,6 +65,10 @@ alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
 alias ,nvim='$EDITOR ~/.config/nvim/init.lua'
 
 # abbreviations
+abbr ta 'tmux attach'
+abbr tn 'tmux new -s (basename (pwd))'
+abbr ts 'tmux ls'
+
 abbr g git
 abbr v nvim
 abbr lg lazygit
