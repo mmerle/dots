@@ -994,6 +994,8 @@ local plugins = {
           opts = { noremap = false, expr = true, buffer = true },
         },
       },
+      disable_frontmatter = true,
+      open_app_foreground = true,
     },
   },
   -- minimap.vim (https://github.com/wfxr/minimap.vim)
@@ -1020,6 +1022,40 @@ local plugins = {
         },
       }
     end,
+  },
+  -- navigator.nvim (https://github.com/numToStr/Navigator.nvim)
+  {
+    'numToStr/Navigator.nvim',
+    enabled = not_vscode,
+    lazy = false,
+    keys = {
+      {
+        '<C-h>',
+        '<cmd>NavigatorLeft<cr>',
+        mode = { 'n', 't' },
+      },
+      {
+        '<C-l>',
+        '<cmd>NavigatorRight<cr>',
+        mode = { 'n', 't' },
+      },
+      {
+        '<C-k>',
+        '<cmd>NavigatorUp<cr>',
+        mode = { 'n', 't' },
+      },
+      {
+        '<C-j>',
+        '<cmd>NavigatorDown<cr>',
+        mode = { 'n', 't' },
+      },
+      {
+        '<C-\\>',
+        '<cmd>NavigatorPrevious<cr>',
+        mode = { 'n', 't' },
+      },
+    },
+    opts = {},
   },
 }
 
