@@ -74,3 +74,5 @@ abbr v nvim
 abbr lg lazygit
 abbr p pnpm
 abbr mkdir 'mkdir -vp'
+
+zoxide init fish | source

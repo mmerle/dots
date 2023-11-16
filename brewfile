@@ -25,6 +25,7 @@ brew 'schappim/ocr/ocr'
 brew 'tealdeer'
 brew 'tmux'
 brew 'vercel-cli'
+brew 'zoxide'
 
 cask 'bitwarden'
 cask 'blender'
