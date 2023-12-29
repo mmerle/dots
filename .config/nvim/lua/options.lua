@@ -1,6 +1,15 @@
 local indent = 2
 local scrolloff = 3
 
+vim.opt.fillchars = {
+  foldopen = '↓',
+  foldclose = '→',
+  fold = ' ',
+  foldsep = ' ',
+  diff = '/',
+  eob = ' ',
+}
+
 -- disable netrw for better nvim-tree support
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -146,114 +155,4 @@ if not vim.g.vscode then
       end
     end,
   })
-
-  M = {}
-  function M.watch_fn(fn)
-    return '%<%{luaeval("' .. fn .. '")}'
-  end
-
-  -- --- LSP loading status
-  -- function M.lsp_status()
-  --   local messages = vim.lsp.util.get_progress_messages()
-  --   local mode = vim.api.nvim_get_mode().mode
-  --
-  --   -- If neovim is not in normal mode, or if there are no messages.
-  --   if mode ~= 'n' or vim.tbl_isempty(messages) then
-  --     return ''
-  --   end
-  --
-  --   local percentage
-  --   local result = {}
-  --
-  --   for _, msg in pairs(messages) do
-  --     if msg.message then
-  --       table.insert(result, msg.title .. ': ' .. msg.message)
-  --     else
-  --       table.insert(result, msg.title)
-  --     end
-  --     if msg.percentage then
-  --       percentage = math.max(percentage or 0, msg.percentage)
-  --     end
-  --   end
-  --
-  --   if percentage then
-  --     return string.format('%03d: %s', percentage, table.concat(result, ', '))
-  --   else
-  --     return table.concat(result, ', ')
-  --   end
-  -- end
-  --
-  -- --- Get first diagnostic message for the current line.
-  -- function M.diagnostic_message()
-  --   local severities = { 'Error', 'Warning' }
-  --   local diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
-  --
-  --   if not next(diagnostics) then
-  --     return ''
-  --   end
-  --
-  --   if not severities[diagnostics[1].severity] then
-  --     return ' ' .. diagnostics[1].message .. ' '
-  --   else
-  --     return ' ' .. severities[diagnostics[1].severity] .. ': ' .. diagnostics[1].message .. ' '
-  --   end
-  -- end
-  --
-  -- --- Get number of errors for the current buffer.
-  -- function M.diagnostic_error_status()
-  --   local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-  --
-  --   if num_errors > 0 then
-  --     return '● ' .. num_errors
-  --   end
-  --   return ''
-  -- end
-  --
-  -- --- Get number of warnings for the current buffer.
-  -- function M.diagnostic_warn_status()
-  --   local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-  --
-  --   if num_warnings > 0 then
-  --     return '● ' .. num_warnings
-  --   end
-  --   return ''
-  -- end
-  --
-  -- --- Configure statusline sections.
-  -- function M.statusline()
-  --   local branch = vim.fn.system("git branch --show-current | tr -d '\n'")
-  --   local lsp_error_count = '%#DiagnosticError#' .. M.watch_fn('M.diagnostic_error_status()') .. '%*'
-  --   local lsp_warning_count = '%#DiagnosticWarn#' .. M.watch_fn('M.diagnostic_warn_status()') .. '%*'
-  --
-  --   local sections = {
-  --     '(' .. branch .. ')',
-  --     -- '%f %m',
-  --     '%f',
-  --     lsp_error_count,
-  --     lsp_warning_count,
-  --     M.watch_fn('M.lsp_status()'),
-  --     '%=',
-  --     '%P %l:%c',
-  --   }
-  --
-  --   --- Combine all sections with padding between each section.
-  --   --- TODO: Empty sections, e.g. when there are 0 errors, create an extra space.
-  --   return ' ' .. table.concat(sections, ' ') .. ' '
-  -- end
-  --
-  -- --- Configure winbar sections
-  -- function M.winbar()
-  --   local sections = {
-  --     '%=',
-  --     '%#PMenu#' .. M.watch_fn('M.diagnostic_message()') .. '%*',
-  --   }
-  --
-  --   --- Combine all sections with padding between each section
-  --   --- TODO: Empty sections, e.g. when there are 0 errors, create an extra space
-  --   return ' ' .. table.concat(sections, ' ') .. ' '
-  -- end
-  --
-  -- vim.diagnostic.config({ virtual_text = false })
-  -- vim.opt.statusline = M.statusline()
-  -- vim.opt.winbar = M.winbar()
 end

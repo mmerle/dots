@@ -15,10 +15,6 @@ vim.opt.runtimepath:prepend(lazypath)
 local not_vscode = not vim.g.vscode
 
 local plugins = {
-  --------------------------------------------------------------------------------------------------
-  -- interface
-  --------------------------------------------------------------------------------------------------
-
   -- flora
   {
     dir = '~/Developer/projects/p/flora/flora.nvim',
@@ -79,19 +75,14 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     enabled = not_vscode,
     build = ':TSUpdate',
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'windwp/nvim-ts-autotag',
-      'kevinhwang91/nvim-ufo',
       'kevinhwang91/promise-async',
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
       require('nvim-treesitter.configs').setup({
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
         ensure_installed = 'all',
         ignore_install = { 'phpdoc' },
         highlight = { enable = true },
@@ -107,12 +98,6 @@ local plugins = {
             },
           },
         },
-      })
-
-      require('ufo').setup({
-        provider_selector = function()
-          return { 'treesitter', 'indent' }
-        end,
       })
     end,
   },
@@ -474,6 +459,26 @@ local plugins = {
       view = { side = 'right' },
     },
   },
+  -- oil.nvim (https://github.com/stevearc/oil.nvim)
+  {
+    'stevearc/oil.nvim',
+    keys = {
+      { '<leader>of', ":lua require('oil').open_float()<CR>", desc = 'Oil' },
+    },
+    opts = {
+      keymaps = {
+        ['<C-v>'] = 'actions.select_vsplit',
+        ['<C-s>'] = 'actions.select_split',
+        ['<Esc>'] = 'actions.close',
+      },
+      view_options = {
+        show_hidden = true,
+      },
+      float = {
+        padding = 5,
+      },
+    },
+  },
   -- barbar.nvim (https://github.com/romgrk/barbar.nvim)
   {
     'romgrk/barbar.nvim',
@@ -566,46 +571,20 @@ local plugins = {
         end,
         desc = 'LazyGit',
       },
-      {
-        '<leader>md',
-        function()
-          local Terminal = require('toggleterm.terminal').Terminal
-          local glow = Terminal:new({
-            cmd = 'glow',
-            hidden = true,
-            direction = 'float',
-            float_opts = {
-              border = 'none',
-            },
-            on_open = function(_)
-              vim.cmd('startinsert!')
-            end,
-            on_close = function(_) end,
-            count = 99,
-          })
-          glow:toggle()
-        end,
-        desc = 'Glow',
-      },
     },
   },
-
-  --------------------------------------------------------------------------------------------------
   -- lsp
-  --------------------------------------------------------------------------------------------------
-
   {
     'neovim/nvim-lspconfig',
+    name = 'lsp',
     enabled = not_vscode,
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
     config = function()
       require('mason').setup()
-      require('mason-tool-installer').setup({})
       require('mason-lspconfig').setup({
         ensure_installed = {
           'astro',
@@ -616,6 +595,7 @@ local plugins = {
           'tailwindcss',
           'tsserver',
         },
+        automatic_installation = true,
       })
 
       local function on_attach(_, bufnr)
@@ -626,10 +606,9 @@ local plugins = {
           vim.keymap.set(mode, lhs, rhs, opts)
         end
 
-        -- map("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
+        -- map("n", "K", vim.lsp.buf.hover, { desc = "Documenation" })
         map('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Code actions' })
         map('n', '<leader>r', vim.lsp.buf.rename, { desc = 'Rename symbol' })
-        -- map("n", "K", vim.lsp.buf.hover, { desc = "Documenation" })
         map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto declaration' })
         map('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
         map('n', 'gt', vim.lsp.buf.type_definition, { desc = 'Goto type definition' })
@@ -641,15 +620,11 @@ local plugins = {
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.offsetEncoding = { 'utf-16' }
-
-      -- Improve compatibility with nvim-cmp completions
       local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
       if has_cmp_nvim_lsp then
         capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
       end
 
-      -- Setup servers installed via `:MasonInstall`
       require('mason-lspconfig').setup_handlers({
         function(server_name)
           require('lspconfig')[server_name].setup({
@@ -684,11 +659,19 @@ local plugins = {
       })
     end,
   },
-
-  --------------------------------------------------------------------------------------------------
+  -- luasnip
+  {
+    'L3MON4D3/LuaSnip',
+    lazy = false,
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'saadparwaiz1/cmp_luasnip',
+    },
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+    end,
+  },
   -- completions
-  --------------------------------------------------------------------------------------------------
-
   {
     'hrsh7th/nvim-cmp',
     enabled = not_vscode,
@@ -703,12 +686,14 @@ local plugins = {
     config = function()
       local cmp = require('cmp')
       local lspkind = require('lspkind')
-
       cmp.setup({
+        -- window = {
+        --   documentation = cmp.config.window.bordered(),
+        --   completion = cmp.config.window.bordered(),
+        -- },
         snippet = {
           expand = function(args)
             require('luasnip').lsp_expand(args.body)
-            require('luasnip.loaders.from_lua').load({ paths = '~/.config/nvim/snippets/' })
           end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -735,7 +720,7 @@ local plugins = {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'buffer', keyword_length = 2 },
+          { name = 'buffer',  keyword_length = 2 },
           { name = 'path' },
         },
         formatting = {
@@ -752,21 +737,15 @@ local plugins = {
       })
     end,
   },
-
-  --------------------------------------------------------------------------------------------------
-  -- formatters
-  --------------------------------------------------------------------------------------------------
-
+  -- none-ls
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     enabled = not_vscode,
     event = 'BufReadPre',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'jay-babu/mason-null-ls.nvim',
-    },
     config = function()
+      local null_ls = require('null-ls')
       local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+
       local function format_on_save(client, bufnr)
         if client.supports_method('textDocument/formatting') then
           vim.api.nvim_clear_autocmds({
@@ -783,32 +762,20 @@ local plugins = {
         end
       end
 
-      require('null-ls').setup({
+      null_ls.setup({
         sources = {
-          require('null-ls').builtins.formatting.prettierd.with({
+          null_ls.builtins.formatting.prettierd.with({
             extra_filetypes = { 'jsonc', 'astro', 'svelte' },
             env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/.prettierrc.json') },
           }),
-          require('null-ls').builtins.formatting.stylua,
-          require('null-ls').builtins.formatting.fish_indent,
-          require('null-ls').builtins.completion.spell,
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.fish_indent,
+          null_ls.builtins.completion.spell,
         },
         on_attach = format_on_save,
       })
-
-      require('mason-null-ls').setup({
-        automatic_setup = true,
-        handlers = {
-          function() end,
-        },
-      })
     end,
   },
-
-  --------------------------------------------------------------------------------------------------
-  -- other
-  --------------------------------------------------------------------------------------------------
-
   -- flash.nvim (https://github.com/folke/flash.nvim)
   {
     'folke/flash.nvim',
@@ -819,6 +786,7 @@ local plugins = {
       },
       modes = {
         search = { enabled = false },
+        char = { enabled = false },
       },
     },
     keys = {
@@ -894,65 +862,22 @@ local plugins = {
       end,
     },
   },
-  -- nvim-scrollbar (https://github.com/petertriho/nvim-scrollbar)
-  -- {
-  --   'petertriho/nvim-scrollbar',
-  --   enabled = not_vscode,
-  --   event = 'BufReadPre',
-  --   opts = {
-  --     set_highlights = false,
-  --     marks = {
-  --       Cursor = {
-  --         text = '',
-  --       },
-  --       Error = {
-  --         text = { '●', '●' },
-  --       },
-  --       Warn = {
-  --         text = { '●', '●' },
-  --       },
-  --       Info = {
-  --         text = { '●', '●' },
-  --       },
-  --       Hint = {
-  --         text = { '●', '●' },
-  --       },
-  --       GitAdd = {
-  --         text = '│',
-  --       },
-  --       GitChange = {
-  --         text = '│',
-  --       },
-  --       GitDelete = {
-  --         text = '▁',
-  --       },
-  --     },
-  --     handlers = {
-  --       cursor = false,
-  --       gitsigns = true,
-  --     },
-  --   },
-  -- },
   -- markdown preview
   {
     'toppair/peek.nvim',
     enables = not_vscode,
+    event = { 'VeryLazy' },
     build = 'deno task --quiet build:fast',
     keys = {
-      {
-        '<leader>op',
-        function()
-          local peek = require('peek')
-          if peek.is_open() then
-            peek.close()
-          else
-            peek.open()
-          end
-        end,
-        desc = 'Peek (Markdown Preview)',
-      },
+      { '<leader>op', ':PeekOpen<cr>', desc = 'Peek' },
     },
-    opts = { app = 'browser' },
+    config = function()
+      require('peek').setup({
+        app = 'browser',
+      })
+      vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+      vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+    end,
   },
   -- diffview.nvim (https://github.com/sindrets/diffview.nvim)
   {
@@ -960,7 +885,7 @@ local plugins = {
     enabled = not_vscode,
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
     keys = {
-      { '<leader>dvo', ':DiffviewOpen<cr>', desc = 'DiffView open' },
+      { '<leader>dvo', ':DiffviewOpen<cr>',  desc = 'DiffView open' },
       { '<leader>dvc', ':DiffviewClose<cr>', desc = 'Diffview close' },
     },
     config = true,
@@ -998,31 +923,6 @@ local plugins = {
       open_app_foreground = true,
     },
   },
-  -- minimap.vim (https://github.com/wfxr/minimap.vim)
-  {
-    'echasnovski/mini.map',
-    enabled = not_vscode,
-    event = 'VeryLazy',
-    keys = {
-      { '<leader>mm', ':lua MiniMap.toggle()<cr>', desc = 'Mini map' },
-    },
-    opts = function()
-      local minimap = require('mini.map')
-      return {
-        symbols = {
-          encode = require('mini.map').gen_encode_symbols.dot('4x2'),
-        },
-        integrations = {
-          minimap.gen_integration.diagnostic(),
-          minimap.gen_integration.builtin_search(),
-          minimap.gen_integration.gitsigns(),
-        },
-        window = {
-          show_integration_count = false,
-        },
-      }
-    end,
-  },
   -- navigator.nvim (https://github.com/numToStr/Navigator.nvim)
   {
     'numToStr/Navigator.nvim',
@@ -1057,25 +957,20 @@ local plugins = {
     },
     opts = {},
   },
+  -- nvim-ufo (https://github.com/kevinhwang91/nvim-ufo)
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+    event = 'BufReadPost',
+    opts = {},
+    init = function()
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = 'Open all folds' })
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close all folds' })
+      vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor, { desc = 'Peek fold' })
+    end,
+  },
 }
 
 require('lazy').setup(plugins, {
   defaults = { lazy = true },
-  change_detection = { notify = false },
-  ui = {
-    icons = {
-      cmd = '⌘',
-      config = '',
-      event = '→',
-      ft = '',
-      init = '⚙',
-      keys = '',
-      plugin = '◍',
-      runtime = '',
-      source = '',
-      start = '',
-      task = '',
-      lazy = '',
-    },
-  },
 })
