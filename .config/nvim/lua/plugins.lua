@@ -109,6 +109,7 @@ local plugins = {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
+      'dimaportenko/telescope-simulators.nvim',
     },
     keys = {
       {
