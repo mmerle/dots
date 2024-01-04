@@ -8,14 +8,16 @@ vim.keymap.set({ 'n', 'v' }, 'k', 'gk', opts)
 
 vim.keymap.set('v', '<', '<gv', opts) -- unindent (keep selection)
 vim.keymap.set('v', '>', '>gv', opts) -- indent (keep selection)
+
 vim.keymap.set('n', 'H', '^', opts) -- jump to first character of line
 vim.keymap.set('n', 'L', 'g_', opts) -- jump to last character of line
-vim.keymap.set('n', '<leader>s', ':w<cr>', { desc = 'Write file' }, opts) -- quick save
-vim.keymap.set('n', '<leader>S', ':wall<cr>', { desc = 'Write all files' }, opts) -- quick save all buffers
-vim.keymap.set('n', '<leader>q', ':q<cr>', { desc = 'Quit instance' }, opts) -- quick quit
+
+vim.keymap.set('n', '<leader>s', '<cmd>w<cr>', { desc = 'Write file' }, opts) -- quick save
+vim.keymap.set('n', '<leader>S', '<cmd>wall<cr>', { desc = 'Write all files' }, opts) -- quick save all buffers
+vim.keymap.set('n', '<leader>q', '<cmd>q<cr>', { desc = 'Quit instance' }, opts) -- quick quit
 
 -- search
-vim.keymap.set('n', '<esc>', ':noh<cr>', opts) -- clear search highlights
+vim.keymap.set('n', '<esc>', '<cmd>noh<cr>', opts) -- clear search highlights
 vim.keymap.set('n', '*', '*N', opts) -- search word under cursor (keep position)
 vim.keymap.set('v', '*', [[y/\V<c-r>=escape(@",'/\')<cr><cr>N]], opts) -- search selection (keep position)
 -- vim.keymap.set('n', 'S', ':%s/<c-r><c-w>//g<left><left>', { silent = false }) -- replace selection
@@ -40,7 +42,6 @@ vim.keymap.set('n', '<c-u>', '<c-u>zz', opts)
 -- goto
 vim.keymap.set('n', 'go', '<c-o>', { desc = 'Goto previous position' }, opts) -- goto previous position
 vim.keymap.set('n', 'gm', '%', { desc = 'Goto matching pair' }, opts) -- goto matching character: '()', '{}', '[]'
-vim.keymap.set('n', 'gp', ':bprev<cr>', { desc = 'Goto previous buffer' }, opts) -- goto previous buffer
-vim.keymap.set('n', 'gn', ':bnext<cr>', { desc = 'Goto next buffer' }, opts) -- goto next buffer
 
-vim.keymap.set('n', '<leader>i', ':Inspect<cr>', opts)
+-- inspect syntax highlighting
+vim.keymap.set('n', '<leader>i', '<cmd>Inspect<cr>', opts)
