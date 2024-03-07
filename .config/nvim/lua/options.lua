@@ -1,15 +1,6 @@
 local indent = 2
 local scrolloff = 3
 
-vim.opt.fillchars = { --test
-	foldopen = "↓",
-	foldclose = "→",
-	fold = " ",
-	foldsep = " ",
-	diff = "/",
-	eob = " ",
-}
-
 -- disable netrw for better nvim-tree support
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -40,7 +31,7 @@ vim.opt.sidescrolloff = scrolloff -- always show at least x lines left/right cur
 vim.opt.shiftround = true -- round indent
 vim.opt.shiftwidth = indent -- size of indent
 vim.opt.showmode = false -- Hide redundant mode
-vim.opt.shortmess:append("c") -- shorter messages
+vim.opt.shortmess:append("WcC") -- shorter messages
 vim.opt.signcolumn = "yes" -- always show signcolumn
 vim.opt.smartcase = true -- only case sensitive when alternate case is used
 vim.opt.smartindent = true
@@ -176,6 +167,17 @@ if not vim.g.vscode then
 				vim.api.nvim_cmd({ cmd = "wincmd", args = { "L" } }, {})
 				vim.keymap.set("n", "q", ":q<cr>", { buffer = 0 })
 			end
+		end,
+	})
+
+	vim.api.nvim_create_autocmd("FileType", {
+		group = vim.api.nvim_create_augroup("Prose", {}),
+		pattern = { "gitcommit", "markdown" },
+		callback = function()
+			vim.opt_local.spell = true
+			vim.opt_local.wrap = true
+			vim.opt_local.linebreak = true
+			vim.opt_local.conceallevel = 2
 		end,
 	})
 end

@@ -492,40 +492,6 @@ return {
 			},
 		},
 	},
-	-- navigator.nvim (https://github.com/numToStr/Navigator.nvim)
-	{
-		"numToStr/Navigator.nvim",
-		enabled = not_vscode,
-		lazy = false,
-		keys = {
-			{
-				"<C-h>",
-				"<cmd>NavigatorLeft<cr>",
-				mode = { "n", "t" },
-			},
-			{
-				"<C-l>",
-				"<cmd>NavigatorRight<cr>",
-				mode = { "n", "t" },
-			},
-			{
-				"<C-k>",
-				"<cmd>NavigatorUp<cr>",
-				mode = { "n", "t" },
-			},
-			{
-				"<C-j>",
-				"<cmd>NavigatorDown<cr>",
-				mode = { "n", "t" },
-			},
-			{
-				"<C-\\>",
-				"<cmd>NavigatorPrevious<cr>",
-				mode = { "n", "t" },
-			},
-		},
-		opts = {},
-	},
 	-- nvim-ufo (https://github.com/kevinhwang91/nvim-ufo)
 	{
 		"kevinhwang91/nvim-ufo",
@@ -546,7 +512,7 @@ return {
 		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen mode" } },
 		opts = {
 			window = {
-				backdrop = 1,
+				-- backdrop = 1,
 				width = 0.85,
 				height = 0.85,
 				options = {
@@ -566,20 +532,14 @@ return {
 			},
 			on_open = function()
 				vim.cmd("IBLDisable")
-				vim.cmd("TogglePencil")
+				-- vim.cmd("TogglePencil")
 				vim.b.miniindentscope_disable = true
 			end,
 			on_close = function()
 				vim.cmd("IBLEnable")
-				vim.cmd("TogglePencil")
+				-- vim.cmd("TogglePencil")
 				vim.b.miniindentscope_disable = false
 			end,
 		},
-	},
-	-- pencil
-	{
-		"preservim/vim-pencil",
-		enabled = not_vscode,
-		cmd = "Pencil",
 	},
 }

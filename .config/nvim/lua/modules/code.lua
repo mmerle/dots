@@ -33,7 +33,7 @@ return {
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
-					["<c-space>"] = cmp.mapping.complete({ select = true }),
+					["<C-Space>"] = cmp.mapping.complete(),
 					["<cr>"] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
 						select = true,

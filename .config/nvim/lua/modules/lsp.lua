@@ -34,8 +34,8 @@ return {
 				end
 
 				-- map("n", "K", vim.lsp.buf.hover, { desc = "Documentation" })
-				map("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Code actions" })
-				map("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
+				map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+				map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename symbol" })
 				map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto declaration" })
 				map("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition" })
 				map("n", "gt", vim.lsp.buf.type_definition, { desc = "Goto type definition" })
@@ -88,7 +88,7 @@ return {
 					require("lspconfig").emmet_ls.setup({
 						on_attach = on_attach,
 						capabilities = capabilities,
-						filetypes = { "html", "javascript", "javascriptreact", "svelte" },
+						filetypes = { "html", "javascript", "javascriptreact", "svelte", "astro" },
 						init_options = {
 							javascript = {
 								options = {

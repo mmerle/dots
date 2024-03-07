@@ -70,30 +70,6 @@ return {
 				end,
 				desc = "Flash Treesitter",
 			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Flash Treesitter Search",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
-			},
 		},
 	},
 	-- markdown preview
@@ -103,7 +79,7 @@ return {
 		event = { "VeryLazy" },
 		build = "deno task --quiet build:fast",
 		keys = {
-			{ "<leader>op", "<cmd>PeekOpen<cr>", desc = "Preview markdown" },
+			{ "<leader>mp", "<cmd>PeekOpen<cr>", desc = "Preview markdown" },
 		},
 		config = function()
 			require("peek").setup({
@@ -121,6 +97,11 @@ return {
 		event = {
 			"BufReadPre " .. vim.fn.expand("~") .. "/Documents/notes/**.md",
 			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/notes/**.md",
+		},
+		keys = {
+			{ "<leader>on", "<cmd>ObsidianNew<cr>", desc = "New Note" },
+			{ "<leader>op", "<cmd>ObsidianQuickSwitch<cr>", desc = "Quick Switch" },
+			{ "<leader>o/", "<cmd>ObsidianSearch<cr>", desc = "Search Notes" },
 		},
 		opts = {
 			dir = "~/Documents/notes",
