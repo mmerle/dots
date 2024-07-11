@@ -7,7 +7,7 @@
   p = push
   pl = pull
   s = status
-  unstage = reset HEAD --
+  unstage = reset --soft HEAD^
 [core]
 	editor = nvim
   excludesfile = ~/.config/git/ignore

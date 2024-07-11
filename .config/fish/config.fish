@@ -9,10 +9,12 @@ set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx GOPATH $XDG_DATA_HOME/go
 
 set -gx EDITOR nvim
+set -gx FZF_DEFAULT_OPTS "--color=16"
 
 # disable analytics of commonly used tools
 set HOMEBREW_NO_ANALYTICS 1
 set NEXT_TELEMETRY_DISABLED 1
+set -gx NODE_OPTIONS --no-deprecation
 
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
