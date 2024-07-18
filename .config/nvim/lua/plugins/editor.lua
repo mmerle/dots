@@ -449,12 +449,20 @@ return {
     opts = {
       defaults = {
         mode = { 'n', 'v' },
-        [']'] = { name = '+next' },
-        ['['] = { name = '+prev' },
-        ['<leader>f'] = { name = '+find' },
+        { '[',          group = 'prev' },
+        { ']',          group = 'next' },
+        { '<leader>f',  group = 'find' },
+        { '<leader>gh', group = 'git' },
       },
-      window = {
-        margin = { 0, 0, 0, 0 },
+      win = {
+        padding = { 1, 0 },
+      },
+      icons = {
+        breadcrumb = '»',
+        separator = '→',
+        group = '+',
+        ellipsis = '…',
+        mappings = false,
       },
       plugins = {
         spelling = { enabled = true },
@@ -464,7 +472,7 @@ return {
     config = function(_, opts)
       local wk = require('which-key')
       wk.setup(opts)
-      wk.register(opts.defaults)
+      wk.add(opts.defaults)
     end,
   },
   -- diffview.nvim (https://github.com/sindrets/diffview.nvim)

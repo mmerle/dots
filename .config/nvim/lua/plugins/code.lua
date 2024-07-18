@@ -95,22 +95,20 @@ return {
       })
     end,
   },
-  -- nvim-surround (https://github.com/kylechui/nvim-surround)
+  -- mini.surround (https://github.com/echasnovski/mini.surround)
   {
-    'kylechui/nvim-surround',
+    'echasnovski/mini.surround',
+    version = false,
     event = 'VeryLazy',
     opts = {
-      keymaps = {
-        insert = '<C-g>z',
-        insert_line = '<C-g>gZ',
-        normal = 'gz',
-        normal_cur = 'gZ',
-        normal_line = 'gzgz',
-        normal_cur_line = 'gZgZ',
-        visual = 'gz',
-        visual_line = 'gZ',
+      mappings = {
+        add = 'gza',
         delete = 'gzd',
-        change = 'gzc',
+        find = 'gzf',
+        find_left = 'gzF',
+        highlight = 'gzh',
+        replace = 'gzr',
+        update_n_lines = 'gzn',
       },
     },
   },
