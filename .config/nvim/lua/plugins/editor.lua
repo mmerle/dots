@@ -34,7 +34,7 @@ return {
         desc = 'Find undo history',
       },
       {
-        '<leader><Tab>',
+        '<leader>b',
         '<cmd>Telescope buffers<cr>',
         desc = 'Find buffers',
       },
@@ -163,7 +163,6 @@ return {
           },
         },
         extensions = {
-          fzf = {},
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -247,22 +246,48 @@ return {
       })
     end,
   },
-  -- indentmini.nvim (https://github.com/nvimdev/indentmini.nvim)
+  -- -- indentmini.nvim (https://github.com/nvimdev/indentmini.nvim)
+  -- {
+  --   'nvimdev/indentmini.nvim',
+  --   event = { 'BufReadPre', 'BufNewFile' },
+  --   opts = {
+  --     char = '│',
+  --     exclude = {
+  --       'help',
+  --       'toggleterm',
+  --       'lazy',
+  --       'mason',
+  --       'markdown',
+  --       'NvimTree',
+  --     },
+  --   },
+  -- },
+  -- mini.indentscope (https://github.com/echasnovski/mini.indentscope)
   {
-    'nvimdev/indentmini.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    opts = {
-      char = '│',
-      exclude = {
-        'help',
-        'terminal',
-        'toggleterm',
-        'lazy',
-        'mason',
-        'markdown',
-        'NvimTree',
-      },
-    },
+    'echasnovski/mini.indentscope',
+    version = false,
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      require('mini.indentscope').setup({
+        draw = { delay = 0, animation = require('mini.indentscope').gen_animation.none() },
+        options = { try_as_border = true },
+        symbol = '│',
+      })
+    end,
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = {
+          'help',
+          'lazy',
+          'man',
+          'mason',
+          'markdown',
+          'NvimTree',
+          'terminal',
+        },
+        callback = function() vim.b.miniindentscope_disable = true end,
+      })
+    end,
   },
   -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
   {
@@ -299,23 +324,13 @@ return {
           },
           glyphs = {
             folder = {
-              default = '→',
-              open = '↓',
-              empty = '─',
-              empty_open = '─',
-              symlink = '↔',
-              symlink_open = '↓',
+              default = '▶︎',
+              open = '▼',
+              empty = '▶︎',
+              empty_open = '▼',
+              symlink = '▶︎',
+              symlink_open = '▼',
             },
-          },
-        },
-        indent_markers = {
-          enable = true,
-          icons = {
-            corner = '│',
-            edge = '│',
-            item = '│',
-            bottom = '─',
-            none = ' ',
           },
         },
       },
@@ -370,9 +385,19 @@ return {
       },
       {
         'S',
-        mode = { 'n', 'o', 'x' },
+        mode = { 'n', 'x', 'o' },
         function() require('flash').treesitter() end,
         desc = 'Flash Treesitter',
+      },
+      {
+        '<leader>*',
+        mode = { 'n' },
+        function()
+          require('flash').jump({
+            pattern = vim.fn.expand('<cword>'),
+          })
+        end,
+        desc = 'Jump to word under cursor',
       },
     },
   },
@@ -388,11 +413,13 @@ return {
         render = function(props)
           local filepath = vim.api.nvim_buf_get_name(props.buf)
           local filename = vim.fn.fnamemodify(filepath, ':t')
-          if vim.bo[props.buf].modified then filename = '*' .. filename end
-          -- local ext = vim.fn.fnamemodify(filepath, ':e')
-          -- local relative = vim.fn.fnamemodify(filepath, ':~:.:h')
           local parent = vim.fn.fnamemodify(filepath, ':h:t')
-          return string.format('%s/%s', parent, filename)
+
+          if vim.bo[props.buf].modified then
+            return { { string.format('*%s/%s', parent, filename), hlgroup = 'InclineModified' } }
+          else
+            return { string.format('%s/%s', parent, filename) }
+          end
         end,
       })
     end,
@@ -415,9 +442,9 @@ return {
 
           for _, buf in ipairs(bufs) do
             if
-                vim.api.nvim_buf_is_valid(buf)
-                and vim.api.nvim_buf_get_option(buf, 'buflisted')
-                and buf ~= current_buf
+              vim.api.nvim_buf_is_valid(buf)
+              and vim.api.nvim_buf_get_option(buf, 'buflisted')
+              and buf ~= current_buf
             then
               require('mini.bufremove').delete(buf, false)
             end
@@ -449,9 +476,10 @@ return {
     opts = {
       defaults = {
         mode = { 'n', 'v' },
-        { '[',          group = 'prev' },
-        { ']',          group = 'next' },
-        { '<leader>f',  group = 'find' },
+        { '[', group = 'prev' },
+        { ']', group = 'next' },
+        { '<leader>c', group = 'code' },
+        { '<leader>f', group = 'find' },
         { '<leader>gh', group = 'git' },
       },
       win = {
@@ -480,7 +508,7 @@ return {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
     keys = {
-      { '<leader>dvo', '<cmd>DiffviewOpen<cr>',  desc = 'DiffView open' },
+      { '<leader>dvo', '<cmd>DiffviewOpen<cr>', desc = 'DiffView open' },
       { '<leader>dvc', '<cmd>DiffviewClose<cr>', desc = 'Diffview close' },
     },
     config = true,
@@ -494,6 +522,25 @@ return {
       },
     },
   },
+  -- -- mini.diff
+  -- {
+  --   'echasnovski/mini.diff',
+  --   version = false,
+  --   event = 'VeryLazy',
+  --   opts = {
+  --     keys = {
+  --       {
+  --         '<leader>go',
+  --         function() require('mini.diff').toggle_overlay(0) end,
+  --         desc = 'Toggle mini.diff overlay',
+  --       },
+  --     },
+  --     view = {
+  --       style = 'sign',
+  --       signs = { add = '+', change = '~', delete = '-' },
+  --     },
+  --   },
+  -- },
   -- nvim-ufo (https://github.com/kevinhwang91/nvim-ufo)
   {
     'kevinhwang91/nvim-ufo',
@@ -514,8 +561,8 @@ return {
     opts = {
       window = {
         backdrop = 1,
-        width = 0.85,
-        height = 0.85,
+        width = 0.8,
+        height = 0.8,
         options = {
           number = false,
           relativenumber = false,
@@ -523,7 +570,6 @@ return {
       },
       plugins = {
         gitsigns = { enabled = true },
-        kitty = { enabled = false, font = '+2' },
         tmux = { enabled = true },
         options = {
           enabled = true,
@@ -531,15 +577,17 @@ return {
           laststatus = 0,
         },
       },
-      -- on_open = function()
-      --   -- todo: disable indentmini.nvim (awaiting functionality)
-      -- end,
-      -- on_close = function()
-      --   -- todo: enable indentmini.nvim (awaiting functionality)
-      -- end,
+      on_open = function()
+        vim.b.miniindentscope_disable = true
+        require('incline').disable()
+      end,
+      on_close = function()
+        vim.b.miniindentscope_disable = false
+        require('incline').enable()
+      end,
     },
   },
-  -- nvim-treesitter-context
+  -- nvim-treesitter-context (https://github.com/nvim-treesitter/nvim-treesitter-context)
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = { 'BufReadPost', 'BufNewFile' },

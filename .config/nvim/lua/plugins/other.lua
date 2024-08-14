@@ -37,22 +37,6 @@ return {
       })
     end,
   },
-  -- markdown preview
-  {
-    'toppair/peek.nvim',
-    ft = 'markdown',
-    build = 'deno task --quiet build:fast',
-    keys = {
-      { '<leader>mp', '<cmd>PeekOpen<cr>', desc = 'Preview markdown' },
-    },
-    config = function()
-      require('peek').setup({
-        app = 'browser',
-      })
-      vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-      vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
-    end,
-  },
   -- obsidian.nvim (https://github.com/epwalsh/obsidian.nvim)
   {
     'epwalsh/obsidian.nvim',
@@ -63,9 +47,9 @@ return {
       'BufNewFile ' .. vim.fn.expand('~') .. '/Documents/notes/**.md',
     },
     keys = {
-      { '<leader>on', '<cmd>ObsidianNew<cr>',         desc = 'New Note' },
+      { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New Note' },
       { '<leader>op', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick Switch' },
-      { '<leader>o/', '<cmd>ObsidianSearch<cr>',      desc = 'Search Notes' },
+      { '<leader>o/', '<cmd>ObsidianSearch<cr>', desc = 'Search Notes' },
     },
     opts = {
       dir = '~/Documents/notes',
@@ -132,5 +116,24 @@ return {
       enabled = true,
       cloak_character = '*',
     },
+  },
+  -- gen.nvim (https://github.com/David-Kunz/gen.nvim)
+  {
+    'David-Kunz/gen.nvim',
+    cmd = 'Gen',
+    opts = {
+      model = 'codestral',
+      display_mode = 'split',
+      show_model = true,
+      no_auto_close = true,
+    },
+    config = function(_, opts)
+      require('gen').setup(opts)
+      require('gen').prompts['Fix_Code'] = {
+        prompt = 'Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```',
+        replace = true,
+        extract = '```$filetype\n(.-)```',
+      }
+    end,
   },
 }

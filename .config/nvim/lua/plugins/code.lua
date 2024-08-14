@@ -27,10 +27,6 @@ return {
         snippet = {
           expand = function(args) require('luasnip').lsp_expand(args.body) end,
         },
-        -- window = {
-        --   completion = { border = 'rounded', scrollbar = false },
-        --   documentation = { border = 'rounded', scrollbar = false },
-        -- },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-j>'] = function(fallback)

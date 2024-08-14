@@ -72,11 +72,8 @@ return {
             hovers = true,
             suggestions = true,
             root_dir = function(fname)
-              local root_pattern = require('lspconfig').util.root_pattern(
-                'tailwind.config.cjs',
-                'tailwind.config.js',
-                'postcss.config.js'
-              )
+              local root_pattern =
+                require('lspconfig').util.root_pattern('tailwind.config.cjs', 'tailwind.config.js', 'postcss.config.js')
               return root_pattern(fname)
             end,
           })
@@ -99,40 +96,86 @@ return {
       })
     end,
   },
-  -- none-ls
+  -- conform.nvim
   {
-    'nvimtools/none-ls.nvim',
-    event = 'BufReadPre',
-    config = function()
-      local null_ls = require('null-ls')
-      local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    'stevearc/conform.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = function()
+      local prettier_config_cache = {}
 
-      local function format_on_save(client, bufnr)
-        if client.supports_method('textDocument/formatting') then
-          vim.api.nvim_clear_autocmds({
-            group = augroup,
-            buffer = bufnr,
-          })
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            group = augroup,
-            buffer = bufnr,
-            callback = function() vim.lsp.buf.format({ bufnr = bufnr }) end,
-          })
-        end
+      local function get_prettier_config(ctx)
+        if not ctx or not ctx.dirname then return nil end
+
+        local global_config = vim.fn.expand('~/.config/.prettierrc.json')
+
+        if vim.fn.filereadable(global_config) ~= 1 then return nil end
+
+        local project_config = vim.fs.find(
+          function(name) return name:match('^%.?prettier.*') ~= nil end,
+          { upward = true, path = ctx.dirname, type = 'file' }
+        )[1]
+
+        return project_config or global_config
       end
 
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.formatting.prettierd.with({
-            extra_filetypes = { 'jsonc', 'astro', 'svelte' },
-            env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand('~/.config/.prettierrc.json') },
-          }),
-          null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.fish_indent,
-          null_ls.builtins.completion.spell,
+      return {
+        notify_on_error = false,
+        formatters_by_ft = {
+          fish = { 'fish_indent' },
+          lua = { 'stylua' },
+
+          -- prettier (default)
+          javascript = { 'prettierd', 'prettier' },
+          javascriptreact = { 'prettierd', 'prettier' },
+          typescript = { 'prettierd', 'prettier' },
+          typescriptreact = { 'prettierd', 'prettier' },
+          vue = { 'prettierd', 'prettier' },
+          css = { 'prettierd', 'prettier' },
+          scss = { 'prettierd', 'prettier' },
+          less = { 'prettierd', 'prettier' },
+          html = { 'prettierd', 'prettier' },
+          json = { 'prettierd', 'prettier' },
+          jsonc = { 'prettierd', 'prettier' },
+          graphql = { 'prettierd', 'prettier' },
+          markdown = { 'prettierd', 'prettier' },
+          yaml = { 'prettierd', 'prettier' },
+
+          -- prettier (via extensions)
+          astro = { 'prettierd', 'prettier' },
+          svelte = { 'prettierd', 'prettier' },
         },
-        on_attach = format_on_save,
-      })
+        format_on_save = {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 500,
+        },
+        formatters = {
+          prettier = {
+            command = 'prettierd',
+            args = function(ctx)
+              local filepath = vim.api.nvim_buf_get_name(0)
+              local dirname = vim.fn.fnamemodify(filepath, ':h')
+              ctx.dirname = dirname
+
+              local config = get_prettier_config(ctx)
+              if not config then return { '--stdin-filepath', filepath } end
+              return {
+                '--config',
+                config,
+                '--stdin-filepath',
+                filepath,
+              }
+            end,
+            cwd = function(ctx)
+              return vim.fn.fnamemodify(vim.fs.find({ 'package.json', '.git' }, {
+                upward = true,
+                stop = vim.loop.os_homedir(),
+                path = ctx.dirname,
+              })[1] or ctx.dirname, ':h')
+            end,
+          },
+        },
+      }
     end,
   },
 }
