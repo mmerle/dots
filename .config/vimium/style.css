@@ -1,61 +1,63 @@
-:root {
-  --vim-font-mono: 'MD IO', monospace;
-  --vim-font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
+#vimiumHintMarkerContainer,
+#vomnibar,
+.vimiumHUD {
+  --vimium-font-mono: 'MD IO', monospace;
+  --vimium-font-sans: 'Sohne', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
-  --vim-white: #fff;
-  --vim-black: #000;
-  --vim-fg: var(--vim-white);
-  --vim-fgAlpha: 0 0% 100%;
-  --vim-bg: hsl(0 0% 7% / 0.8);
-  --vim-accent: #6f9aec;
-  --vim-accentAlpha: hsl(220 80% 76% / 0.2);
-  --vim-mono: hsl(0 0% 62.8%);
-  --vim-monoAlpha: 0 0% 62.8%;
+  --vimium-white: #fff;
+  --vimium-black: #000;
+  --vimium-fg: var(--vimium-white);
+  --vimium-fgAlpha: 0 0% 100%;
+  --vimium-bg: hsl(0 0% 7% / 0.8);
+  --vimium-accent: #6f9aec;
+  --vimium-accentAlpha: hsl(220 80% 76% / 0.2);
+  --vimium-mono: hsl(0 0% 62.8%);
+  --vimium-monoAlpha: 0 0% 62.8%;
 
-  --vim-text-xs: 10px;
-  --vim-text-sm: 12px;
-  --vim-text: 14px;
-  --vim-text-lg: 16px;
-  --vim-leading: 1.5;
+  --vimium-text-xs: 10px;
+  --vimium-text-sm: 12px;
+  --vimium-text: 14px;
+  --vimium-text-lg: 16px;
+  --vimium-leading: 1.5;
 
-  --vim-border: 1px solid hsl(var(--vim-fgAlpha) / 0.15);
-  --vim-outline: 0.5px solid var(--vim-black);
+  --vimium-border: 1px solid hsl(var(--vimium-fgAlpha) / 0.15);
+  --vimium-outline: 0.5px solid var(--vimium-black);
 
-  --vim-radius-sm: 6px;
-  --vim-radius: 8px;
-  --vim-radius-lg: 10px;
+  --vimium-radius-sm: 6px;
+  --vimium-radius: 8px;
+  --vimium-radius-lg: 10px;
 
-  --vim-shadow: rgb(0 0 0 / 20%) 0px 16px 70px;
-  --vim-blur: blur(40px);
+  --vimium-shadow: rgb(0 0 0 / 20%) 0px 16px 70px;
+  --vimium-blur: blur(40px);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --vim-fg: var(--vim-black);
-    --vim-bg: hsl(0 0% 100% / 0.8);
+    --vimium-fg: var(--vimium-black);
+    --vimium-bg: hsl(0 0% 100% / 0.8);
 
-    --vim-border: 1px solid hsl(var(--vim-monoAlpha) / 0.4);
-    --vim-outline: none;
+    --vimium-border: 1px solid hsl(var(--vimium-monoAlpha) / 0.4);
+    --vimium-outline: none;
   }
 }
 
 /* hints */
 #vimiumHintMarkerContainer div.vimiumHintMarker {
-  background: var(--vim-bg);
-  backdrop-filter: var(--vim-blur);
-  border-radius: var(--vim-radius-sm);
-  border: var(--vim-border);
-  outline: var(--vim-outline);
-  box-shadow: var(--vim-shadow);
-  box-shadow: inset 0 -1px 0 hsl(var(--vim-fgAlpha) / 0.15);
+  background: var(--vimium-bg);
+  backdrop-filter: var(--vimium-blur);
+  border-radius: var(--vimium-radius-sm);
+  border: var(--vimium-border);
+  outline: var(--vimium-outline);
+  box-shadow: var(--vimium-shadow);
+  box-shadow: inset 0 -1px 0 hsl(var(--vimium-fgAlpha) / 0.15);
   padding: 3px 5px;
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker span {
   color: inherit;
-  font-family: var(--vim-font-mono);
-  font-size: var(--vim-text-sm);
+  font-family: var(--vimium-font-mono);
+  font-size: var(--vimium-text-sm);
   font-weight: inherit;
   text-shadow: none;
   text-transform: lowercase;
@@ -68,11 +70,11 @@
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker {
-  color: var(--vim-fg);
+  color: var(--vimium-fg);
 }
 
 #vimiumHintMarkerContainer div.vimiumHintMarker:has(.matchingCharacter) {
-  color: var(--vim-accent);
+  color: var(--vimium-accent);
   font-weight: 700;
 }
 
@@ -81,12 +83,12 @@ div.vimiumHUD {
   width: fit-content;
   left: auto;
   right: 0;
-  background: var(--vim-bg);
-  backdrop-filter: var(--vim-blur);
-  border-radius: var(--vim-radius);
-  border: var(--vim-border);
-  outline: var(--vim-outline);
-  box-shadow: var(--vim-shadow);
+  background: var(--vimium-bg);
+  backdrop-filter: var(--vimium-blur);
+  border-radius: var(--vimium-radius);
+  border: var(--vimium-border);
+  outline: var(--vimium-outline);
+  box-shadow: var(--vimium-shadow);
   bottom: 18px;
 }
 
@@ -97,17 +99,17 @@ div.vimiumHUD div.vimiumHUDSearchArea {
 
 div.vimiumHUD div.vimiumHUDSearchAreaInner,
 div.vimiumHUD span#hud-find-input {
-  color: var(--vim-fg);
-  font-family: var(--vim-font-sans);
-  font-size: var(--vim-text);
+  color: var(--vimium-fg);
+  font-family: var(--vimium-font-sans);
+  font-size: var(--vimium-text);
   font-weight: 400;
   height: fit-content;
   line-height: inherit;
 }
 
 div.vimiumHUD span#hud-match-count {
-  color: var(--vim-mono);
-  font-size: var(--vim-text);
+  color: var(--vimium-mono);
+  font-size: var(--vimium-text);
 }
 
 div.vimiumHUD .hud-find {
@@ -117,12 +119,12 @@ div.vimiumHUD .hud-find {
 
 /* vomnibar */
 #vomnibar {
-  background: var(--vim-bg);
-  backdrop-filter: var(--vim-blur);
-  border: var(--vim-border);
-  outline: var(--vim-outline);
-  box-shadow: var(--vim-shadow);
-  border-radius: var(--vim-radius);
+  background: var(--vimium-bg);
+  backdrop-filter: var(--vimium-blur);
+  border: var(--vimium-border);
+  outline: var(--vimium-outline);
+  box-shadow: var(--vimium-shadow);
+  border-radius: var(--vimium-radius);
   padding: 0 8px;
   width: 640px;
   left: 50%;
@@ -142,16 +144,16 @@ div.vimiumHUD .hud-find {
   background: transparent;
   border: none;
   padding: 16px 8px;
-  font-size: var(--vim-text-lg);
-  font-family: var(--vim-font-sans);
-  color: var(--vim-fg);
+  font-size: var(--vimium-text-lg);
+  font-family: var(--vimium-font-sans);
+  color: var(--vimium-fg);
   box-shadow: none;
   height: fit-content;
 }
 
 #vomnibar #vomnibarInput::selection {
-  color: var(--vim-black);
-  background: var(--vim-fg);
+  color: var(--vimium-black);
+  background: var(--vimium-fg);
 }
 
 #vomnibar ul {
@@ -159,7 +161,7 @@ div.vimiumHUD .hud-find {
   border-radius: 0;
   margin: 0;
   padding: 14px 0;
-  border-top: var(--vim-border);
+  border-top: var(--vimium-border);
   overflow: hidden;
 }
 
@@ -180,12 +182,12 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar li:hover {
-  background: hsl(var(--vim-monoAlpha) / 0.08);
+  background: hsl(var(--vimium-monoAlpha) / 0.08);
 }
 
 #vomnibar li .vomnibarTopHalf,
 #vomnibar li .vomnibarBottomHalf {
-  font-size: var(--vim-text);
+  font-size: var(--vimium-text);
   margin: 0;
   padding: 0;
 }
@@ -198,7 +200,7 @@ div.vimiumHUD .hud-find {
 
 #vomnibar li .vomnibarTopHalf::after {
   content: '—';
-  color: var(--vim-mono);
+  color: var(--vimium-mono);
 }
 
 #vomnibar li .vomnibarBottomHalf {
@@ -208,17 +210,17 @@ div.vimiumHUD .hud-find {
 
 #vomnibar li .vomnibarTitle,
 #vomnibar li .vomnibarUrl {
-  font-family: var(--vim-font-sans);
+  font-family: var(--vimium-font-sans);
   font-weight: 400;
-  line-height: var(--vim-leading);
+  line-height: var(--vimium-leading);
 }
 
 #vomnibar li .vomnibarSource {
-  color: var(--vim-accent);
-  background: var(--vim-accentAlpha);
+  color: var(--vimium-accent);
+  background: var(--vimium-accentAlpha);
   font-size: inherit;
   margin: 0;
-  border-radius: var(--vim-radius-sm);
+  border-radius: var(--vimium-radius-sm);
   padding: 4px 6px;
   display: block;
   flex-shrink: 0;
@@ -237,10 +239,10 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar li .vomnibarUrl {
-  color: var(--vim-mono);
+  color: var(--vimium-mono);
   font-size: inherit;
   font-weight: 400;
-  font-family: var(--vim-font-sans);
+  font-family: var(--vimium-font-sans);
   display: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -263,10 +265,6 @@ div.vimiumHUD .hud-find {
 }
 
 #vomnibar li.vomnibarSelected {
-  background: hsl(var(--vim-monoAlpha) / 0.16);
+  background: hsl(var(--vimium-monoAlpha) / 0.16);
 }
 
-.vomnibarFrame #vomnibar {
-  background: red !important;
-  color: red !important;
-}
