@@ -1,15 +1,18 @@
 tap 'homebrew/bundle'
 tap 'homebrew/cask-versions'
 
+brew 'bash'
 brew 'bat'
 brew 'bitwarden-cli'
 brew 'btop'
+brew 'dust'
 brew 'eza'
 brew 'fd'
 brew 'ffmpeg'
 brew 'fish'
 brew 'fisher'
 brew 'fsouza/prettierd/prettierd'
+brew 'fzf'
 brew 'gh'
 brew 'git'
 brew 'glow'
@@ -25,6 +28,7 @@ brew 'ripgrep'
 brew 'schappim/ocr/ocr'
 brew 'tealdeer'
 brew 'tmux'
+brew 'trash-cli'
 brew 'vercel-cli'
 brew 'zoxide'
 
@@ -32,16 +36,19 @@ cask 'bitwarden'
 cask 'blender'
 cask 'discord'
 cask 'eloston-chromium'
-cask 'figma-beta'
+cask 'figma'
 cask 'hiddenbar'
 cask 'iina'
 cask 'karabiner-elements'
 cask 'keka'
 cask 'kitty'
 cask 'linear-linear'
-cask 'macmediakeyforwarder'
+cask 'localsend'
 cask 'mac-mouse-fix'
+cask 'macmediakeyforwarder'
 cask 'obsidian'
+cask 'ollama'
+cask 'orbstack'
 cask 'raycast'
 cask 'sioyek'
 cask 'spaceid'
@@ -49,7 +56,9 @@ cask 'spotify'
 cask 'utm'
 cask 'visual-studio-code-insiders'
 
-mas 'Pandan',         id: 1569600264
-mas 'Xcode',          id: 497799835
+mas "Actions", id: 1586435171
+mas 'Pandan', id: 1569600264
+mas "TestFlight", id: 899247664
+mas 'Xcode', id: 497799835
 
 # vim:filetype=ruby
