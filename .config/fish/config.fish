@@ -10,11 +10,12 @@ set -gx GOPATH $XDG_DATA_HOME/go
 
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_OPTS "--color=16"
+set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
+set -gx HOMEBREW_NO_ENV_HINTS 1
 
 # disable analytics of commonly used tools
-set HOMEBREW_NO_ANALYTICS 1
-set NEXT_TELEMETRY_DISABLED 1
-set -gx NODE_OPTIONS --no-deprecation
+set -gx HOMEBREW_NO_ANALYTICS 1
+set -gx NEXT_TELEMETRY_DISABLED 1
 
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
@@ -57,6 +58,8 @@ alias reload='exec $SHELL -l'
 alias code='code-insiders'
 alias connect='kitty +kitten ssh'
 alias tmr='transmission-remote'
+alias npm='pnpm'
+alias npx='pnpm dlx'
 
 alias ,fish='$EDITOR ~/.config/fish/config.fish'
 alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
