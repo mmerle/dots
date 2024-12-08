@@ -1,0 +1,42 @@
+font-family = MD IO
+font-size = 13
+adjust-cell-height = 40%
+
+macos-option-as-alt = true
+mouse-hide-while-typing = true
+focus-follows-mouse = true
+confirm-close-surface = false
+quit-after-last-window-closed = true
+shell-integration-features = no-cursor
+cursor-invert-fg-bg = true
+cursor-style-blink = false
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+
+macos-titlebar-style = hidden
+window-colorspace = display-p3
+window-padding-balance = true
+window-padding-x = 10
+window-padding-y = 10
+window-padding-color = background
+quick-terminal-animation-duration = 0
+
+background-opacity = 0.94
+background-blur-radius = 60
+
+# \x02 is ctrl+b (tmux)
+keybind = super+w=text:\x02x
+keybind = super+t=text:\x02c
+keybind = super+f=text:\x02f
+keybind = super+g=text:\x02g
+keybind = super+v=text:\x02%
+keybind = super+x=text:\x02"
+
+keybind = global:super+ctrl+alt+shift+t=toggle_quick_terminal
+
+# colors
+background = #17181b
+
+# vim:filetype=conf
+
