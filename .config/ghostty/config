@@ -26,12 +26,17 @@ background-opacity = 0.94
 background-blur-radius = 60
 
 # \x02 is ctrl+b (tmux)
+keybind = super+one=text:\x021
+keybind = super+two=text:\x022
+keybind = super+three=text:\x023
+keybind = super+four=text:\x024
+keybind = super+five=text:\x025
 keybind = super+w=text:\x02x
 keybind = super+t=text:\x02c
 keybind = super+f=text:\x02f
 keybind = super+g=text:\x02g
-keybind = super+v=text:\x02%
-keybind = super+x=text:\x02"
+keybind = super+d=text:\x02%
+keybind = super+shift+d=text:\x02"
 
 keybind = global:super+ctrl+alt+shift+t=toggle_quick_terminal
 
