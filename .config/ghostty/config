@@ -2,28 +2,33 @@ font-family = MD IO
 font-size = 13
 adjust-cell-height = 40%
 
+theme = flora
+background-opacity = 0.96
+background-blur-radius = 60
+
+confirm-close-surface = false
+
 macos-option-as-alt = true
 mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+mouse-shift-capture = true
 focus-follows-mouse = true
-confirm-close-surface = false
 quit-after-last-window-closed = true
 shell-integration-features = no-cursor
-cursor-invert-fg-bg = true
-cursor-style-blink = false
 clipboard-read = allow
 clipboard-write = allow
 copy-on-select = clipboard
+cursor-style-blink = false
+cursor-invert-fg-bg = true
 
 macos-titlebar-style = hidden
+quick-terminal-animation-duration = 0
+resize-overlay = never
 window-colorspace = display-p3
 window-padding-balance = true
 window-padding-x = 10
-window-padding-y = 10
+window-padding-y = 10,0
 window-padding-color = background
-quick-terminal-animation-duration = 0
-
-background-opacity = 0.94
-background-blur-radius = 60
 
 # \x02 is ctrl+b (tmux)
 keybind = super+one=text:\x021
@@ -33,15 +38,11 @@ keybind = super+four=text:\x024
 keybind = super+five=text:\x025
 keybind = super+w=text:\x02x
 keybind = super+t=text:\x02c
-keybind = super+f=text:\x02f
+keybind = super+f=text:\x02\x05
 keybind = super+g=text:\x02g
 keybind = super+d=text:\x02%
 keybind = super+shift+d=text:\x02"
 
 keybind = global:super+ctrl+alt+shift+t=toggle_quick_terminal
 
-# colors
-background = #17181b
-
-# vim:filetype=conf
-
+# vim:ft=conf
