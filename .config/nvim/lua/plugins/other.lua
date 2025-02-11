@@ -13,29 +13,22 @@ return {
     build = ':TSUpdate',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
-      'windwp/nvim-ts-autotag',
       'kevinhwang91/promise-async',
-      -- 'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = 'all',
-        ignore_install = { 'phpdoc' },
+        -- ignore_install = { 'phpdoc' },
         highlight = { enable = true },
         indent = { enable = true },
-        autotag = { enable = true },
-        -- textobjects = {
-        --   select = {
-        --     enable = true,
-        --     lookahead = true,
-        --     keymaps = {
-        --       ['af'] = '@function.outer',
-        --       ['if'] = '@function.inner',
-        --     },
-        --   },
-        -- },
       })
     end,
+  },
+  -- nvim-ts-autotag (https://github.com/windwp/nvim-ts-autotag)
+  {
+    'windwp/nvim-ts-autotag',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
   },
   -- obsidian.nvim (https://github.com/epwalsh/obsidian.nvim)
   {
