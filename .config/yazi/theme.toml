@@ -1,0 +1,5 @@
+[icon]
+append_rules = [
+	{ name = "*" , text = "" },
+	{ name = "*/", text = "" },
+]
