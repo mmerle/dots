@@ -19,7 +19,7 @@ return {
           'lua_ls',
           'svelte',
           'tailwindcss',
-          'tsserver',
+          'ts_ls',
         },
         automatic_installation = true,
       })
@@ -32,7 +32,7 @@ return {
           vim.keymap.set(mode, lhs, rhs, opts)
         end
 
-        -- map("n", "K", vim.lsp.buf.hover, { desc = "Documentation" })
+        map('n', 'gh', vim.lsp.buf.hover, { desc = 'Documentation' })
         map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
         map('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
         map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto declaration' })
@@ -82,7 +82,7 @@ return {
           require('lspconfig').emmet_ls.setup({
             on_attach = on_attach,
             capabilities = capabilities,
-            filetypes = { 'html', 'javascript', 'javascriptreact', 'svelte', 'astro', 'xhtml' },
+            filetypes = { 'html', 'javascript', 'javascriptreact', 'svelte', 'astro', 'xhtml', 'php' },
             init_options = {
               javascript = {
                 options = {
@@ -106,7 +106,7 @@ return {
       local function get_prettier_config(ctx)
         if not ctx or not ctx.dirname then return nil end
 
-        local global_config = vim.fn.expand('~/.config/.prettierrc.json')
+        local global_config = vim.fn.expand('~/.config/.prettierrc')
 
         if vim.fn.filereadable(global_config) ~= 1 then return nil end
 
@@ -120,6 +120,9 @@ return {
 
       return {
         notify_on_error = false,
+        default_format_opts = {
+          lsp_format = 'fallback',
+        },
         formatters_by_ft = {
           fish = { 'fish_indent' },
           lua = { 'stylua' },
@@ -139,6 +142,7 @@ return {
           graphql = { 'prettierd', 'prettier' },
           markdown = { 'prettierd', 'prettier' },
           yaml = { 'prettierd', 'prettier' },
+          php = { 'prettierd', 'prettier' },
 
           -- prettier (via extensions)
           astro = { 'prettierd', 'prettier' },
