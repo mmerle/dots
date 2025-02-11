@@ -132,22 +132,10 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
   end,
 })
 
--- vim.api.nvim_create_autocmd('FileType', {
---     group = vim.api.nvim_create_augroup('Prose', {}),
---     pattern = { 'gitcommit', 'markdown' },
---     callback = function()
---         vim.opt_local.spell = true
---         vim.opt_local.wrap = true
---         vim.opt_local.linebreak = true
---         vim.opt_local.conceallevel = 2
---     end,
--- })
-
--- cursorline in active window
+-- cursorline only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter', 'InsertLeave' }, {
   callback = function() vim.opt_local.cursorline = true end,
 })
-
 vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave', 'InsertEnter' }, {
   callback = function() vim.opt_local.cursorline = false end,
 })
@@ -156,6 +144,7 @@ vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave', 'InsertEnter' }, {
 vim.filetype.add({
   extension = {
     mdx = 'markdown',
+    mdoc = 'markdown',
     js = 'javascriptreact',
     conf = 'conf',
   },
@@ -163,4 +152,14 @@ vim.filetype.add({
     ['.*%.env.*'] = 'sh',
     ['ignore$'] = 'conf',
   },
+})
+
+-- quickfix quickview
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function(event)
+    local opts = { buffer = event.buf, silent = true }
+    vim.keymap.set('n', 'j', '<cmd>cn | wincmd p<CR>', opts)
+    vim.keymap.set('n', 'k', '<cmd>cN | wincmd p<CR>', opts)
+  end,
 })
