@@ -43,15 +43,15 @@ return {
               fallback()
             end
           end,
-          ['<cr>'] = cmp.mapping.confirm({
+          ['<C-y>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
+            select = true,
           }),
         }),
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'buffer',  keyword_length = 2 },
+          { name = 'buffer', keyword_length = 4 },
           { name = 'path' },
           { name = 'calc' },
         },
@@ -66,6 +66,10 @@ return {
               calc = '[calc]',
             },
           }),
+        },
+        performance = {
+          debounce = 0,
+          throttle = 0,
         },
       })
 
@@ -113,6 +117,12 @@ return {
     'altermo/ultimate-autopair.nvim',
     event = { 'InsertEnter', 'CmdlineEnter' },
     opts = {},
+  },
+  -- multicursor.nvim (https://jake-stewart/multicursor.nvim)
+  -- todo: setup
+  {
+    'jake-stewart/multicursor.nvim',
+    branch = '1.0',
   },
   -- vim-repeat (https://github.com/tpope/vim-repeat)
   {
