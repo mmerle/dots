@@ -8,14 +8,31 @@
   pl = pull
   s = status
   unstage = reset --soft HEAD^
+[branch]
+  sort = -committerdate
+[column]
+  ui = auto
 [core]
 	editor = nvim
   excludesfile = ~/.config/git/ignore
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+[help]
+  autocorrect = prompt
 [init]
 	defaultBranch = main
 [pull]
   rebase = false
+[tag]
+  sort = version:refname
 [user]
 	name = mmerle
 	email = 35971019+mmerle@users.noreply.github.com
-
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
