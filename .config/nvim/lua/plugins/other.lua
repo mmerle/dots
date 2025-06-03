@@ -18,8 +18,16 @@ return {
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = 'all',
-        -- ignore_install = { 'phpdoc' },
         highlight = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = false,
+            scope_incremental = false,
+            node_incremental = '.',
+            node_decremental = ',',
+          },
+        },
         indent = { enable = true },
       })
     end,
@@ -30,19 +38,18 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {},
   },
-  -- obsidian.nvim (https://github.com/epwalsh/obsidian.nvim)
+  -- obsidian.nvim (https://github.com/obsidian-nvim/obsidian.nvim)
   {
-    'epwalsh/obsidian.nvim',
+    'obsidian-nvim/obsidian.nvim',
     version = '*',
-    lazy = true,
     event = {
       'BufReadPre ' .. vim.fn.expand('~') .. '/Documents/notes/**.md',
       'BufNewFile ' .. vim.fn.expand('~') .. '/Documents/notes/**.md',
     },
     keys = {
-      { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New Note' },
+      { '<leader>on', '<cmd>ObsidianNew<cr>',         desc = 'New Note' },
       { '<leader>op', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick Switch' },
-      { '<leader>o/', '<cmd>ObsidianSearch<cr>', desc = 'Search Notes' },
+      { '<leader>o/', '<cmd>ObsidianSearch<cr>',      desc = 'Search Notes' },
     },
     opts = {
       dir = '~/Documents/notes',
@@ -76,26 +83,10 @@ return {
   {
     'numToStr/Navigator.nvim',
     keys = {
-      {
-        '<C-h>',
-        '<cmd>NavigatorLeft<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-l>',
-        '<cmd>NavigatorRight<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-k>',
-        '<cmd>NavigatorUp<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-j>',
-        '<cmd>NavigatorDown<cr>',
-        mode = { 'n', 't' },
-      },
+      { '<C-h>', '<cmd>NavigatorLeft<cr>',  mode = { 'n' } },
+      { '<C-j>', '<cmd>NavigatorDown<cr>',  mode = { 'n' } },
+      { '<C-k>', '<cmd>NavigatorUp<cr>',    mode = { 'n' } },
+      { '<C-l>', '<cmd>NavigatorRight<cr>', mode = { 'n' } },
     },
     opts = {
       disable_on_zoom = true,
@@ -109,24 +100,5 @@ return {
       enabled = true,
       cloak_character = '*',
     },
-  },
-  -- gen.nvim (https://github.com/David-Kunz/gen.nvim)
-  {
-    'David-Kunz/gen.nvim',
-    cmd = 'Gen',
-    opts = {
-      model = 'codestral',
-      display_mode = 'split',
-      show_model = true,
-      no_auto_close = true,
-    },
-    config = function(_, opts)
-      require('gen').setup(opts)
-      require('gen').prompts['Fix_Code'] = {
-        prompt = 'Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```',
-        replace = true,
-        extract = '```$filetype\n(.-)```',
-      }
-    end,
   },
 }

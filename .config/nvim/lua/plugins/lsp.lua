@@ -2,25 +2,25 @@ return {
   -- lspconfig
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPost', 'BufNewFile' },
+    lazy = false,
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
     },
     config = function()
       local function on_attach()
-        local m = vim.keymap.set
-        m('n', 'gh', vim.lsp.buf.hover, { desc = 'Documentation' })
-        m('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
-        m('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
-        m('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto declaration' })
-        m('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
-        m('n', 'gt', vim.lsp.buf.type_definition, { desc = 'Goto type definition' })
-        m('n', 'gi', vim.lsp.buf.implementation, { desc = 'Goto implementation' })
-        m('n', 'gr', vim.lsp.buf.references, { desc = 'Goto references' })
-        m('n', 'gl', vim.diagnostic.open_float, { desc = 'Diagnostics' })
-        m('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
-        m('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+        local map = vim.keymap.set
+        map('n', 'gh', vim.lsp.buf.hover, { desc = 'Documentation' })
+        map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
+        map('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
+        map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto declaration' })
+        map('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
+        map('n', 'gt', vim.lsp.buf.type_definition, { desc = 'Goto type definition' })
+        map('n', 'gi', vim.lsp.buf.implementation, { desc = 'Goto implementation' })
+        map('n', 'gr', vim.lsp.buf.references, { desc = 'Goto references' })
+        map('n', 'gl', vim.diagnostic.open_float, { desc = 'Diagnostics' })
+        map('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+        map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
       end
 
       vim.lsp.config('*', {
@@ -34,7 +34,6 @@ return {
       })
     end,
   },
-
   -- conform.nvim
   {
     'stevearc/conform.nvim',
@@ -47,7 +46,6 @@ return {
         },
         formatters_by_ft = {
           fish = { 'fish_indent' },
-          lua = { 'stylua' },
           -- biome (default)
           javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
           javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },

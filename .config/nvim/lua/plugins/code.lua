@@ -2,12 +2,21 @@ return {
   -- luasnip (https://github.com/L3MON4D3/LuaSnip)
   {
     'L3MON4D3/LuaSnip',
+    version = 'v2.*',
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
       'saadparwaiz1/cmp_luasnip',
     },
-    config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+      local ls = require('luasnip')
+      ls.config.setup({
+        enable_autosnippets = true,
+        region_check_events = 'InsertEnter',
+        delete_check_events = 'InsertLeave'
+      })
+    end,
   },
   -- completions (https://github.com/hrsh7th/nvim-cmp)
   {
@@ -51,7 +60,7 @@ return {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'buffer', keyword_length = 4 },
+          { name = 'buffer',  keyword_length = 4 },
           { name = 'path' },
           { name = 'calc' },
         },
@@ -85,7 +94,7 @@ return {
   -- comment (https://github.com/numToStr/Comment.nvim)
   {
     'numToStr/Comment.nvim',
-    event = 'VeryLazy',
+    event = 'BufEnter',
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
@@ -119,7 +128,6 @@ return {
     opts = {},
   },
   -- multicursor.nvim (https://jake-stewart/multicursor.nvim)
-  -- todo: setup
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
