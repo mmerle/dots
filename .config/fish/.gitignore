@@ -1,5 +1,6 @@
 /functions/_*
 /functions/fisher.fish
+/functions/nvm.fish
 /completions/
 /conf.d/
 fish_variables

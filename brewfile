@@ -18,7 +18,6 @@ brew 'git'
 brew 'glow'
 brew 'go'
 brew 'lazygit'
-brew 'lf'
 brew 'mas'
 brew 'neovim', args: ['HEAD']
 brew 'node'
@@ -29,7 +28,7 @@ brew 'schappim/ocr/ocr'
 brew 'tealdeer'
 brew 'tmux'
 brew 'trash-cli'
-brew 'vercel-cli'
+brew 'yazi'
 brew 'zoxide'
 
 cask 'bitwarden'
@@ -52,9 +51,9 @@ cask 'orbstack'
 cask 'raycast'
 cask 'sioyek'
 cask 'spaceid'
-cask 'spotify'
+cask 'syncthing'
 cask 'utm'
-cask 'visual-studio-code-insiders'
+cask 'zed'
 
 mas "Actions", id: 1586435171
 mas 'Pandan', id: 1569600264

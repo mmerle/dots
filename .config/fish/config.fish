@@ -9,7 +9,10 @@ set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx GOPATH $XDG_DATA_HOME/go
 
 set -gx EDITOR nvim
-set -gx FZF_DEFAULT_OPTS "--color=16"
+set -gx MANPAGER "nvim -c +Man!"
+set -gx FZF_DEFAULT_OPTS "\
+--color=16,gutter:-1 \
+--layout=reverse"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
 set -gx HOMEBREW_NO_ENV_HINTS 1
 
@@ -25,24 +28,56 @@ fish_add_path $GOPATH/bin
 # enable vi mode
 fish_vi_key_bindings
 
-# disable fish greeting
-set fish_greeting
+if status is-interactive
+    if not set -q TMUX
+        tmux new -A -s (basename (pwd) | tr . _)
+    end
+
+    # disable fish greeting
+    set fish_greeting
+end
 
 function fish_title
     echo (string split -- / $PWD)[-1]
 end
 
 function fish_prompt
-    # set -g fish_prompt_pwd_dir_length 0
-    # printf '%s%s> ' (prompt_pwd)
-    set -gx __fish_git_prompt_showdirtystate 1
-    set -g __fish_git_prompt_showupstream verbose
-    set -g __fish_git_prompt_char_upstream_ahead ' ↑'
-    set -g __fish_git_prompt_char_upstream_behind ' ↓'
-    set -g __fish_git_prompt_char_upstream_diverged ' ↕'
-    set -g __fish_git_prompt_char_upstream_equal
-    set -g __fish_git_prompt_char_upstream_prefix
-    printf '%s%s> ' (fish_prompt_pwd_dir_length=0 prompt_pwd)(set_color brblack; fish_git_prompt; set_color normal)
+    set -g __fish_git_prompt_showdirtystate 1
+
+    set -l full_path (string replace -r "^$HOME" "~" "$PWD")
+    set -l path_parts (string split "/" "$full_path")
+    set -l display_path "$full_path"
+    set -l path_count (count $path_parts)
+
+    if test $path_count -ge 8
+        # Start with the first component (usually ~)
+        set display_path $path_parts[1]
+
+        # Shorten intermediate directories, keeping the last 2 full
+        for i in (seq 2 (math $path_count - 2))
+            set display_path "$display_path/"(string sub -l 1 "$path_parts[$i]")
+        end
+
+        # Add the last two components in full
+        if test $path_count -ge 2
+            set display_path "$display_path/"$path_parts[-2]"/"$path_parts[-1]
+        end
+    end
+
+    # Git information
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1
+        set -l git_branch (git symbolic-ref --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
+        set -l git_dirty (git status --porcelain 2>/dev/null)
+
+        set -l git_display $git_branch
+        if test -n "$git_dirty"
+            set git_display "$git_display*"
+        end
+
+        printf '%s:%s> ' "$display_path" "$git_display"
+    else
+        printf '%s> ' "$display_path"
+    end
 end
 
 function fish_mode_prompt
@@ -55,19 +90,14 @@ alias ll='eza --group-directories-first -la'
 alias lt='eza --git-ignore -Ta'
 alias vim='nvim'
 alias reload='exec $SHELL -l'
-alias code='code-insiders'
 alias connect='kitty +kitten ssh'
 alias tmr='transmission-remote'
 alias npm='pnpm'
 alias npx='pnpm dlx'
 
-alias ,fish='$EDITOR ~/.config/fish/config.fish'
-alias ,kitty='$EDITOR ~/.config/kitty/kitty.conf'
-alias ,nvim='$EDITOR ~/.config/nvim/init.lua'
-
 # abbreviations
 abbr ta 'tmux attach'
-abbr tn 'tmux new -s (basename (pwd))'
+abbr tn 'tmux new -A -s (basename (pwd) | tr . _)'
 abbr ts 'tmux ls'
 
 abbr g git
@@ -77,3 +107,4 @@ abbr p pnpm
 abbr mkdir 'mkdir -vp'
 
 zoxide init fish | source
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
