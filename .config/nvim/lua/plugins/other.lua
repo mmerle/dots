@@ -101,4 +101,16 @@ return {
       cloak_character = '*',
     },
   },
+  -- harpoonline (https://github.com/abeldekat/harpoonline)
+  {
+    'abeldekat/harpoonline',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = '*',
+    config = function()
+      local Harpoonline = require('harpoonline')
+      Harpoonline.setup({
+        on_update = function() vim.cmd.redrawstatus() end
+      })
+    end,
+  }
 }

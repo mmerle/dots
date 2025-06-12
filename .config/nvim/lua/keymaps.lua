@@ -4,8 +4,8 @@ local opts = { silent = true }
 local map = vim.keymap.set
 
 -- move through wrapped lines
-map({ 'n', 'v' }, 'j', 'gj', opts)
-map({ 'n', 'v' }, 'k', 'gk', opts)
+map({ 'n', 'v' }, 'j', 'gj')
+map({ 'n', 'v' }, 'k', 'gk')
 
 map('v', '<', '<gv', opts) -- unindent (keep selection)
 map('v', '>', '>gv', opts) -- indent (keep selection)
@@ -64,7 +64,6 @@ map('n', 'yc', 'yygccp', { remap = true })
 
 -- yank entire file content
 map('n', '<leader>y', '<cmd>%y<cr>')
-
 
 -- conceal level toggle
 map('n', '<leader>uc', function()

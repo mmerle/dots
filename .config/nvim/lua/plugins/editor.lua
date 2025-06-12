@@ -49,6 +49,15 @@ return {
             border = 'single',
           },
         },
+        previewers = {
+          builtin = {
+            syntax_limit_b = 1024 * 1024,
+            limit_b        = 1024 * 1024,
+            treesitter     = {
+              context = false,
+            },
+          },
+        },
         files = {
           formatter = 'path.filename_first',
           winopts = {
@@ -57,7 +66,7 @@ return {
           },
           previewer = false,
           cwd_prompt = false,
-          rg_opts = '--files --hidden -g !.git',
+          rg_opts = '--files --hidden -g !.git --color=never',
         },
         oldfiles = {
           formatter = 'path.filename_first',
@@ -79,7 +88,8 @@ return {
           ignore_current_buffer = true,
         },
         grep = {
-          rg_opts = '--no-heading --hidden --with-filename --line-number --column --trim -g !.git --smart-case'
+          rg_opts =
+          '--no-heading --hidden --with-filename --line-number --column --trim -g !.git --smart-case --color=never'
         },
         spell_suggest = {
           winopts = {
@@ -107,35 +117,13 @@ return {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
-      { ']h', '<cmd>Gitsigns next_hunk<cr>', desc = 'Next hunk' },
-      { '[h', '<cmd>Gitsigns prev_hunk<cr>', desc = 'Previous hunk' },
-      {
-        '<leader>hp',
-        '<cmd>Gitsigns preview_hunk<cr>',
-        desc = 'Git preview hunk',
-      },
-      {
-        '<leader>hr',
-        '<cmd>Gitsigns reset_hunk<cr>',
-        desc = 'Git reset hunk',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>hs',
-        '<cmd>Gitsigns stage_hunk<cr>',
-        desc = 'Git stage hunk',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>hS',
-        '<cmd>Gitsigns stage_buffer<cr>',
-        desc = 'Git stage buffer',
-      },
-      {
-        '<leader>hd',
-        '<cmd>Gitsigns diffthis<cr>',
-        desc = 'Git diff hunk',
-      },
+      { ']h',         '<cmd>Gitsigns next_hunk<cr>',    desc = 'Next hunk' },
+      { '[h',         '<cmd>Gitsigns prev_hunk<cr>',    desc = 'Previous hunk' },
+      { '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', desc = 'Git preview hunk' },
+      { '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>',   desc = 'Git reset hunk',  mode = { 'n', 'v' }, },
+      { '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>',   desc = 'Git stage hunk',  mode = { 'n', 'v' }, },
+      { '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', desc = 'Git stage buffer' },
+      { '<leader>hd', '<cmd>Gitsigns diffthis<cr>',     desc = 'Git diff hunk' },
     },
     opts = {
       current_line_blame = true,
@@ -283,6 +271,39 @@ return {
       })
     end,
   },
+  -- mini.bufremove (https://github.com/echasnovski/mini.bufremove)
+  {
+    'echasnovski/mini.bufremove',
+    version = false,
+    keys = {
+      {
+        '<leader>w',
+        function() require('mini.bufremove').delete(0, false) end,
+        desc = 'Close current buffer',
+      },
+      {
+        '<leader>W',
+        function()
+          local current_buf = vim.api.nvim_get_current_buf()
+          local bufs = vim.api.nvim_list_bufs()
+
+          for _, buf in ipairs(bufs) do
+            if
+                vim.api.nvim_buf_is_valid(buf)
+                and vim.api.nvim_buf_get_option(buf, 'buflisted')
+                and buf ~= current_buf
+            then
+              require('mini.bufremove').delete(buf, false)
+            end
+          end
+        end,
+        desc = 'Close all but current buffer',
+      },
+    },
+    opts = {
+      silent = true,
+    },
+  },
   -- flash.nvim (https://github.com/folke/flash.nvim)
   {
     'folke/flash.nvim',
@@ -346,39 +367,6 @@ return {
         end,
       })
     end,
-  },
-  -- mini.bufremove (https://github.com/echasnovski/mini.bufremove)
-  {
-    'echasnovski/mini.bufremove',
-    version = false,
-    keys = {
-      {
-        '<leader>w',
-        function() require('mini.bufremove').delete(0, false) end,
-        desc = 'Close current buffer',
-      },
-      {
-        '<leader>W',
-        function()
-          local current_buf = vim.api.nvim_get_current_buf()
-          local bufs = vim.api.nvim_list_bufs()
-
-          for _, buf in ipairs(bufs) do
-            if
-                vim.api.nvim_buf_is_valid(buf)
-                and vim.api.nvim_buf_get_option(buf, 'buflisted')
-                and buf ~= current_buf
-            then
-              require('mini.bufremove').delete(buf, false)
-            end
-          end
-        end,
-        desc = 'Close all but current buffer',
-      },
-    },
-    opts = {
-      silent = true,
-    },
   },
   -- nvim-highlight-colors (https://github.com/brenoprata10/nvim-highlight-colors)
   {

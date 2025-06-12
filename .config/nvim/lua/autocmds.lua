@@ -37,9 +37,10 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = '●',
     },
   },
-  virtual_text = {
-    prefix = '*',
-  },
+  -- virtual_text = {
+  --   prefix = '*',
+  -- },
+  virtual_text = false,
 })
 
 -- balance splits on window resize
@@ -95,3 +96,19 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', 'k', '<cmd>cN | wincmd p<CR>', opts)
   end,
 })
+
+-- mini file search
+function Fd(file_pattern, _)
+  -- if first char is * then fuzzy search
+  if file_pattern:sub(1, 1) == '*' then
+    file_pattern = file_pattern:gsub('.', '.*%0') .. '.*'
+  end
+  local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git" --exclude="deps" "'
+      .. file_pattern
+      .. '"'
+  local result = vim.fn.systemlist(cmd)
+  return result
+end
+
+vim.opt.findfunc = 'v:lua.Fd'
+vim.keymap.set('n', '<C-p>', ':find ', { desc = 'Project Files' })

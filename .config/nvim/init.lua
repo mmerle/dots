@@ -1,7 +1,7 @@
--- vim.deprecate = function() end ---@diagnostic disable-line: duplicate-set-field
 require('options')
 require('keymaps')
 require('autocmds')
+require('statusline')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -19,6 +19,21 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins', {
   defaults = { lazy = true },
   change_detection = { notify = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'gzip',
+        'netrwPlugin',
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
+      },
+    }
+  },
+  rocks = {
+    enabled = false,
+  },
 })
 
 require('snippets')
