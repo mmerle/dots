@@ -89,7 +89,7 @@ return {
         },
         grep = {
           rg_opts =
-          '--no-heading --hidden --with-filename --line-number --column --trim -g !.git --smart-case --color=never'
+          '--no-heading --hidden --with-filename --line-number --column --trim -g !.git -g !dist -g !build --smart-case --color=never'
         },
         spell_suggest = {
           winopts = {
@@ -105,6 +105,10 @@ return {
           preview_border = 'FloatBorder',
         },
         fzf_colors = {
+          ['fg'] = { 'fg', 'Pmenu' },
+          ['bg'] = { 'bg', 'Pmenu' },
+          ['fg+'] = { 'fg', 'PmenuSel' },
+          ['bg+'] = { 'bg', 'PmenuSel' },
           ['gutter'] = '-1'
         },
         file_icon_padding = '',
@@ -176,9 +180,9 @@ return {
       })
     end,
   },
-  -- mini.indentscope (https://github.com/echasnovski/mini.indentscope)
+  -- mini.indentscope (https://github.com/nvim-mini/mini.indentscope)
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     version = false,
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
@@ -196,16 +200,16 @@ return {
           'man',
           'mason',
           'markdown',
-          'NvimTree',
           'terminal',
+          'fzf',
         },
         callback = function() vim.b.miniindentscope_disable = true end,
       })
     end,
   },
-  -- mini.files (https://github.com/echasnovski/mini.files)
+  -- mini.files (https://github.com/nvim-mini/mini.files)
   {
-    'echasnovski/mini.files',
+    'nvim-mini/mini.files',
     version = false,
     lazy = false,
     keys = {
@@ -215,7 +219,6 @@ return {
           local minifiles = require('mini.files')
           if not minifiles.close() then
             minifiles.open(vim.api.nvim_buf_get_name(0))
-            -- minifiles.reveal_cwd()
           end
         end,
         desc = 'File explorer',
@@ -246,7 +249,6 @@ return {
     },
     config = function(_, opts)
       require('mini.files').setup(opts)
-
       -- open in splits
       local map_split = function(buf_id, lhs, direction)
         local rhs = function()
@@ -260,7 +262,6 @@ return {
         end
         vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = 'Open in ' .. direction })
       end
-
       vim.api.nvim_create_autocmd('User', {
         pattern = 'MiniFilesBufferCreate',
         callback = function(args)
@@ -271,9 +272,9 @@ return {
       })
     end,
   },
-  -- mini.bufremove (https://github.com/echasnovski/mini.bufremove)
+  -- mini.bufremove (https://github.com/nvim-mini/mini.bufremove)
   {
-    'echasnovski/mini.bufremove',
+    'nvim-mini/mini.bufremove',
     version = false,
     keys = {
       {
@@ -286,7 +287,6 @@ return {
         function()
           local current_buf = vim.api.nvim_get_current_buf()
           local bufs = vim.api.nvim_list_bufs()
-
           for _, buf in ipairs(bufs) do
             if
                 vim.api.nvim_buf_is_valid(buf)
@@ -535,12 +535,30 @@ return {
     config = function()
       local harpoon = require('harpoon')
       harpoon:setup({ settings = { save_on_toggle = true } })
-      vim.keymap.set('n', 'ma', function() harpoon:list():add() end)
-      vim.keymap.set('n', '<leader>m', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-      vim.keymap.set('n', "'a", function() harpoon:list():select(1) end)
-      vim.keymap.set('n', "'s", function() harpoon:list():select(2) end)
-      vim.keymap.set('n', "'d", function() harpoon:list():select(3) end)
-      vim.keymap.set('n', "'f", function() harpoon:list():select(4) end)
+      vim.keymap.set('n', 'ma',
+        function() harpoon:list():add() end,
+        { desc = 'Add current file to mark list' }
+      )
+      vim.keymap.set('n', '<leader>m',
+        function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+        { desc = 'Toggle quick mark list' }
+      )
+      vim.keymap.set('n', "'a",
+        function() harpoon:list():select(1) end,
+        { desc = 'Go to mark #1' }
+      )
+      vim.keymap.set('n', "'s",
+        function() harpoon:list():select(2) end,
+        { desc = 'Go to mark #2' }
+      )
+      vim.keymap.set('n', "'d",
+        function() harpoon:list():select(3) end,
+        { desc = 'Go to mark #3' }
+      )
+      vim.keymap.set('n', "'f",
+        function() harpoon:list():select(4) end,
+        { desc = 'Go to mark #4' }
+      )
     end,
   },
 }

@@ -35,5 +35,3 @@ require('lazy').setup('plugins', {
     enabled = false,
   },
 })
-
-require('snippets')

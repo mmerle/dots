@@ -51,7 +51,7 @@ map('n', 'go', '<c-o>', { desc = 'Goto previous position' }, opts) -- goto previ
 map('n', 'gm', '%', { desc = 'Goto matching pair' }, opts)         -- goto matching character: '()', '{}', '[]'
 
 -- inspect syntax highlighting
-map('n', '<leader>i', '<cmd>Inspect<cr>', opts)
+map('n', '<leader>i', '<cmd>Inspect<cr>', { desc = 'Inspect syntax highlighting' }, opts)
 
 -- visually select text that was last edited/pasted (Vimcast#26)
 map('n', 'gV', '`[v`]', { desc = 'Visually select last edited' }, opts)
@@ -63,7 +63,7 @@ map('i', '<a-bs>', '<c-w>', { desc = 'Delete word' })
 map('n', 'yc', 'yygccp', { remap = true })
 
 -- yank entire file content
-map('n', '<leader>y', '<cmd>%y<cr>')
+map('n', '<leader>y', '<cmd>%y<cr>', { desc = 'Yank entire file' })
 
 -- conceal level toggle
 map('n', '<leader>uc', function()

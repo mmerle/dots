@@ -66,6 +66,7 @@ return {
           astro = { 'prettierd', 'prettier', stop_after_first = true },
           svelte = { 'prettierd', 'prettier', stop_after_first = true },
           php = { 'prettierd', 'prettier', stop_after_first = true },
+          twig = { 'prettierd', 'prettier', stop_after_first = true },
         },
         format_on_save = {
           lsp_format = 'fallback',

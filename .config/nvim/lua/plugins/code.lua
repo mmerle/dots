@@ -10,7 +10,9 @@ return {
     },
     config = function()
       require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_lua').load({ paths = '~/.config/nvim/lua/snippets/' })
       local ls = require('luasnip')
+      -- vim.keymap.set({ 'i', 's' }, '<tab>', function() ls.jump(1) end, { silent = true })
       ls.config.setup({
         enable_autosnippets = true,
         region_check_events = 'InsertEnter',
@@ -58,8 +60,8 @@ return {
           }),
         }),
         sources = {
-          { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          { name = 'nvim_lsp' },
           { name = 'buffer',  keyword_length = 4 },
           { name = 'path' },
           { name = 'calc' },
@@ -104,9 +106,9 @@ return {
       })
     end,
   },
-  -- mini.surround (https://github.com/echasnovski/mini.surround)
+  -- mini.surround (https://github.com/nvim-mini/mini.surround)
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     version = false,
     event = 'VeryLazy',
     opts = {
@@ -137,9 +139,9 @@ return {
     'tpope/vim-repeat',
     event = 'VeryLazy',
   },
-  -- mini.ai (https://github.com/echasnovski/mini.ai)
+  -- mini.ai (https://github.com/nvim-mini/mini.ai)
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     version = false,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
