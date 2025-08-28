@@ -6,6 +6,7 @@ return {
     'javascriptreact',
     'php',
     'svelte',
+    'twig',
     'typescript',
     'typescriptreact',
   },
