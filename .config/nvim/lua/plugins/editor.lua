@@ -383,38 +383,58 @@ return {
       enable_var_usage = false,
     },
   },
-  -- which-key (https://github.com/folke/which-key.nvim)
+  -- mini.clue (https://github.com/nvim-mini/mini.clue)
   {
-    'folke/which-key.nvim',
+    'nvim-mini/mini.clue',
+    version = false,
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        mode = { 'n', 'v' },
-        { '[',          group = 'prev' },
-        { ']',          group = 'next' },
-        { '<leader>c',  group = 'code' },
-        { '<leader>f',  group = 'find' },
-        { '<leader>gh', group = 'git' },
-      },
-      win = {
-        padding = { 1, 0 },
-      },
-      icons = {
-        breadcrumb = '»',
-        separator = '→',
-        group = '+',
-        ellipsis = '…',
-        mappings = false,
-      },
-      plugins = {
-        spelling = { enabled = true },
-      },
-      show_help = false,
-    },
-    config = function(_, opts)
-      local wk = require('which-key')
-      wk.setup(opts)
-      wk.add(opts.defaults)
+    config = function()
+      local miniclue = require('mini.clue')
+      miniclue.setup({
+        triggers = {
+          -- leader maps
+          { mode = 'n', keys = '<Leader>' },
+          { mode = 'x', keys = '<Leader>' },
+          -- completions
+          { mode = 'i', keys = '<C-x>' },
+          -- `g` key
+          { mode = 'n', keys = 'g' },
+          { mode = 'x', keys = 'g' },
+          -- marks
+          { mode = 'n', keys = "'" },
+          { mode = 'n', keys = '`' },
+          { mode = 'x', keys = "'" },
+          { mode = 'x', keys = '`' },
+          -- registers
+          { mode = 'n', keys = '"' },
+          { mode = 'x', keys = '"' },
+          { mode = 'i', keys = '<C-r>' },
+          { mode = 'c', keys = '<C-r>' },
+          -- window commands
+          { mode = 'n', keys = '<C-w>' },
+          -- `z` key
+          { mode = 'n', keys = 'z' },
+          { mode = 'x', keys = 'z' },
+          -- square brackets
+          { mode = 'n', keys = '[' },
+          { mode = 'n', keys = ']' },
+        },
+        clues = {
+          miniclue.gen_clues.builtin_completion(),
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows(),
+          miniclue.gen_clues.z(),
+          miniclue.gen_clues.square_brackets(),
+        },
+        window = {
+          delay = 500,
+          config = {
+            width = 50,
+          }
+        }
+      })
     end,
   },
   -- diffview.nvim (https://github.com/sindrets/diffview.nvim)
