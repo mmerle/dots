@@ -9,8 +9,6 @@ vim.opt.shiftround = true -- round indent
 vim.opt.tabstop = 2       -- size of tab
 vim.opt.softtabstop = 2
 vim.opt.breakindent = true
--- vim.opt.autoindent = true -- good auto indent
--- vim.opt.smartindent = true
 
 -- search
 vim.opt.ignorecase = true
@@ -32,7 +30,7 @@ vim.opt.statuscolumn = '%=%{&nu?(&rnu && v:relnum?v:relnum:v:lnum):""}%=%s'
 vim.opt.showmode = false      -- hide redundant mode
 
 vim.opt.linebreak = true
-vim.opt.showbreak = [[\\]]
+vim.opt.showbreak = '↪'
 
 vim.opt.winborder = 'single'
 
@@ -101,3 +99,4 @@ vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
 
 -- undo and history
 vim.opt.undofile = true -- enable undo
+vim.opt.swapfile = false
