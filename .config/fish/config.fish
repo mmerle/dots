@@ -10,9 +10,7 @@ set -gx GOPATH $XDG_DATA_HOME/go
 
 set -gx EDITOR nvim
 set -gx MANPAGER "nvim -c +Man!"
-set -gx FZF_DEFAULT_OPTS "\
---color=16,gutter:-1 \
---layout=reverse"
+set -gx FZF_DEFAULT_OPTS "--color=16,gutter:-1 --layout=reverse"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
 set -gx HOMEBREW_NO_ENV_HINTS 1
 
@@ -29,12 +27,13 @@ fish_add_path $GOPATH/bin
 fish_vi_key_bindings
 
 if status is-interactive
-    if not set -q TMUX
-        tmux new -A -s (basename (pwd) | tr . _)
-    end
-
     # disable fish greeting
     set fish_greeting
+
+    # auto attach to tmux
+    if not set -q TMUX; and test "$TERM_PROGRAM" != vscode
+        tmux new -A -s (basename (pwd) | tr . _)
+    end
 end
 
 function fish_title
@@ -64,7 +63,7 @@ function fish_prompt
         end
     end
 
-    # Git information
+    # Git info
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1
         set -l git_branch (git symbolic-ref --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
         set -l git_dirty (git status --porcelain 2>/dev/null)
@@ -106,5 +105,6 @@ abbr lg lazygit
 abbr p pnpm
 abbr mkdir 'mkdir -vp'
 
+# generated
 zoxide init fish | source
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
