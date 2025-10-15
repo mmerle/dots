@@ -456,6 +456,17 @@ return {
       },
     },
   },
+  -- vim-dadbod-ui (https://github.com/kristijanhusak/vim-dadbod-ui)
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = { 'tpope/vim-dadbod' },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+  },
   -- nvim-ufo (https://github.com/kevinhwang91/nvim-ufo)
   {
     'kevinhwang91/nvim-ufo',
