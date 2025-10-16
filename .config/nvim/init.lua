@@ -1,3 +1,5 @@
+_G.conf = {}
+
 require('options')
 require('keymaps')
 require('autocmds')

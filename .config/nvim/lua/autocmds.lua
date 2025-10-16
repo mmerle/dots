@@ -27,22 +27,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 }) end,
 })
 
--- diagnostic symbols
-vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = '●',
-      [vim.diagnostic.severity.WARN] = '●',
-      [vim.diagnostic.severity.INFO] = '●',
-      [vim.diagnostic.severity.HINT] = '●',
-    },
-  },
-  -- virtual_text = {
-  --   prefix = '*',
-  -- },
-  virtual_text = false,
-})
-
 -- balance splits on window resize
 vim.api.nvim_create_autocmd('VimResized', {
   desc = 'Balance windows',
@@ -63,7 +47,6 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'
   end,
   group = number_toggle,
 })
-
 
 -- cursorline only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter', 'InsertLeave' }, {

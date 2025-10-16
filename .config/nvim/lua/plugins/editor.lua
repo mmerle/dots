@@ -34,6 +34,7 @@ return {
         },
         fzf_opts = {
           ['--info'] = 'hidden',
+          ['--gutter'] = ' ',
         },
         defaults = {
           file_icons = false,
@@ -109,6 +110,7 @@ return {
           ['bg'] = { 'bg', 'Pmenu' },
           ['fg+'] = { 'fg', 'PmenuSel' },
           ['bg+'] = { 'bg', 'PmenuSel' },
+          ['border'] = { 'fg', 'FloatBorder' },
           ['gutter'] = '-1'
         },
         file_icon_padding = '',
@@ -392,7 +394,7 @@ return {
       local miniclue = require('mini.clue')
       miniclue.setup({
         triggers = {
-          -- leader maps
+          -- leader
           { mode = 'n', keys = '<Leader>' },
           { mode = 'x', keys = '<Leader>' },
           -- completions
@@ -420,11 +422,12 @@ return {
           { mode = 'n', keys = ']' },
         },
         clues = {
+          conf.group_clues,
           miniclue.gen_clues.builtin_completion(),
           miniclue.gen_clues.g(),
           miniclue.gen_clues.marks(),
           miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows(),
+          miniclue.gen_clues.windows({ submode_resize = true }),
           miniclue.gen_clues.z(),
           miniclue.gen_clues.square_brackets(),
         },

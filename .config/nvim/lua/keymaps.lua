@@ -3,15 +3,17 @@ vim.g.mapleader = ' '
 local opts = { silent = true }
 local map = vim.keymap.set
 
+_G.conf.group_clues = {
+  { mode = 'n', keys = '<Leader>f', desc = '+Find' },
+  { mode = 'n', keys = '<Leader>h', desc = '+Hunk' },
+}
+
 -- move through wrapped lines
 map({ 'n', 'v' }, 'j', 'gj')
 map({ 'n', 'v' }, 'k', 'gk')
 
 map('v', '<', '<gv', opts) -- unindent (keep selection)
 map('v', '>', '>gv', opts) -- indent (keep selection)
-
--- map('n', 'H', '^', opts) -- jump to first character of line
--- map('n', 'L', 'g_', opts) -- jump to last character of line
 
 -- quick actions
 map('n', '<leader>s', '<cmd>w<cr>', { desc = 'Write file' }, opts)         -- quick save
