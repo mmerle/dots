@@ -7,8 +7,6 @@ adjust-cell-height = 40%
 adjust-cursor-height = 40%
 
 theme = flora
-background-opacity = 0.96
-background-blur-radius = 60
 
 confirm-close-surface = false
 
