@@ -8,6 +8,7 @@
   "editor.cursorBlinking": "smooth",
   "editor.cursorSurroundingLines": 5,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.experimentalGpuAcceleration": "on",
   "editor.find.addExtraSpaceOnTop": false,
   "editor.fontFamily": "'MD IO', SF Mono",
   "editor.fontLigatures": false,
@@ -38,7 +39,7 @@
     "*.mdx": "markdown",
     "*.fish": "shellscript",
     "*.json": "jsonc",
-    "*.svg": "html",
+    "*.svg": "html"
   },
   "files.exclude": {
     "**/node_modules": true
@@ -74,14 +75,13 @@
   "workbench.iconTheme": null,
   "workbench.layoutControl.enabled": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
-  // "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "workbench.tree.indent": 18,
   "zenMode.fullScreen": false,
 
-  // lang specific
+  // lang
   "css.validate": false,
   "css.lint.unknownAtRules": "ignore",
   "scss.lint.unknownAtRules": "ignore",
@@ -98,7 +98,7 @@
   },
   "svelte.enable-ts-plugin": true,
 
-  // plugin specific
+  // plugin
   "color-highlight.markRuler": false,
   "color-highlight.markerType": "underline",
   "color-highlight.matchRgbWithNoFunction": true,

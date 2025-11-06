@@ -1,0 +1,68 @@
+{
+  "terminal": {
+    "copy_on_select": true,
+    "shell": "system"
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "tabs": {
+    "git_status": false
+  },
+  "use_smartcase_search": true,
+  "tab_size": 2,
+  "rounded_selection": false,
+  "context_servers": {
+    "mcp-server-github": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "github_personal_access_token": "GITHUB_PERSONAL_ACCESS_TOKEN"
+      }
+    }
+  },
+  "agent": {
+    "default_model": {
+      "provider": "ollama",
+      "model": "qwen3:latest"
+    }
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "features": {
+    "edit_prediction_provider": "none"
+  },
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+    "selections_menu": false
+  },
+  "title_bar": {
+    "show_branch_icon": true,
+    "show_user_picture": false
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Github Light",
+    "dark": "Github Dark"
+  },
+  "buffer_font_family": "MD IO",
+  "buffer_font_size": 13,
+  "vim_mode": true,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    "use_system_clipboard": "always",
+    "use_smartcase_find": true
+  },
+  "project_panel": {
+    "hide_root": true,
+    "file_icons": false,
+    "folder_icons": false
+  },
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.85
+  },
+  "cursor_blink": false
+}
