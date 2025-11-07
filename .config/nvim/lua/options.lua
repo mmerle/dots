@@ -1,4 +1,5 @@
 -- vim.opt.cmdheight = 0
+
 vim.opt.mouse            = 'a' -- enable mouse
 vim.opt.diffopt          = 'internal,filler,closeoff,linematch:60'
 

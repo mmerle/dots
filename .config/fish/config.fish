@@ -6,7 +6,6 @@ set -gx XDG_STATE_HOME $HOME/.local/state
 set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
-set -gx GOPATH $XDG_DATA_HOME/go
 
 set -gx EDITOR nvim
 set -gx MANPAGER "nvim -c +Man!"
@@ -18,10 +17,10 @@ set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx NEXT_TELEMETRY_DISABLED 1
 
+fish_add_path "$HOME/.local/bin"
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path $CARGO_HOME/bin
-fish_add_path $GOPATH/bin
 
 # enable vi mode
 fish_vi_key_bindings
