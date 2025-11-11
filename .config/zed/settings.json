@@ -48,7 +48,7 @@
     "light": "Github Light",
     "dark": "Github Dark"
   },
-  "buffer_font_family": "MD IO",
+  "buffer_font_family": "MD IO Variable",
   "buffer_font_size": 13,
   "vim_mode": true,
   "vim": {
