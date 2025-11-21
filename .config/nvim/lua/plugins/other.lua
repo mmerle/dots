@@ -1,7 +1,7 @@
 return {
   -- flora
   {
-    dir = '~/Developer/projects/p/flora/flora.nvim',
+    dir = '~/Developer/projects/flora/nvim',
     name = 'flora',
     lazy = false,
     priority = 1000,
@@ -18,6 +18,7 @@ return {
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = 'all',
+        ignore_install = { 'ipkg' },
         highlight = { enable = true },
         incremental_selection = {
           enable = true,

@@ -1,5 +1,10 @@
 -- vim.opt.cmdheight = 0
 
+-- temp: surpress vscode-neovim output messages
+if vim.g.vscode then
+  vim.opt.cmdheight = 999
+end
+
 vim.opt.mouse            = 'a' -- enable mouse
 vim.opt.diffopt          = 'internal,filler,closeoff,linematch:60'
 

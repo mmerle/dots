@@ -24,7 +24,7 @@
             ]
           },
           {
-            "description": "Right Command to Hyper",
+            "description": "Right Command to LCAG",
             "manipulators": [
               {
                 "from": {
@@ -33,8 +33,8 @@
                 },
                 "to": [
                   {
-                    "key_code": "left_command",
-                    "modifiers": ["left_option", "left_shift", "left_control"]
+                    "key_code": "left_control",
+                    "modifiers": ["left_option", "left_command"]
                   }
                 ],
                 "type": "basic"
@@ -199,4 +199,3 @@
     }
   ]
 }
-
