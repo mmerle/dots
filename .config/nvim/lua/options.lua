@@ -1,4 +1,4 @@
--- vim.opt.cmdheight = 0
+require('vim._extui').enable({})
 
 -- temp: surpress vscode-neovim output messages
 if vim.g.vscode then
