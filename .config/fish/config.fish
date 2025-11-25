@@ -82,10 +82,9 @@ function fish_mode_prompt
 end
 
 # aliases
-alias ls='eza --group-directories-first'
-alias la='eza --group-directories-first -a'
-alias ll='eza --group-directories-first -la'
-alias lt='eza --git-ignore -Ta'
+alias ls='ls -F --color=auto'
+alias la='ls -aF --color=auto'
+alias ll='ls -lavF --color=auto'
 alias vim='nvim'
 alias reload='exec $SHELL -l'
 alias connect='kitty +kitten ssh'
