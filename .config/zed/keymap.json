@@ -1,33 +1,43 @@
 [
+  // global
   {
     "bindings": {
       "ctrl-j": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrevious"
+      "ctrl-k": "menu::SelectPrevious",
+      "ctrl-enter": "workspace::ToggleZoom"
     }
   },
   {
-    "context": "Editor && (showing_code_actions || showing_completions)",
+    "context": "Workspace",
     "bindings": {
-      "ctrl-j": "editor::ContextMenuNext",
-      "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-y": "editor::ConfirmCompletionReplace",
-      "enter": "editor::Newline"
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-b": "workspace::ToggleRightDock"
     }
   },
-  {
-    "context": "VimControl && !menu",
-    "bindings": {
-      "g m": "vim::Matching"
-    }
-  },
+  // pane navigation
   {
     "context": "Editor && vim_mode == normal || Dock",
     "bindings": {
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-e": "workspace::ToggleLeftDock"
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  // completion menus
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-j": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrevious",
+      "ctrl-y": "editor::ConfirmCompletionReplace"
+    }
+  },
+  // misc
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "g m": "vim::Matching"
     }
   },
   {

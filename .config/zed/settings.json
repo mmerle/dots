@@ -1,4 +1,6 @@
 {
+  "ensure_final_newline_on_save": false,
+  "format_on_save": "off",
   "outline_panel": {
     "indent_size": 12.0,
     "folder_icons": false,
