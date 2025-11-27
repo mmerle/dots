@@ -1,4 +1,20 @@
 {
+  "preferred_line_length": 100,
+  "soft_wrap": "editor_width",
+  "minimap": {
+    "show": "never"
+  },
+  "file_types": {
+    "Markdown": [".mdx", ".mdoc"],
+    "JSONC": [".json"],
+    "HTML": [".svg"]
+  },
+  "scrollbar": {
+    "show": "never"
+  },
+  "sticky_scroll": {
+    "enabled": true
+  },
   "terminal": {
     "copy_on_select": true,
     "shell": "system"
@@ -14,7 +30,6 @@
   "rounded_selection": false,
   "context_servers": {
     "mcp-server-github": {
-      "source": "extension",
       "enabled": true,
       "settings": {
         "github_personal_access_token": "GITHUB_PERSONAL_ACCESS_TOKEN"
@@ -23,8 +38,8 @@
   },
   "agent": {
     "default_model": {
-      "provider": "ollama",
-      "model": "qwen3:latest"
+      "provider": "openai",
+      "model": "gpt-5.1"
     }
   },
   "telemetry": {
@@ -35,6 +50,8 @@
     "edit_prediction_provider": "none"
   },
   "toolbar": {
+    "code_actions": false,
+    "agent_review": false,
     "breadcrumbs": false,
     "quick_actions": false,
     "selections_menu": false
@@ -45,8 +62,8 @@
   },
   "theme": {
     "mode": "system",
-    "light": "Github Light",
-    "dark": "Github Dark"
+    "light": "Min Light (Solid)",
+    "dark": "Min Dark (Solid)"
   },
   "buffer_font_family": "MD IO Variable",
   "buffer_font_size": 13,
@@ -59,7 +76,8 @@
   "project_panel": {
     "hide_root": true,
     "file_icons": false,
-    "folder_icons": false
+    "folder_icons": false,
+    "show_diagnostics": "off"
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.85
