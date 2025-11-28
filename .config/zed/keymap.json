@@ -30,7 +30,8 @@
     "bindings": {
       "ctrl-j": "editor::ContextMenuNext",
       "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-y": "editor::ConfirmCompletionReplace"
+      "ctrl-y": "editor::ConfirmCompletionReplace",
+      "enter": "editor::Newline"
     }
   },
   // misc
@@ -49,6 +50,28 @@
       "space p": "file_finder::Toggle",
       "space /": "pane::DeploySearch",
       "space w": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+    "bindings": {
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "g z a": "vim::PushAddSurrounds",
+      "g z d": "vim::PushDeleteSurrounds",
+      "g z r": "vim::PushChangeSurrounds"
+    }
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward"
     }
   }
 ]
