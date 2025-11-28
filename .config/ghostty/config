@@ -21,6 +21,7 @@ adjust-cursor-height = 40%
 
 title = " "
 confirm-close-surface = false
+bell-features = no-title, no-attention
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
 mouse-shift-capture = true
@@ -43,11 +44,11 @@ window-padding-y = 0
 window-padding-color = background
 
 # \x02 is ctrl+b (tmux)
-keybind = super+one=text:\x021
-keybind = super+two=text:\x022
-keybind = super+three=text:\x023
-keybind = super+four=text:\x024
-keybind = super+five=text:\x025
+keybind = super+digit_1=text:\x021
+keybind = super+digit_2=text:\x022
+keybind = super+digit_3=text:\x023
+keybind = super+digit_4=text:\x024
+keybind = super+digit_5=text:\x025
 keybind = super+w=text:\x02x
 keybind = super+t=text:\x02c
 keybind = super+f=text:\x02\x05
