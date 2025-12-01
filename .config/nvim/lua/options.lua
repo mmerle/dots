@@ -37,6 +37,7 @@ vim.opt.number           = true  -- show line numbers
 vim.opt.relativenumber   = true  -- line numbers relative to cursor
 vim.opt.signcolumn       = 'yes' -- always show signcolumn
 vim.opt.statuscolumn     = '%=%{&nu?(&rnu && v:relnum?v:relnum:v:lnum):""}%=%s'
+vim.o.colorcolumn        = '+1'
 vim.opt.showmode         = false -- hide redundant mode
 
 vim.opt.linebreak        = true
