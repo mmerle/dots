@@ -1,0 +1,15 @@
+[
+  {
+    "label": "LazyGit",
+    "command": "lazygit",
+    "shell": {
+      "program": "sh"
+    },
+    "hide": "on_success",
+    "reveal_target": "center",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": true,
+    "show_summary": false,
+    "show_command": false
+  }
+]
