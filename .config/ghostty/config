@@ -1,16 +1,10 @@
 auto-update-channel = tip
 
 theme = flora-dark
-background-opacity = 0.96
-background-blur-radius = 60
 
 macos-option-as-alt = true
-macos-titlebar-style = transparent
+macos-titlebar-style = hidden
 macos-titlebar-proxy-icon = hidden
-macos-icon = custom-style
-macos-icon-frame = plastic
-macos-icon-ghost-color = #ffffff
-macos-icon-screen-color = #000000
 macos-shortcuts = allow
 
 font-family = MD IO Variable
