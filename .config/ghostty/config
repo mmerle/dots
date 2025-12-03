@@ -34,7 +34,7 @@ resize-overlay = never
 window-colorspace = display-p3
 window-padding-balance = true
 window-padding-x = 10
-window-padding-y = 0
+window-padding-y = 10
 window-padding-color = background
 
 # \x02 is ctrl+b (tmux)
