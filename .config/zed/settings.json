@@ -57,14 +57,24 @@
     "git_status": false
   },
   "use_smartcase_search": true,
-  "tab_size": 2,
+  "tab_size": 4,
   "rounded_selection": false,
   "context_servers": {
-    "mcp-server-github": {
-      "enabled": true,
-      "settings": {
-        "github_personal_access_token": "GITHUB_PERSONAL_ACCESS_TOKEN"
-      }
+    "figma": {
+      "settings": {},
+      "url": "http://127.0.0.1:3845/mcp"
+    },
+    "astro-docs": {
+      "settings": {},
+      "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"]
     }
   },
   "agent": {
@@ -92,7 +102,7 @@
     "show_branch_icon": true,
     "show_user_picture": false
   },
-  "theme": "Min Dark (Solid)",
+  "theme": "Github Dark",
   "buffer_font_family": "MD IO Variable",
   "buffer_font_size": 13,
   "vim_mode": true,
@@ -116,6 +126,9 @@
   "cursor_blink": false,
   "languages": {
     "SCSS": {
+      "tab_size": 4
+    },
+    "Twig": {
       "tab_size": 4
     }
   }
