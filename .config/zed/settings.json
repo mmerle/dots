@@ -57,7 +57,7 @@
     "git_status": false
   },
   "use_smartcase_search": true,
-  "tab_size": 4,
+  "tab_size": 2,
   "rounded_selection": false,
   "context_servers": {
     "figma": {

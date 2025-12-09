@@ -38,7 +38,16 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
       "g m": "vim::Matching"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      ">": "editor::Indent",
+      "<": "editor::Outdent"
     }
   },
   {
