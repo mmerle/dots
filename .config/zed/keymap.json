@@ -34,6 +34,19 @@
       "enter": "editor::Newline"
     }
   },
+  // leader keys
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space s": "workspace::Save",
+      "space S": "workspace::SaveAll",
+      "space x": "editor::Format",
+      "space p": "file_finder::Toggle",
+      "space /": "pane::DeploySearch",
+      "space w": "pane::CloseActiveItem",
+      "space b": "tab_switcher::ToggleAll"
+    }
+  },
   // misc
   {
     "context": "VimControl && !menu",
@@ -48,17 +61,6 @@
     "bindings": {
       ">": "editor::Indent",
       "<": "editor::Outdent"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == normal",
-    "bindings": {
-      "space s": "workspace::Save",
-      "space S": "workspace::SaveAll",
-      "space x": "editor::Format",
-      "space p": "file_finder::Toggle",
-      "space /": "pane::DeploySearch",
-      "space w": "pane::CloseActiveItem"
     }
   },
   {
