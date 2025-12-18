@@ -1,139 +1,125 @@
 {
-  "use_system_path_prompts": false,
-  "zoomed_padding": true,
-  "debugger": {
-    "button": false
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
   },
+  "buffer_font_family": "MD IO Variable",
+  "buffer_font_size": 13,
+  "tab_size": 2,
+  "theme": "Min Dark (Solid)",
+  // ui
+  "cursor_blink": false,
+  "rounded_selection": false,
+  "use_system_path_prompts": false,
   "show_whitespaces": "trailing",
   "inline_code_actions": false,
-  "ensure_final_newline_on_save": false,
+  "scrollbar": {
+    "show": "never",
+  },
+  "sticky_scroll": {
+    "enabled": true,
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false,
+  },
+  "tabs": {
+    "file_icons": false,
+    "git_status": false,
+  },
+  // formatting
+  "soft_wrap": "editor_width",
+  "preferred_line_length": 100,
   "format_on_save": "off",
-  "outline_panel": {
-    "default_width": 240.0,
-    "dock": "right",
-    "indent_size": 12.0,
-    "folder_icons": false,
-    "file_icons": false
+  "ensure_final_newline_on_save": true,
+  "features": {
+    "edit_prediction_provider": "none",
+  },
+  "minimap": {
+    "show": "never",
+  },
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.85,
+  },
+  "debugger": {
+    "button": false,
   },
   "git": {
     "path_style": "file_name_first",
     "inline_blame": {
-      "enabled": false
-    }
-  },
-  "collaboration_panel": {
-    "button": false
-  },
-  "notification_panel": {
-    "default_width": 240.0,
-    "button": false
+      "enabled": false,
+    },
   },
   "search": {
-    "button": false
-  },
-  "git_panel": {
-    "default_width": 240.0,
-    "tree_view": false,
-    "status_style": "icon",
-    "dock": "right",
-    "collapse_untracked_diff": false,
-    "sort_by_path": false
-  },
-  "preferred_line_length": 100,
-  "soft_wrap": "editor_width",
-  "minimap": {
-    "show": "never"
-  },
-  "file_types": {
-    "Markdown": [".mdx", ".mdoc"],
-    "JSONC": [".json"],
-    "HTML": [".svg"]
-  },
-  "scrollbar": {
-    "show": "never"
-  },
-  "sticky_scroll": {
-    "enabled": true
+    "button": false,
   },
   "terminal": {
     "button": false,
     "copy_on_select": true,
     "shell": "system",
-    "line_height": "comfortable"
-  },
-  "tab_bar": {
-    "show": true,
-    "show_nav_history_buttons": false
-  },
-  "tabs": {
-    "file_icons": false,
-    "git_status": false
+    "line_height": "comfortable",
   },
   "use_smartcase_search": true,
-  "tab_size": 2,
-  "rounded_selection": false,
-  "context_servers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "figma": {
-      "settings": {},
-      "url": "http://127.0.0.1:3845/mcp"
-    },
-    "astro-docs": {
-      "settings": {},
-      "url": "https://mcp.docs.astro.build/mcp"
-    },
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"]
-    }
-  },
-  "agent": {
-    "default_width": 240.0,
-    "dock": "right",
-    "use_modifier_to_send": true,
-    "default_model": {
-      "provider": "openai",
-      "model": "gpt-5.1"
-    },
-    "inline_assistant_model": {
-      "provider": "openai",
-      "model": "gpt-5.1"
-    },
-    "commit_message_model": {
-       "provider": "openai",
-       "model": "gpt-5-nano"
-     }
-  },
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  },
-  "features": {
-    "edit_prediction_provider": "none"
-  },
   "toolbar": {
     "code_actions": false,
     "agent_review": false,
     "breadcrumbs": false,
     "quick_actions": false,
-    "selections_menu": false
+    "selections_menu": false,
   },
   "title_bar": {
     "show_branch_icon": true,
-    "show_user_picture": false
+    "show_user_picture": false,
   },
-  "theme": "Min Dark (Solid)",
-  "buffer_font_family": "MD IO Variable",
-  "buffer_font_size": 13,
+  // vim
   "vim_mode": true,
   "vim": {
     "toggle_relative_line_numbers": true,
     "use_system_clipboard": "always",
-    "use_smartcase_find": true
+    "use_smartcase_find": true,
   },
+  // llm
+  "context_servers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+    },
+    "figma": {
+      "settings": {},
+      "url": "http://127.0.0.1:3845/mcp",
+    },
+    "astro-docs": {
+      "settings": {},
+      "url": "https://mcp.docs.astro.build/mcp",
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"],
+    },
+  },
+  "agent": {
+    "dock": "right",
+    "use_modifier_to_send": true,
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-5.1",
+    },
+    "inline_assistant_model": {
+      "provider": "openai",
+      "model": "gpt-5.1",
+    },
+    "commit_message_model": {
+      "provider": "openai",
+      "model": "gpt-5-nano",
+    },
+  },
+  // filetypes
+  "file_types": {
+    "Markdown": [".mdx", ".mdoc"],
+    "JSONC": [".json"],
+    "HTML": [".svg"],
+  },
+  // panels
   "project_panel": {
     "dock": "right",
     "starts_open": false,
@@ -142,18 +128,34 @@
     "hide_root": true,
     "file_icons": false,
     "folder_icons": false,
-    "show_diagnostics": "off"
+    "show_diagnostics": "off",
   },
-  "active_pane_modifiers": {
-    "inactive_opacity": 0.85
+  "git_panel": {
+    "tree_view": false,
+    "status_style": "icon",
+    "dock": "right",
+    "collapse_untracked_diff": false,
+    "sort_by_path": false,
   },
-  "cursor_blink": false,
+  "outline_panel": {
+    "dock": "right",
+    "indent_size": 12.0,
+    "folder_icons": false,
+    "file_icons": false,
+  },
+  "collaboration_panel": {
+    "button": false,
+  },
+  "notification_panel": {
+    "button": false,
+  },
+  // lang specific
   "languages": {
     "SCSS": {
-      "tab_size": 4
+      "tab_size": 4,
     },
     "Twig": {
-      "tab_size": 4
-    }
-  }
+      "tab_size": 4,
+    },
+  },
 }
