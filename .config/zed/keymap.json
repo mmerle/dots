@@ -3,15 +3,16 @@
   {
     "bindings": {
       "ctrl-j": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrevious",
-      "ctrl-enter": "workspace::ToggleZoom"
+      "ctrl-k": "menu::SelectPrevious"
+      // "ctrl-enter": "workspace::ToggleZoom"
     }
   },
   {
     "context": "Workspace",
     "bindings": {
       "cmd-shift-g": "git_panel::ToggleFocus",
-      "cmd-shift-b": "workspace::ToggleRightDock"
+      "cmd-b": "workspace::ToggleRightDock",
+      "cmd-shift-b": "workspace::ToggleLeftDock",
     }
   },
   // pane navigation
@@ -53,7 +54,8 @@
     "bindings": {
       "j": ["vim::Down", { "display_lines": true }],
       "k": ["vim::Up", { "display_lines": true }],
-      "g m": "vim::Matching"
+      "g m": "vim::Matching",
+      "space c a": "editor::ToggleCodeActions"
     }
   },
   {
@@ -83,6 +85,22 @@
     "bindings": {
       "s": "vim::PushSneak",
       "shift-s": "vim::PushSneakBackward"
+    }
+  },
+  // file explorer
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "y": "project_panel::Copy",
+      "Y": "workspace::CopyRelativePath",
+      "d": "project_panel::Trash",
+      "D": "project_panel::Delete",
+      "e": "project_panel::CollapseAllEntries",
+      "p": "project_panel::Paste",
+      "P": "project_panel::SelectParent",
+      "r": "project_panel::Rename",
+      "x": "project_panel::Cut",
     }
   }
 ]

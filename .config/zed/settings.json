@@ -1,9 +1,16 @@
 {
+  "use_system_path_prompts": false,
+  "zoomed_padding": true,
+  "debugger": {
+    "button": false
+  },
   "show_whitespaces": "trailing",
   "inline_code_actions": false,
   "ensure_final_newline_on_save": false,
   "format_on_save": "off",
   "outline_panel": {
+    "default_width": 240.0,
+    "dock": "right",
     "indent_size": 12.0,
     "folder_icons": false,
     "file_icons": false
@@ -18,14 +25,19 @@
     "button": false
   },
   "notification_panel": {
+    "default_width": 240.0,
     "button": false
   },
   "search": {
     "button": false
   },
   "git_panel": {
+    "default_width": 240.0,
+    "tree_view": false,
+    "status_style": "icon",
+    "dock": "right",
     "collapse_untracked_diff": false,
-    "sort_by_path": true
+    "sort_by_path": false
   },
   "preferred_line_length": 100,
   "soft_wrap": "editor_width",
@@ -44,6 +56,7 @@
     "enabled": true
   },
   "terminal": {
+    "button": false,
     "copy_on_select": true,
     "shell": "system",
     "line_height": "comfortable"
@@ -60,6 +73,10 @@
   "tab_size": 2,
   "rounded_selection": false,
   "context_servers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
     "figma": {
       "settings": {},
       "url": "http://127.0.0.1:3845/mcp"
@@ -68,21 +85,27 @@
       "settings": {},
       "url": "https://mcp.docs.astro.build/mcp"
     },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"]
     }
   },
   "agent": {
+    "default_width": 240.0,
+    "dock": "right",
     "use_modifier_to_send": true,
     "default_model": {
       "provider": "openai",
       "model": "gpt-5.1"
-    }
+    },
+    "inline_assistant_model": {
+      "provider": "openai",
+      "model": "gpt-5.1"
+    },
+    "commit_message_model": {
+       "provider": "openai",
+       "model": "gpt-5-nano"
+     }
   },
   "telemetry": {
     "diagnostics": false,
@@ -102,7 +125,7 @@
     "show_branch_icon": true,
     "show_user_picture": false
   },
-  "theme": "Github Dark",
+  "theme": "Min Dark (Solid)",
   "buffer_font_family": "MD IO Variable",
   "buffer_font_size": 13,
   "vim_mode": true,
@@ -112,6 +135,7 @@
     "use_smartcase_find": true
   },
   "project_panel": {
+    "dock": "right",
     "starts_open": false,
     "entry_spacing": "standard",
     "indent_size": 12.0,

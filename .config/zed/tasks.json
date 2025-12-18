@@ -11,5 +11,27 @@
     "use_new_terminal": true,
     "show_summary": false,
     "show_command": false
-  }
+  },
+  {
+    "label": "Live Grep",
+    "command": "zed \"$(tv text)\"",
+    "shell": {
+      "program": "sh"
+    },
+    "hide": "always",
+    "reveal_target": "center",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  },
+  {
+    "label": "Live Grep Test",
+    "command": "sh -lc 'rg -uu --line-number --no-heading --color=always \"\" | fzf --ansi --delimiter : --preview \"bat --style=numbers --color=always {1} --line-range {2}:\" --preview-window=right:60% | awk -F: \"{print \\$1 \\\":+\\\" \\$2}\" | xargs -r zed'",
+    "shell": {
+      "program": "sh"
+    },
+    "hide": "always",
+    "reveal_target": "center",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  },
 ]
