@@ -30,8 +30,10 @@ if status is-interactive
     set fish_greeting
 
     # auto attach to tmux
-    if not set -q TMUX; and test "$TERM_PROGRAM" != vscode
-        tmux new -A -s (basename (pwd) | tr . _)
+    if not set -q TMUX
+        if not contains -- $TERM_PROGRAM vscode zed
+            tmux new -A -s (basename (pwd) | tr . _)
+        end
     end
 end
 
