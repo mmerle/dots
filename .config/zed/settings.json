@@ -30,7 +30,7 @@
   // formatting
   "soft_wrap": "editor_width",
   "preferred_line_length": 100,
-  "format_on_save": "off",
+  "format_on_save": "on",
   "ensure_final_newline_on_save": true,
   "features": {
     "edit_prediction_provider": "none",
@@ -156,6 +156,13 @@
     },
     "Twig": {
       "tab_size": 4,
+    },
+  },
+  "profiles": {
+    "work": {
+      "tab_size": 4,
+      "format_on_save": "off",
+      "ensure_final_newline_on_save": true,
     },
   },
 }
