@@ -6,7 +6,17 @@
   "buffer_font_family": "MD IO Variable",
   "buffer_font_size": 13,
   "tab_size": 2,
-  "theme": "Min Dark (Solid)",
+  "theme": {
+    "mode": "system",
+    "dark": "Min Dark (Solid)",
+    "light": "Min Light (Solid)",
+  },
+  "use_smartcase_search": true,
+  // formatting
+  "soft_wrap": "editor_width",
+  "preferred_line_length": 80,
+  "format_on_save": "on",
+  "ensure_final_newline_on_save": true,
   // ui
   "cursor_blink": false,
   "rounded_selection": false,
@@ -27,11 +37,6 @@
     "file_icons": false,
     "git_status": false,
   },
-  // formatting
-  "soft_wrap": "editor_width",
-  "preferred_line_length": 100,
-  "format_on_save": "off",
-  "ensure_final_newline_on_save": true,
   "features": {
     "edit_prediction_provider": "none",
   },
@@ -59,7 +64,6 @@
     "shell": "system",
     "line_height": "comfortable",
   },
-  "use_smartcase_search": true,
   "toolbar": {
     "code_actions": false,
     "agent_review": false,
@@ -94,7 +98,12 @@
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"],
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--channel=canary",
+        "--headless=true",
+      ],
     },
   },
   "agent": {
@@ -156,6 +165,16 @@
     },
     "Twig": {
       "tab_size": 4,
+    },
+  },
+  // profiles
+  "profiles": {
+    "work": {
+      "tab_size": 4,
+      "soft_wrap": "none",
+      "preferred_line_length": 100,
+      "format_on_save": "off",
+      "ensure_final_newline_on_save": true,
     },
   },
 }
