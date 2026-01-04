@@ -1,12 +1,4 @@
 return {
-  -- flora
-  {
-    dir = '~/Developer/projects/flora/nvim',
-    name = 'flora',
-    lazy = false,
-    priority = 1000,
-    config = function() vim.cmd([[colorscheme flora]]) end,
-  },
   -- nvim-treesitter (https://github.com/nvim-treesitter/nvim-treesitter)
   {
     'nvim-treesitter/nvim-treesitter',

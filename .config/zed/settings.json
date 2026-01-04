@@ -37,11 +37,6 @@
     "file_icons": false,
     "git_status": false,
   },
-  // formatting
-  "soft_wrap": "editor_width",
-  "preferred_line_length": 100,
-  "format_on_save": "on",
-  "ensure_final_newline_on_save": true,
   "features": {
     "edit_prediction_provider": "none",
   },
@@ -103,12 +98,7 @@
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": [
-        "-y",
-        "chrome-devtools-mcp@latest",
-        "--channel=canary",
-        "--headless=true",
-      ],
+      "args": ["-y", "chrome-devtools-mcp@latest", "--channel=canary", "--headless=true"],
     },
   },
   "agent": {
