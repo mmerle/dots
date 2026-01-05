@@ -29,6 +29,9 @@
   "sticky_scroll": {
     "enabled": true,
   },
+  "file_finder": {
+    "file_icons": false,
+  },
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false,
@@ -36,9 +39,6 @@
   "tabs": {
     "file_icons": false,
     "git_status": false,
-  },
-  "features": {
-    "edit_prediction_provider": "none",
   },
   "minimap": {
     "show": "never",
@@ -83,6 +83,9 @@
     "use_smartcase_find": true,
   },
   // llm
+  "features": {
+    "edit_prediction_provider": "none",
+  },
   "context_servers": {
     "context7": {
       "command": "npx",
@@ -122,12 +125,6 @@
       "model": "gpt-5-nano",
     },
   },
-  // filetypes
-  "file_types": {
-    "Markdown": [".mdx", ".mdoc"],
-    "JSONC": [".json"],
-    "HTML": [".svg"],
-  },
   // panels
   "project_panel": {
     "auto_fold_dirs": false,
@@ -158,6 +155,12 @@
   },
   "notification_panel": {
     "button": false,
+  },
+  // filetypes
+  "file_types": {
+    "Markdown": [".mdx", ".mdoc"],
+    "JSONC": [".json"],
+    "HTML": [".svg"],
   },
   // lang specific
   "languages": {
