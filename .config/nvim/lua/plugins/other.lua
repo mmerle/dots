@@ -3,7 +3,8 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
+    lazy = false,
+    branch = 'master',
     dependencies = {
       'kevinhwang91/promise-async',
     },
