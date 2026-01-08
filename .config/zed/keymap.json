@@ -55,6 +55,7 @@
       "j": ["vim::Down", { "display_lines": true }],
       "k": ["vim::Up", { "display_lines": true }],
       "g m": "vim::Matching",
+      "g h": "editor::Hover",
       "space c a": "editor::ToggleCodeActions",
     },
   },
