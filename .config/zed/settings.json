@@ -82,47 +82,30 @@
     "use_system_clipboard": "always",
     "use_smartcase_find": true,
   },
+  "which_key": { "enabled": true },
   // llm
   "features": {
     "edit_prediction_provider": "none",
-  },
-  "context_servers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"],
-    },
-    "figma": {
-      "settings": {},
-      "url": "http://127.0.0.1:3845/mcp",
-    },
-    "astro-docs": {
-      "settings": {},
-      "url": "https://mcp.docs.astro.build/mcp",
-    },
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "chrome-devtools-mcp@latest",
-        "--channel=canary",
-        "--headless=true",
-      ],
-    },
   },
   "agent": {
     "dock": "right",
     "use_modifier_to_send": true,
     "default_model": {
       "provider": "openai",
-      "model": "gpt-5.1",
+      "model": "gpt-5.2",
     },
     "inline_assistant_model": {
       "provider": "openai",
-      "model": "gpt-5.1",
+      "model": "gpt-5.2",
     },
     "commit_message_model": {
       "provider": "openai",
       "model": "gpt-5-nano",
+    },
+  },
+  "agent_servers": {
+    "codex": {
+      "favorite_models": ["gpt-5.2-codex/xhigh", "gpt-5.2/xhigh"],
     },
   },
   // panels
