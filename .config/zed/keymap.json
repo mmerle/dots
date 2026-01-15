@@ -4,7 +4,6 @@
     "bindings": {
       "ctrl-j": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrevious",
-      // "ctrl-enter": "workspace::ToggleZoom"
     },
   },
   {
@@ -58,6 +57,7 @@
       "j": ["vim::Down", { "display_lines": true }],
       "k": ["vim::Up", { "display_lines": true }],
       "g m": "vim::Matching",
+      "g h": "editor::Hover",
       "space c a": "editor::ToggleCodeActions",
     },
   },
@@ -94,7 +94,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "a": "project_panel::NewFile",
+      "o": "project_panel::NewFile",
       "y": "project_panel::Copy",
       "Y": "workspace::CopyRelativePath",
       "d": "project_panel::Trash",
