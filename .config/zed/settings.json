@@ -84,6 +84,7 @@
   },
   "which_key": { "enabled": true },
   // llm
+  "show_edit_predictions": false,
   "agent": {
     "dock": "right",
     "use_modifier_to_send": true,
