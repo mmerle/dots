@@ -105,7 +105,10 @@
   },
   "agent_servers": {
     "codex": {
-      "favorite_models": ["gpt-5.2-codex/xhigh", "gpt-5.2/xhigh"],
+      "favorite_models": [
+        "gpt-5.2-codex/xhigh",
+        "gpt-5.2-codex/high"
+      ],
     },
   },
   // panels
@@ -145,23 +148,12 @@
     "JSONC": [".json"],
     "HTML": [".svg"],
   },
-  // lang specific
-  "languages": {
-    "SCSS": {
-      "tab_size": 4,
-    },
-    "Twig": {
-      "tab_size": 4,
-    },
-  },
   // profiles
   "profiles": {
     "work": {
       "tab_size": 4,
-      "soft_wrap": "none",
       "preferred_line_length": 100,
       "format_on_save": "off",
-      "ensure_final_newline_on_save": true,
     },
   },
 }
