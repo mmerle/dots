@@ -84,8 +84,8 @@
   },
   "which_key": { "enabled": true },
   // llm
-  "features": {
-    "edit_prediction_provider": "none",
+  "edit_predictions": {
+    "provider": "none"
   },
   "agent": {
     "dock": "right",
@@ -110,6 +110,16 @@
         "gpt-5.2-codex/high"
       ],
     },
+  },
+  "context_servers": {
+      "context7": {
+        "url": "https://mcp.context7.com/mcp",
+        "settings": {},
+      },
+      "playwright": {
+        "command": "npx",
+        "args": ["-y", "@playwright/mcp@latest", "--isolated", "--browser", "webkit"],
+      }
   },
   // panels
   "project_panel": {
