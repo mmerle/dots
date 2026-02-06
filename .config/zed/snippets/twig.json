@@ -1,0 +1,30 @@
+{
+  "twig expression delimiter": {
+    "prefix": "{{",
+    "body": ["{{ $1 }}", "$0"]
+  },
+  "twig statement delimiter": {
+    "prefix": "%%",
+    "body": ["{% $1 %}", "$0"]
+  },
+  "twig comment": {
+    "prefix": "##",
+    "body": ["{# $1 #}", "$0"]
+  },
+  "twig variable": {
+    "prefix": "set",
+    "body": ["{% set $1 = $2 %}", "$0"]
+  },
+  "twig include": {
+    "prefix": "include",
+    "body": ["{% include $1 %}", "$0"]
+  },
+  "twig if": {
+    "prefix": "if",
+    "body": ["{% if $1 %}$2{% endif %}", "$0"]
+  },
+  "twig if else": {
+    "prefix": "ife",
+    "body": ["{% if $1 %}$2{% else %}$3{% endif %}", "$0"]
+  }
+}

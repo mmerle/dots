@@ -1,9 +1,54 @@
 [
-  // open source control view
+  // sidebar shortcuts
   {
     "key": "shift+cmd+g",
     "command": "workbench.view.scm",
     "when": "!searchViewletVisible"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "workbench.view.remote",
+    "when": "!searchViewletVisible"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "chatgpt.openSidebar",
+    "when": "!searchViewletVisible"
+  },
+  // tab switching order
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditorInGroup"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditorInGroup"
+  },
+  // explorer shortcuts
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "explorerViewletFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "r",
+    "command": "renameFile",
+    "when": "explorerViewletFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+d",
+    "command": "deleteFile",
+    "when": "explorerViewletFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "shift+w",
+    "command": "workbench.files.action.collapseExplorerFolders",
+    "when": "explorerViewletFocus && filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "q",
+    "command": "workbench.action.closeSidebar",
+    "when": "sideBarFocus && !inputFocus"
   },
   // terminal keybinds
   {
@@ -39,6 +84,16 @@
     "key": "ctrl+k",
     "command": "selectPrevSuggestion",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+y",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "enter",
+    "command": "-acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
   },
   // vim navigation for command palette
   {
@@ -88,13 +143,10 @@
     "key": "ctrl+s",
     "command": "workbench.action.moveEditorToNextGroup"
   },
-  // better tab navigation
+  // emmet
   {
-    "key": "ctrl+.",
-    "command": "workbench.action.nextEditor"
-  },
-  {
-    "key": "ctrl+,",
-    "command": "workbench.action.previousEditor"
+    "key": "shift+5",
+    "command": "editor.emmet.action.matchTag",
+    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
   }
 ]

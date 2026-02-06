@@ -1,173 +1,121 @@
--- editor plugins
---
--- additions/enhancements/replacements to the user interface
-
 return {
-  -- nvim-telescope (https://github.com/nvim-telescope/telescope.nvim)
+  -- fzf-lua (https://github.com/ibhagwan/fzf-lua)
   {
-    'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'debugloop/telescope-undo.nvim',
-      'dimaportenko/telescope-simulators.nvim',
-      'nvim-telescope/telescope-ui-select.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-      },
-    },
+    'ibhagwan/fzf-lua',
     keys = {
-      {
-        '<leader>p',
-        '<cmd>Telescope find_files<cr>',
-        desc = 'Find files',
-      },
-      {
-        '<leader>/',
-        '<cmd>Telescope live_grep<cr>',
-        desc = 'Find text',
-      },
-      {
-        '<leader>fu',
-        '<cmd>Telescope undo<cr>',
-        desc = 'Find undo history',
-      },
-      {
-        '<leader>b',
-        '<cmd>Telescope buffers<cr>',
-        desc = 'Find buffers',
-      },
-      {
-        '<leader>fb',
-        '<cmd>Telescope current_buffer_fuzzy_find<cr>',
-        desc = 'Find in current buffer',
-      },
-      {
-        '<leader>fo',
-        '<cmd>Telescope oldfiles<cr>',
-        desc = 'Find recent files',
-      },
-      {
-        '<leader>fr',
-        '<cmd>Telescope resume<cr>',
-        desc = 'Resume find',
-      },
-      {
-        '<leader>fw',
-        '<cmd>Telescope grep_string<cr>',
-        desc = 'Find current word',
-      },
-      {
-        '<leader>fd',
-        '<cmd>Telescope diagnostics<cr>',
-        desc = 'Find diagnostics',
-      },
-      {
-        '<leader>fc',
-        '<cmd>Telescope command_history<cr>',
-        desc = 'Find command history',
-      },
-      {
-        '<leader>fC',
-        '<cmd>Telescope commands<cr>',
-        desc = 'Find commands',
-      },
-      {
-        '<leader>fh',
-        '<cmd>Telescope help_tags<cr>',
-        desc = 'Find help pages',
-      },
-      {
-        '<leader>fH',
-        '<cmd>Telescope highlights<cr>',
-        desc = 'Find highlight groups',
-      },
-      {
-        '<leader>fk',
-        '<cmd>Telescope keymaps<cr>',
-        desc = 'Find keymaps',
-      },
-      {
-        '<leader>fM',
-        '<cmd>Telescope man_pages<cr>',
-        desc = 'Find man pages',
-      },
-      {
-        '<leader>ff',
-        '<cmd>Telescope builtin<cr>',
-        desc = 'Find telescope builtins',
-      },
+      { '<leader>fr', '<cmd>FzfLua resume<cr>',                   desc = 'Resume find' },
+      { '<leader>p',  '<cmd>FzfLua files<cr>',                    desc = 'Find files' },
+      { '<leader>/',  '<cmd>FzfLua live_grep<cr>',                desc = 'Find text' },
+      { '<leader>b',  '<cmd>FzfLua buffers<cr>',                  desc = 'Find buffers', },
+      { '<leader>fo', '<cmd>FzfLua oldfiles<cr>',                 desc = 'Find recent files', },
+      { '<leader>fb', '<cmd>FzfLua lgrep_curbuf<cr>',             desc = 'Find in current buffer', },
+      { '<leader>fd', '<cmd>FzfLua lsp_document_diagnostics<cr>', desc = 'Find diagnostics' },
+      { '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>',     desc = 'Find symbols', },
+      { '<leader>fS', '<cmd>FzfLua spell_suggest<cr>',            desc = 'Find spelling suggestions', },
+      { '<leader>fw', '<cmd>FzfLua grep_cword<cr>',               desc = 'Find current word', },
+      { '<leader>fc', '<cmd>FzfLua command_history<cr>',          desc = 'Find command history', },
+      { '<leader>fC', '<cmd>FzfLua commands<cr>',                 desc = 'Find commands', },
+      { '<leader>fh', '<cmd>FzfLua helptags<cr>',                 desc = 'Find help', },
+      { '<leader>fz', '<cmd>FzfLua zoxide<cr>',                   desc = 'Find in zoxide', },
+      { '<leader>fH', '<cmd>FzfLua highlights<cr>',               desc = 'Find highlights', },
     },
-    opts = function()
-      local telescope = require('telescope')
-      local actions = require('telescope.actions')
-      telescope.load_extension('undo')
-      telescope.load_extension('fzf')
-      telescope.load_extension('ui-select')
-
-      return {
+    opts = {
+    },
+    config = function()
+      local fzf = require('fzf-lua')
+      fzf.setup({
+        keymap = {
+          builtin = {
+            ['<esc>'] = 'hide',
+          },
+          fzf = {
+            ['ctrl-q'] = 'select-all+accept',
+          },
+        },
+        fzf_opts = {
+          ['--info'] = 'hidden',
+          ['--gutter'] = ' ',
+        },
         defaults = {
-          prompt_prefix = ' ',
-          selection_caret = '  ',
-          results_title = false,
-          preview_title = false,
-          column_indent = 0,
-          sorting_strategy = 'ascending',
-          layout_config = {
-            prompt_position = 'top',
-            horizontal = { preview_width = 0.6, height = 0.6 },
-            preview_cutoff = 1,
+          file_icons = false,
+          git_icons = false,
+        },
+        winopts = {
+          height = 0.6,
+          width = 0.6,
+          border = 'single',
+          preview = {
+            horizontal = 'right:70%',
+            scrollbar = 'border',
+            border = 'single',
           },
-          vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--hidden',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--trim',
-            '-g',
-            '!.git',
-            '--smart-case',
-          },
-          mappings = {
-            i = {
-              ['<C-j>'] = actions.move_selection_next,
-              ['<C-k>'] = actions.move_selection_previous,
-              ['<esc>'] = actions.close,
-              ['<C-f>'] = actions.to_fuzzy_refine,
+        },
+        previewers = {
+          builtin = {
+            syntax_limit_b = 1024 * 1024,
+            limit_b        = 1024 * 1024,
+            treesitter     = {
+              context = false,
             },
           },
         },
-        pickers = {
-          find_files = {
-            theme = 'dropdown',
-            previewer = false,
-            disable_devicons = true,
-            hidden = true,
-            find_command = { 'rg', '--files', '--hidden', '-g', '!.git' },
+        files = {
+          formatter = 'path.filename_first',
+          winopts = {
+            height = 0.4,
+            width = 0.4,
           },
-          buffers = {
-            theme = 'dropdown',
-            previewer = false,
-            disable_devicons = true,
-            -- ignore_current_buffer = true,
-            sort_lastused = true,
+          previewer = false,
+          cwd_prompt = false,
+          rg_opts = '--files --hidden -g !.git --color=never',
+        },
+        oldfiles = {
+          formatter = 'path.filename_first',
+          winopts = {
+            height = 0.4,
+            width = 0.4,
           },
-          oldfiles = {
-            theme = 'dropdown',
-            previewer = false,
-            disable_devicons = true,
+          previewer = false,
+          cwd_only = true,
+          stat_file = true,
+          include_current_session = true,
+        },
+        buffers = {
+          winopts = {
+            height = 0.4,
+            width = 0.4,
+          },
+          previewer = false,
+          ignore_current_buffer = true,
+        },
+        grep = {
+          rg_opts =
+          '--no-heading --hidden --with-filename --line-number --column --trim -g !.git -g !dist -g !build --smart-case --color=never'
+        },
+        spell_suggest = {
+          winopts = {
+            height = 0.33,
+            width = 0.33,
+            relative = 'cursor',
           },
         },
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
-          },
+        hls = {
+          normal = 'NormalFloat',
+          preview_normal = 'NormalFloat',
+          border = 'FloatBorder',
+          preview_border = 'FloatBorder',
         },
-      }
+        fzf_colors = {
+          ['fg'] = { 'fg', 'Pmenu' },
+          ['bg'] = { 'bg', 'Pmenu' },
+          ['fg+'] = { 'fg', 'PmenuSel' },
+          ['bg+'] = { 'bg', 'PmenuSel' },
+          ['border'] = { 'fg', 'FloatBorder' },
+          ['gutter'] = '-1'
+        },
+        file_icon_padding = '',
+      })
+      fzf.register_ui_select()
     end,
   },
   -- gitsigns.nvim (https://github.com/lewis6991/gitsigns.nvim)
@@ -175,37 +123,21 @@ return {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
-      { ']h', '<cmd>Gitsigns next_hunk<cr>', desc = 'Next hunk' },
-      { '[h', '<cmd>Gitsigns prev_hunk<cr>', desc = 'Previous hunk' },
-      {
-        '<leader>ghp',
-        '<cmd>Gitsigns preview_hunk<cr>',
-        desc = 'Git preview hunk',
-      },
-      {
-        '<leader>ghr',
-        '<cmd>Gitsigns reset_hunk<cr>',
-        desc = 'Git reset hunk',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>ghs',
-        '<cmd>Gitsigns stage_hunk<cr>',
-        desc = 'Git stage hunk',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>ghS',
-        '<cmd>Gitsigns stage_buffer<cr>',
-        desc = 'Git stage buffer',
-      },
-      {
-        '<leader>ghd',
-        '<cmd>Gitsigns diffthis<cr>',
-        desc = 'Git diff hunk',
-      },
+      { ']h',         '<cmd>Gitsigns next_hunk<cr>',    desc = 'Next hunk' },
+      { '[h',         '<cmd>Gitsigns prev_hunk<cr>',    desc = 'Previous hunk' },
+      { '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', desc = 'Git preview hunk' },
+      { '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>',   desc = 'Git reset hunk',  mode = { 'n', 'v' }, },
+      { '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>',   desc = 'Git stage hunk',  mode = { 'n', 'v' }, },
+      { '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', desc = 'Git stage buffer' },
+      { '<leader>hd', '<cmd>Gitsigns diffthis<cr>',     desc = 'Git diff hunk' },
     },
-    opts = {},
+    opts = {
+      current_line_blame = true,
+      current_line_blame_opts = {
+        delay = 0,
+      },
+      current_line_blame_formatter = ' <author>, <author_time:%R> ',
+    },
   },
   -- vim-illuminate (https://github.com/RRethy/vim-illuminate)
   {
@@ -220,6 +152,10 @@ return {
       large_file_cutoff = 2000,
       large_file_overrides = {
         providers = { 'lsp' },
+      },
+      filetypes_denylist = {
+        'lazy',
+        'mason',
       },
     },
     config = function(_, opts)
@@ -246,25 +182,9 @@ return {
       })
     end,
   },
-  -- -- indentmini.nvim (https://github.com/nvimdev/indentmini.nvim)
-  -- {
-  --   'nvimdev/indentmini.nvim',
-  --   event = { 'BufReadPre', 'BufNewFile' },
-  --   opts = {
-  --     char = '│',
-  --     exclude = {
-  --       'help',
-  --       'toggleterm',
-  --       'lazy',
-  --       'mason',
-  --       'markdown',
-  --       'NvimTree',
-  --     },
-  --   },
-  -- },
-  -- mini.indentscope (https://github.com/echasnovski/mini.indentscope)
+  -- mini.indentscope (https://github.com/nvim-mini/mini.indentscope)
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     version = false,
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
@@ -282,100 +202,114 @@ return {
           'man',
           'mason',
           'markdown',
-          'NvimTree',
           'terminal',
+          'fzf',
         },
         callback = function() vim.b.miniindentscope_disable = true end,
       })
     end,
   },
-  -- nvim-tree (https://github.com/nvim-tree/nvim-tree.lua)
+  -- mini.files (https://github.com/nvim-mini/mini.files)
   {
-    'nvim-tree/nvim-tree.lua',
+    'nvim-mini/mini.files',
+    version = false,
+    lazy = false,
     keys = {
       {
-        '<leader>e',
-        '<cmd>NvimTreeFindFileToggle<cr>',
-        desc = 'Toggle file tree',
+        '-',
+        function()
+          local minifiles = require('mini.files')
+          if not minifiles.close() then
+            minifiles.open(vim.api.nvim_buf_get_name(0))
+          end
+        end,
+        desc = 'File explorer',
       },
     },
     opts = {
-      on_attach = function(bufnr)
-        local api = require('nvim-tree.api')
-        api.config.mappings.default_on_attach(bufnr)
-        vim.keymap.set('n', 'd', api.fs.trash, { buffer = bufnr })
-      end,
-      actions = { open_file = { quit_on_open = true } },
-      filters = {
-        custom = { '^.git$', '.DS_Store', '^node_modules$' },
+      mappings = {
+        close = '<esc>',
+        go_in_plus = '<cr>',
+        synchronize = 's',
       },
-      git = { ignore = false },
-      renderer = {
-        group_empty = true,
-        root_folder_label = false,
-        highlight_git = true,
-        icons = {
-          symlink_arrow = ' ≈ ',
-          show = {
-            file = false,
-            folder = true,
-            folder_arrow = false,
-            git = false,
-          },
-          glyphs = {
-            folder = {
-              default = '▶︎',
-              open = '▼',
-              empty = '▶︎',
-              empty_open = '▼',
-              symlink = '▶︎',
-              symlink_open = '▼',
-            },
-          },
-        },
+      content = {
+        filter = function(entry)
+          return entry.name ~= '.DS_Store' and entry.name ~= '.git' and entry.name ~= 'node_modules'
+        end,
+        prefix = function() end,
       },
-      trash = { cmd = 'trash' },
-      -- view = { side = 'right' },
+      options = {
+        permanent_delete = false,
+        use_as_default_explorer = false,
+      },
+      windows = {
+        preview = true,
+        width_focus = 40,
+        width_nofocus = 30,
+        width_preview = 60,
+      },
     },
+    config = function(_, opts)
+      require('mini.files').setup(opts)
+      -- open in splits
+      local map_split = function(buf_id, lhs, direction)
+        local rhs = function()
+          local state = require('mini.files').get_explorer_state()
+          local new_target = vim.api.nvim_win_call(state.target_window, function()
+            vim.cmd(direction)
+            return vim.api.nvim_get_current_win()
+          end)
+          require('mini.files').set_target_window(new_target)
+          require('mini.files').go_in({ close_on_file = true })
+        end
+        vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = 'Open in ' .. direction })
+      end
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MiniFilesBufferCreate',
+        callback = function(args)
+          local buf_id = args.data.buf_id
+          map_split(buf_id, '<C-v>', 'belowright vertical split')
+          map_split(buf_id, '<C-h>', 'belowright horizontal split')
+        end,
+      })
+    end,
   },
-  -- oil.nvim (https://github.com/stevearc/oil.nvim)
+  -- mini.bufremove (https://github.com/nvim-mini/mini.bufremove)
   {
-    'stevearc/oil.nvim',
+    'nvim-mini/mini.bufremove',
+    version = false,
     keys = {
-      { '-', '<cmd>Oil --float<cr>', desc = 'Oil' },
+      {
+        '<leader>w',
+        function() require('mini.bufremove').delete(0, false) end,
+        desc = 'Close current buffer',
+      },
+      {
+        '<leader>W',
+        function()
+          local current_buf = vim.api.nvim_get_current_buf()
+          local bufs = vim.api.nvim_list_bufs()
+          for _, buf in ipairs(bufs) do
+            if
+                vim.api.nvim_buf_is_valid(buf)
+                and vim.api.nvim_buf_get_option(buf, 'buflisted')
+                and buf ~= current_buf
+            then
+              require('mini.bufremove').delete(buf, false)
+            end
+          end
+        end,
+        desc = 'Close all but current buffer',
+      },
     },
     opts = {
-      keymaps = {
-        ['<C-v>'] = 'actions.select_vsplit',
-        ['<C-x>'] = 'actions.select_split',
-        ['<Esc>'] = 'actions.close',
-      },
-      delete_to_trash = true,
-      skip_confirm_for_simple_edits = true,
-      view_options = {
-        show_hidden = true,
-      },
-      columns = {},
-      float = {
-        padding = 5,
-        max_width = 184,
-      },
+      silent = true,
     },
   },
   -- flash.nvim (https://github.com/folke/flash.nvim)
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
-    opts = {
-      jump = {
-        autojump = true,
-      },
-      prompt = { enabled = false },
-      modes = {
-        search = { enabled = false },
-        char = { enabled = false },
-      },
-    },
     keys = {
       {
         's',
@@ -400,6 +334,18 @@ return {
         desc = 'Jump to word under cursor',
       },
     },
+    opts = {
+      jump = {
+        autojump = true,
+      },
+      prompt = { enabled = false },
+      modes = {
+        -- using /
+        search = { enabled = false },
+        -- using f F t T
+        char = { enabled = false },
+      },
+    },
   },
   -- incline.nvim (https://github.com/b0o/incline.nvim)
   {
@@ -416,7 +362,7 @@ return {
           local parent = vim.fn.fnamemodify(filepath, ':h:t')
 
           if vim.bo[props.buf].modified then
-            return { { string.format('*%s/%s', parent, filename), hlgroup = 'InclineModified' } }
+            return { { string.format('* %s/%s', parent, filename), hlgroup = 'InclineModified' } }
           else
             return { string.format('%s/%s', parent, filename) }
           end
@@ -424,83 +370,74 @@ return {
       })
     end,
   },
-  -- mini.bufremove (https://github.com/echasnovski/mini.bufremove)
-  {
-    'echasnovski/mini.bufremove',
-    version = false,
-    keys = {
-      {
-        '<leader>w',
-        function() require('mini.bufremove').delete(0, false) end,
-        desc = 'Close current buffer',
-      },
-      {
-        '<leader>W',
-        function()
-          local current_buf = vim.api.nvim_get_current_buf()
-          local bufs = vim.api.nvim_list_bufs()
-
-          for _, buf in ipairs(bufs) do
-            if
-              vim.api.nvim_buf_is_valid(buf)
-              and vim.api.nvim_buf_get_option(buf, 'buflisted')
-              and buf ~= current_buf
-            then
-              require('mini.bufremove').delete(buf, false)
-            end
-          end
-        end,
-        desc = 'Close all but current buffer',
-      },
-    },
-    opts = {
-      silent = true,
-    },
-  },
   -- nvim-highlight-colors (https://github.com/brenoprata10/nvim-highlight-colors)
   {
     'brenoprata10/nvim-highlight-colors',
     event = 'BufReadPre',
     opts = {
       render = 'virtual',
-      virtual_symbol = '●',
-      enable_tailwind = true,
+      virtual_symbol = '■',
+      virtual_symbol_position = 'eol',
+      virtual_symbol_prefix = '',
+      virtual_symbol_suffix = '',
       enable_named_colors = false,
+      enable_tailwind = false,
       enable_var_usage = false,
     },
   },
-  -- which-key (https://github.com/folke/which-key.nvim)
+  -- mini.clue (https://github.com/nvim-mini/mini.clue)
   {
-    'folke/which-key.nvim',
+    'nvim-mini/mini.clue',
+    version = false,
     event = 'VeryLazy',
-    opts = {
-      defaults = {
-        mode = { 'n', 'v' },
-        { '[', group = 'prev' },
-        { ']', group = 'next' },
-        { '<leader>c', group = 'code' },
-        { '<leader>f', group = 'find' },
-        { '<leader>gh', group = 'git' },
-      },
-      win = {
-        padding = { 1, 0 },
-      },
-      icons = {
-        breadcrumb = '»',
-        separator = '→',
-        group = '+',
-        ellipsis = '…',
-        mappings = false,
-      },
-      plugins = {
-        spelling = { enabled = true },
-      },
-      show_help = false,
-    },
-    config = function(_, opts)
-      local wk = require('which-key')
-      wk.setup(opts)
-      wk.add(opts.defaults)
+    config = function()
+      local miniclue = require('mini.clue')
+      miniclue.setup({
+        triggers = {
+          -- leader
+          { mode = 'n', keys = '<Leader>' },
+          { mode = 'x', keys = '<Leader>' },
+          -- completions
+          { mode = 'i', keys = '<C-x>' },
+          -- `g` key
+          { mode = 'n', keys = 'g' },
+          { mode = 'x', keys = 'g' },
+          -- marks
+          { mode = 'n', keys = "'" },
+          { mode = 'n', keys = '`' },
+          { mode = 'x', keys = "'" },
+          { mode = 'x', keys = '`' },
+          -- registers
+          { mode = 'n', keys = '"' },
+          { mode = 'x', keys = '"' },
+          { mode = 'i', keys = '<C-r>' },
+          { mode = 'c', keys = '<C-r>' },
+          -- window commands
+          { mode = 'n', keys = '<C-w>' },
+          -- `z` key
+          { mode = 'n', keys = 'z' },
+          { mode = 'x', keys = 'z' },
+          -- square brackets
+          { mode = 'n', keys = '[' },
+          { mode = 'n', keys = ']' },
+        },
+        clues = {
+          conf.group_clues,
+          miniclue.gen_clues.builtin_completion(),
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows({ submode_resize = true }),
+          miniclue.gen_clues.z(),
+          miniclue.gen_clues.square_brackets(),
+        },
+        window = {
+          delay = 500,
+          config = {
+            width = 50,
+          }
+        }
+      })
     end,
   },
   -- diffview.nvim (https://github.com/sindrets/diffview.nvim)
@@ -508,7 +445,7 @@ return {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
     keys = {
-      { '<leader>dvo', '<cmd>DiffviewOpen<cr>', desc = 'DiffView open' },
+      { '<leader>dvo', '<cmd>DiffviewOpen<cr>',  desc = 'DiffView open' },
       { '<leader>dvc', '<cmd>DiffviewClose<cr>', desc = 'Diffview close' },
     },
     config = true,
@@ -522,35 +459,37 @@ return {
       },
     },
   },
-  -- -- mini.diff
-  -- {
-  --   'echasnovski/mini.diff',
-  --   version = false,
-  --   event = 'VeryLazy',
-  --   opts = {
-  --     keys = {
-  --       {
-  --         '<leader>go',
-  --         function() require('mini.diff').toggle_overlay(0) end,
-  --         desc = 'Toggle mini.diff overlay',
-  --       },
-  --     },
-  --     view = {
-  --       style = 'sign',
-  --       signs = { add = '+', change = '~', delete = '-' },
-  --     },
-  --   },
-  -- },
+  -- vim-dadbod-ui (https://github.com/kristijanhusak/vim-dadbod-ui)
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = { 'tpope/vim-dadbod' },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+  },
   -- nvim-ufo (https://github.com/kevinhwang91/nvim-ufo)
   {
     'kevinhwang91/nvim-ufo',
     dependencies = 'kevinhwang91/promise-async',
     event = 'BufReadPost',
     opts = {},
-    init = function()
+    config = function()
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = 'Open all folds' })
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close all folds' })
       vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor, { desc = 'Peek fold' })
+
+      require('ufo').setup({
+        preview = {
+          win_config = {
+            border = 'single',
+            winhighlight = 'Normal:Folded',
+            winblend = 0
+          },
+        },
+      })
     end,
   },
   -- zen-mode.nvim (https://github.com/folke/zen-mode.nvim)
@@ -575,6 +514,7 @@ return {
           enabled = true,
           showcmd = false,
           laststatus = 0,
+          winborder = 'none',
         },
       },
       on_open = function()
@@ -599,5 +539,40 @@ return {
       min_window_height = 10,
       separator = '—',
     },
+  },
+  --- harpoon (https://github.com/ThePrimeagen/harpoon)
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    event = { 'BufEnter' },
+    config = function()
+      local harpoon = require('harpoon')
+      harpoon:setup({ settings = { save_on_toggle = true } })
+      vim.keymap.set('n', 'ma',
+        function() harpoon:list():add() end,
+        { desc = 'Add current file to mark list' }
+      )
+      vim.keymap.set('n', '<leader>m',
+        function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+        { desc = 'Toggle quick mark list' }
+      )
+      vim.keymap.set('n', "'a",
+        function() harpoon:list():select(1) end,
+        { desc = 'Go to mark #1' }
+      )
+      vim.keymap.set('n', "'s",
+        function() harpoon:list():select(2) end,
+        { desc = 'Go to mark #2' }
+      )
+      vim.keymap.set('n', "'d",
+        function() harpoon:list():select(3) end,
+        { desc = 'Go to mark #3' }
+      )
+      vim.keymap.set('n', "'f",
+        function() harpoon:list():select(4) end,
+        { desc = 'Go to mark #4' }
+      )
+    end,
   },
 }

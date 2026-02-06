@@ -1,0 +1,109 @@
+[
+  // global
+  {
+    "bindings": {
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrevious",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-b": "workspace::ToggleRightDock",
+      "cmd-shift-b": "workspace::ToggleLeftDock",
+      "cmd-alt-b": "editor::ToggleGitBlameInline",
+    },
+  },
+  // pane navigation
+  {
+    "context": "Editor && vim_mode == normal || Dock",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-shift-h": "workspace::MovePaneLeft",
+      "ctrl-s": "pane::SplitAndMoveRight",
+    },
+  },
+  // completion menus
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-j": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrevious",
+      "ctrl-y": "editor::ConfirmCompletionReplace",
+      "enter": "editor::Newline",
+    },
+  },
+  // leader keys
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space s": "workspace::Save",
+      "space S": "workspace::SaveAll",
+      "space x": "editor::Format",
+      "space p": "file_finder::Toggle",
+      "space /": "pane::DeploySearch",
+      "space w": "pane::CloseActiveItem",
+      "space b": "tab_switcher::ToggleAll",
+    },
+  },
+  // misc
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
+      "g m": "vim::Matching",
+      "g h": "editor::Hover",
+      "space c a": "editor::ToggleCodeActions",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      ">": "editor::Indent",
+      "<": "editor::Outdent",
+    },
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+    "bindings": {
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets",
+    },
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "g z a": "vim::PushAddSurrounds",
+      "g z d": "vim::PushDeleteSurrounds",
+      "g z r": "vim::PushChangeSurrounds",
+    },
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward",
+    },
+  },
+  // file explorer
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "o": "project_panel::NewFile",
+      "y": "project_panel::Copy",
+      "Y": "workspace::CopyRelativePath",
+      "d": "project_panel::Trash",
+      "D": "project_panel::Delete",
+      "e": "project_panel::CollapseAllEntries",
+      "p": "project_panel::Paste",
+      "P": "project_panel::SelectParent",
+      "r": "project_panel::Rename",
+      "x": "project_panel::Cut",
+    },
+  },
+]

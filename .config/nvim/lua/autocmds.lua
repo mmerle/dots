@@ -27,83 +27,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 }) end,
 })
 
--- diagnostic symbols
-vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = '●',
-      [vim.diagnostic.severity.WARN] = '●',
-      [vim.diagnostic.severity.INFO] = '●',
-      [vim.diagnostic.severity.HINT] = '●',
-    },
-  },
-  virtual_text = {
-    prefix = '*',
-  },
-})
-
 -- balance splits on window resize
 vim.api.nvim_create_autocmd('VimResized', {
   desc = 'Balance windows',
   command = 'tabdo wincmd =',
 })
-
--- open nvim-tree on startup, only if in directory
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    local args = vim.fn.argv()
-    local directory = vim.fn.isdirectory(args[1]) == 1
-
-    if directory then require('nvim-tree.api').tree.open() end
-  end,
-})
-
--- custom statusline
-M = {}
-
-function M.watch_fn(fn) return '%<%{luaeval("' .. fn .. '")}' end
-
-function M.get_branch()
-  if vim.fn.isdirectory('.git') ~= 0 then
-    local branch = vim.fn.system("git branch --show-current | tr -d '\n'")
-    return '(' .. branch .. ')'
-  end
-  return ''
-end
-
-function M.diagnostic_error_status()
-  local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-
-  if num_errors > 0 then return '● ' .. num_errors end
-  return ''
-end
-
-function M.diagnostic_warn_status()
-  local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-
-  if num_warnings > 0 then return '● ' .. num_warnings end
-  return ''
-end
-
-function M.statusline()
-  local lsp_error_count = '%#DiagnosticError#' .. M.watch_fn('M.diagnostic_error_status()') .. '%*'
-  local lsp_warning_count = '%#DiagnosticWarn#' .. M.watch_fn('M.diagnostic_warn_status()') .. '%*'
-  local current_branch = M.watch_fn('M.get_branch()')
-
-  local sections = {
-    current_branch,
-    '%f %M',
-    '%=',
-    lsp_error_count,
-    lsp_warning_count,
-    '%P %l:%c',
-  }
-
-  return ' ' .. table.concat(sections, ' ') .. ' '
-end
-
--- vim.diagnostic.config({ virtual_text = false })
-vim.opt.statusline = M.statusline()
 
 -- switch between relative and absolute line numbers based on mode
 local number_toggle = vim.api.nvim_create_augroup('number_toggle', { clear = true })
@@ -120,34 +48,10 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'
   group = number_toggle,
 })
 
--- open `:help` pages in vsplit
-vim.api.nvim_create_autocmd('BufWinEnter', {
-  group = vim.api.nvim_create_augroup('help_window_right', {}),
-  pattern = { '*.txt' },
-  callback = function()
-    if vim.o.filetype == 'help' then
-      vim.api.nvim_cmd({ cmd = 'wincmd', args = { 'L' } }, {})
-      vim.keymap.set('n', 'q', ':q<cr>', { buffer = 0 })
-    end
-  end,
-})
-
--- vim.api.nvim_create_autocmd('FileType', {
---     group = vim.api.nvim_create_augroup('Prose', {}),
---     pattern = { 'gitcommit', 'markdown' },
---     callback = function()
---         vim.opt_local.spell = true
---         vim.opt_local.wrap = true
---         vim.opt_local.linebreak = true
---         vim.opt_local.conceallevel = 2
---     end,
--- })
-
--- cursorline in active window
+-- cursorline only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter', 'InsertLeave' }, {
   callback = function() vim.opt_local.cursorline = true end,
 })
-
 vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave', 'InsertEnter' }, {
   callback = function() vim.opt_local.cursorline = false end,
 })
@@ -156,6 +60,7 @@ vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave', 'InsertEnter' }, {
 vim.filetype.add({
   extension = {
     mdx = 'markdown',
+    mdoc = 'markdown',
     js = 'javascriptreact',
     conf = 'conf',
   },
@@ -164,3 +69,29 @@ vim.filetype.add({
     ['ignore$'] = 'conf',
   },
 })
+
+-- quickfix quickview
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function(event)
+    local opts = { buffer = event.buf, silent = true }
+    vim.keymap.set('n', 'j', '<cmd>cn | wincmd p<CR>', opts)
+    vim.keymap.set('n', 'k', '<cmd>cN | wincmd p<CR>', opts)
+  end,
+})
+
+-- mini file search
+function Fd(file_pattern, _)
+  -- if first char is * then fuzzy search
+  if file_pattern:sub(1, 1) == '*' then
+    file_pattern = file_pattern:gsub('.', '.*%0') .. '.*'
+  end
+  local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git" --exclude="deps" "'
+      .. file_pattern
+      .. '"'
+  local result = vim.fn.systemlist(cmd)
+  return result
+end
+
+vim.opt.findfunc = 'v:lua.Fd'
+vim.keymap.set('n', '<C-p>', ':find ', { desc = 'Project Files' })

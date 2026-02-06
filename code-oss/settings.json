@@ -8,8 +8,9 @@
   "editor.cursorBlinking": "smooth",
   "editor.cursorSurroundingLines": 5,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.experimentalGpuAcceleration": "on",
   "editor.find.addExtraSpaceOnTop": false,
-  "editor.fontFamily": "'MD IO', SF Mono",
+  "editor.fontFamily": "'MD IO Variable', SF Mono",
   "editor.fontLigatures": false,
   "editor.fontSize": 13,
   "editor.formatOnPaste": true,
@@ -36,7 +37,9 @@
   "files.associations": {
     "*.js": "javascriptreact",
     "*.mdx": "markdown",
-    "*.fish": "shellscript"
+    "*.fish": "shellscript",
+    "*.json": "jsonc",
+    "*.svg": "html"
   },
   "files.exclude": {
     "**/node_modules": true
@@ -72,14 +75,13 @@
   "workbench.iconTheme": null,
   "workbench.layoutControl.enabled": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
-  // "workbench.settings.useSplitJSON": true,
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "workbench.tips.enabled": false,
   "workbench.tree.indent": 18,
   "zenMode.fullScreen": false,
 
-  // lang specific
+  // lang
   "css.validate": false,
   "css.lint.unknownAtRules": "ignore",
   "scss.lint.unknownAtRules": "ignore",
@@ -95,26 +97,23 @@
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "svelte.enable-ts-plugin": true,
-  "[lua]": {
-    "editor.defaultFormatter": "JohnnyMorganz.stylua"
-  },
-  "stylua.styluaPath": "/opt/homebrew/bin/stylua",
-  "stylua.searchParentDirectories": true,
 
-  // plugin specific
+  // plugin
   "color-highlight.markRuler": false,
   "color-highlight.markerType": "underline",
   "color-highlight.matchRgbWithNoFunction": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
-    "markdown": "html"
+    "markdown": "html",
+    "php": "html",
+    "twig": "html"
   },
   "emmet.triggerExpansionOnTab": true,
-  "extensions.autoUpdate": "onlyEnabledExtensions",
   "html.completion.attributeDefaultValue": "empty",
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "all",
-  "prettier.printWidth": 120,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
   "vscode-neovim.logOutputToConsole": true,
   "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim"
 }

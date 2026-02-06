@@ -1,18 +1,15 @@
 function update
     ~
-    and echo "[update] Homebrew"
-    and brew update
-    and brew upgrade
+    echo "[update] Homebrew"
+    brew update
+    brew upgrade
 
-    and echo "[update] Cleaning Homebrew cache"
-    and brew cleanup -s
+    echo "[update] Cleaning Homebrew cache"
+    brew cleanup -s
 
-    and echo "[update] Global packages"
-    and pnpm update -g
+    echo "[update] Global packages"
+    pnpm update -g
 
-    # and echo "[update] Fish plugins"
-    # and fisher update
-
-    and echo "[update] Mac App Store"
-    and mas upgrade
+    echo "[update] Mac App Store"
+    mas upgrade
 end

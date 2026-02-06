@@ -1,55 +1,49 @@
 return {
-  -- flora
-  {
-    dir = '~/Developer/projects/p/flora/flora.nvim',
-    name = 'flora',
-    lazy = false,
-    priority = 1000,
-    config = function() vim.cmd([[colorscheme flora]]) end,
-  },
   -- nvim-treesitter (https://github.com/nvim-treesitter/nvim-treesitter)
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
+    lazy = false,
+    branch = 'master',
     dependencies = {
-      'windwp/nvim-ts-autotag',
       'kevinhwang91/promise-async',
-      -- 'nvim-treesitter/nvim-treesitter-textobjects',
     },
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = 'all',
-        ignore_install = { 'phpdoc' },
+        ignore_install = { 'ipkg' },
         highlight = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = false,
+            scope_incremental = false,
+            node_incremental = '.',
+            node_decremental = ',',
+          },
+        },
         indent = { enable = true },
-        autotag = { enable = true },
-        -- textobjects = {
-        --   select = {
-        --     enable = true,
-        --     lookahead = true,
-        --     keymaps = {
-        --       ['af'] = '@function.outer',
-        --       ['if'] = '@function.inner',
-        --     },
-        --   },
-        -- },
       })
     end,
   },
-  -- obsidian.nvim (https://github.com/epwalsh/obsidian.nvim)
+  -- nvim-ts-autotag (https://github.com/windwp/nvim-ts-autotag)
   {
-    'epwalsh/obsidian.nvim',
+    'windwp/nvim-ts-autotag',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
+  },
+  -- obsidian.nvim (https://github.com/obsidian-nvim/obsidian.nvim)
+  {
+    'obsidian-nvim/obsidian.nvim',
     version = '*',
-    lazy = true,
     event = {
       'BufReadPre ' .. vim.fn.expand('~') .. '/Documents/notes/**.md',
       'BufNewFile ' .. vim.fn.expand('~') .. '/Documents/notes/**.md',
     },
     keys = {
-      { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New Note' },
+      { '<leader>on', '<cmd>ObsidianNew<cr>',         desc = 'New Note' },
       { '<leader>op', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick Switch' },
-      { '<leader>o/', '<cmd>ObsidianSearch<cr>', desc = 'Search Notes' },
+      { '<leader>o/', '<cmd>ObsidianSearch<cr>',      desc = 'Search Notes' },
     },
     opts = {
       dir = '~/Documents/notes',
@@ -83,26 +77,10 @@ return {
   {
     'numToStr/Navigator.nvim',
     keys = {
-      {
-        '<C-h>',
-        '<cmd>NavigatorLeft<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-l>',
-        '<cmd>NavigatorRight<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-k>',
-        '<cmd>NavigatorUp<cr>',
-        mode = { 'n', 't' },
-      },
-      {
-        '<C-j>',
-        '<cmd>NavigatorDown<cr>',
-        mode = { 'n', 't' },
-      },
+      { '<C-h>', '<cmd>NavigatorLeft<cr>',  mode = { 'n' } },
+      { '<C-j>', '<cmd>NavigatorDown<cr>',  mode = { 'n' } },
+      { '<C-k>', '<cmd>NavigatorUp<cr>',    mode = { 'n' } },
+      { '<C-l>', '<cmd>NavigatorRight<cr>', mode = { 'n' } },
     },
     opts = {
       disable_on_zoom = true,
@@ -117,23 +95,38 @@ return {
       cloak_character = '*',
     },
   },
-  -- gen.nvim (https://github.com/David-Kunz/gen.nvim)
+  -- harpoonline (https://github.com/abeldekat/harpoonline)
   {
-    'David-Kunz/gen.nvim',
-    cmd = 'Gen',
-    opts = {
-      model = 'codestral',
-      display_mode = 'split',
-      show_model = true,
-      no_auto_close = true,
-    },
-    config = function(_, opts)
-      require('gen').setup(opts)
-      require('gen').prompts['Fix_Code'] = {
-        prompt = 'Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```',
-        replace = true,
-        extract = '```$filetype\n(.-)```',
-      }
+    'abeldekat/harpoonline',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = '*',
+    config = function()
+      local Harpoonline = require('harpoonline')
+      Harpoonline.setup({
+        on_update = function() vim.cmd.redrawstatus() end
+      })
     end,
   },
+  {
+    'sudo-tee/opencode.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      require('opencode').setup({})
+    end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          anti_conceal = { enabled = false },
+          file_types = { 'markdown', 'opencode_output' },
+        },
+        ft = { 'markdown', 'Avante', 'copilot-chat', 'opencode_output' },
+      },
+      'hrsh7th/nvim-cmp',
+      'folke/snacks.nvim',
+      'ibhagwan/fzf-lua',
+    },
+  }
+
 }

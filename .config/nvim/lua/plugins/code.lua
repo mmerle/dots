@@ -2,12 +2,23 @@ return {
   -- luasnip (https://github.com/L3MON4D3/LuaSnip)
   {
     'L3MON4D3/LuaSnip',
+    version = 'v2.*',
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
       'saadparwaiz1/cmp_luasnip',
     },
-    config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_lua').load({ paths = '~/.config/nvim/lua/snippets/' })
+      local ls = require('luasnip')
+      -- vim.keymap.set({ 'i', 's' }, '<tab>', function() ls.jump(1) end, { silent = true })
+      ls.config.setup({
+        enable_autosnippets = true,
+        region_check_events = 'InsertEnter',
+        delete_check_events = 'InsertLeave'
+      })
+    end,
   },
   -- completions (https://github.com/hrsh7th/nvim-cmp)
   {
@@ -43,15 +54,15 @@ return {
               fallback()
             end
           end,
-          ['<cr>'] = cmp.mapping.confirm({
+          ['<C-y>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
+            select = true,
           }),
         }),
         sources = {
-          { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'buffer',  keyword_length = 2 },
+          { name = 'nvim_lsp' },
+          { name = 'buffer',  keyword_length = 4 },
           { name = 'path' },
           { name = 'calc' },
         },
@@ -67,6 +78,10 @@ return {
             },
           }),
         },
+        performance = {
+          debounce = 0,
+          throttle = 0,
+        },
       })
 
       -- `/` cmdline setup.
@@ -81,7 +96,7 @@ return {
   -- comment (https://github.com/numToStr/Comment.nvim)
   {
     'numToStr/Comment.nvim',
-    event = 'VeryLazy',
+    event = 'BufEnter',
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
@@ -91,20 +106,20 @@ return {
       })
     end,
   },
-  -- mini.surround (https://github.com/echasnovski/mini.surround)
+  -- mini.surround (https://github.com/nvim-mini/mini.surround)
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     version = false,
     event = 'VeryLazy',
     opts = {
       mappings = {
-        add = 'gza',
-        delete = 'gzd',
-        find = 'gzf',
-        find_left = 'gzF',
-        highlight = 'gzh',
-        replace = 'gzr',
-        update_n_lines = 'gzn',
+        add = 'gsa',
+        delete = 'gsd',
+        find = 'gsf',
+        find_left = 'gsF',
+        highlight = 'gsh',
+        replace = 'gsr',
+        update_n_lines = 'gsn',
       },
     },
   },
@@ -114,14 +129,19 @@ return {
     event = { 'InsertEnter', 'CmdlineEnter' },
     opts = {},
   },
+  -- multicursor.nvim (https://jake-stewart/multicursor.nvim)
+  {
+    'jake-stewart/multicursor.nvim',
+    branch = '1.0',
+  },
   -- vim-repeat (https://github.com/tpope/vim-repeat)
   {
     'tpope/vim-repeat',
     event = 'VeryLazy',
   },
-  -- mini.ai (https://github.com/echasnovski/mini.ai)
+  -- mini.ai (https://github.com/nvim-mini/mini.ai)
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     version = false,
     event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
