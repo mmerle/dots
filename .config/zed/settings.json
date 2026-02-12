@@ -85,7 +85,7 @@
   "which_key": { "enabled": true },
   // llm
   "edit_predictions": {
-    "provider": "none"
+    "provider": "none",
   },
   "agent": {
     "dock": "right",
@@ -105,21 +105,34 @@
   },
   "agent_servers": {
     "codex": {
-      "favorite_models": [
-        "gpt-5.2-codex/xhigh",
-        "gpt-5.2-codex/high"
-      ],
+      "favorite_config_option_values": {
+        "model": [
+          "gpt-5.3-codex",
+        ]
+      },
+    },
+    "cursor-cli": {
+      "type": "custom",
+      "command": "cursor-agent-acp",
+      "args": [],
+      "env": {},
     },
   },
   "context_servers": {
-      "context7": {
-        "url": "https://mcp.context7.com/mcp",
-        "settings": {},
-      },
-      "playwright": {
-        "command": "npx",
-        "args": ["-y", "@playwright/mcp@latest", "--isolated", "--browser", "webkit"],
-      }
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "settings": {},
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--browser",
+        "webkit",
+      ],
+    },
   },
   // panels
   "project_panel": {
