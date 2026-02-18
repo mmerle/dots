@@ -23,6 +23,7 @@
   "use_system_path_prompts": false,
   "show_whitespaces": "trailing",
   "inline_code_actions": false,
+  "zoomed_padding": false,
   "scrollbar": {
     "show": "never",
   },
@@ -105,9 +106,13 @@
   },
   "agent_servers": {
     "codex": {
+      "default_config_options": {
+        "model": "gpt-5.3-codex"
+      },
       "favorite_config_option_values": {
         "model": [
           "gpt-5.3-codex",
+          "gpt-5.2-codex"
         ]
       },
     },
