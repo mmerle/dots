@@ -28,7 +28,7 @@
     "show": "never",
   },
   "sticky_scroll": {
-    "enabled": true,
+    "enabled": false,
   },
   "file_finder": {
     "file_icons": false,
@@ -89,38 +89,41 @@
     "provider": "none",
   },
   "agent": {
-    "dock": "right",
+    "show_turn_stats": true,
+    "dock": "left",
     "use_modifier_to_send": true,
     "default_model": {
       "provider": "openai",
-      "model": "gpt-5.2",
+      "model": "gpt-5.4-pro",
     },
     "inline_assistant_model": {
       "provider": "openai",
-      "model": "gpt-5.2",
+      "model": "gpt-5.4",
     },
     "commit_message_model": {
       "provider": "openai",
-      "model": "gpt-5-nano",
+      "model": "gpt-5.4",
     },
   },
   "agent_servers": {
-    "codex": {
+    "cursor": {
+      "type": "registry",
       "default_config_options": {
-        "model": "gpt-5.3-codex"
-      },
-      "favorite_config_option_values": {
-        "model": [
-          "gpt-5.3-codex",
-          "gpt-5.2-codex"
-        ]
+        "mode": "agent",
+        "model": "claude-opus-4-6[thinking=true,context=200k,effort=high,fast=false]",
       },
     },
-    "cursor-cli": {
-      "type": "custom",
-      "command": "cursor-agent-acp",
-      "args": [],
-      "env": {},
+    "opencode": {
+      "type": "registry",
+      "default_mode": "build",
+      "default_model": "openai/gpt-5.3-codex/high",
+    },
+    "codex-acp": {
+      "type": "registry",
+      "default_config_options": {
+        "mode": "auto",
+        "model": "gpt-5.3-codex",
+      },
     },
   },
   "context_servers": {
@@ -138,6 +141,10 @@
         "webkit",
       ],
     },
+    "paper": {
+      "url": "http://127.0.0.1:29979/mcp",
+      "settings": {},
+    }
   },
   // panels
   "project_panel": {
