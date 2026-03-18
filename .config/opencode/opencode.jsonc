@@ -1,10 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "system",
-  "keybinds": {
-    "input_newline": "return",
-    "input_submit": "ctrl+return"
-  },
   "mcp": {
     "context7": {
       "type": "remote",
@@ -24,6 +19,11 @@
     "astro-docs": {
       "type": "remote",
       "url": "https://mcp.docs.astro.build/mcp",
+      "enabled": false
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
       "enabled": false
     }
   }
