@@ -107,26 +107,25 @@ return {
       })
     end,
   },
-  {
-    'sudo-tee/opencode.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
-    config = function()
-      require('opencode').setup({})
-    end,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          anti_conceal = { enabled = false },
-          file_types = { 'markdown', 'opencode_output' },
-        },
-        ft = { 'markdown', 'Avante', 'copilot-chat', 'opencode_output' },
-      },
-      'hrsh7th/nvim-cmp',
-      'folke/snacks.nvim',
-      'ibhagwan/fzf-lua',
-    },
-  }
-
+  -- {
+  --   'sudo-tee/opencode.nvim',
+  --   event = { 'BufReadPost', 'BufNewFile' },
+  --   config = function()
+  --     require('opencode').setup({})
+  --   end,
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     {
+  --       'MeanderingProgrammer/render-markdown.nvim',
+  --       opts = {
+  --         anti_conceal = { enabled = false },
+  --         file_types = { 'markdown', 'opencode_output' },
+  --       },
+  --       ft = { 'markdown', 'Avante', 'copilot-chat', 'opencode_output' },
+  --     },
+  --     'hrsh7th/nvim-cmp',
+  --     'folke/snacks.nvim',
+  --     'ibhagwan/fzf-lua',
+  --   },
+  -- }
 }
