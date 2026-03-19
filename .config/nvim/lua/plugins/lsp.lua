@@ -38,6 +38,15 @@ return {
   {
     'stevearc/conform.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
+    cmd = { 'ConformInfo', 'FormatDisable', 'FormatEnable' },
+    keys = {
+      {
+        '<leader>x',
+        function() require('conform').format({ async = true, lsp_format = 'fallback' }) end,
+        mode = 'n',
+        desc = 'Format buffer',
+      },
+    },
     opts = function()
       return {
         notify_on_error = false,
@@ -68,11 +77,14 @@ return {
           php = { 'prettierd', 'prettier', stop_after_first = true },
           twig = { 'prettierd', 'prettier', stop_after_first = true },
         },
-        format_on_save = {
-          lsp_format = 'fallback',
-          async = false,
-          timeout_ms = 500,
-        },
+        format_on_save = function(bufnr)
+          if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+          return {
+            lsp_format = 'fallback',
+            async = false,
+            timeout_ms = 500,
+          }
+        end,
         formatters = {
           biome = {
             command = 'biome',
@@ -134,6 +146,32 @@ return {
           },
         },
       }
+    end,
+    config = function(_, opts)
+      require('conform').setup(opts)
+
+      vim.api.nvim_create_user_command('FormatDisable', function(args)
+        if args.bang then
+          vim.b.disable_autoformat = true
+          vim.notify('Format on save disabled for this buffer')
+        else
+          vim.g.disable_autoformat = true
+          vim.notify('Format on save disabled')
+        end
+      end, {
+        desc = 'Disable format on save',
+        bang = true,
+        force = true,
+      })
+
+      vim.api.nvim_create_user_command('FormatEnable', function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+        vim.notify('Format on save enabled')
+      end, {
+        desc = 'Enable format on save',
+        force = true,
+      })
     end,
   },
 }
