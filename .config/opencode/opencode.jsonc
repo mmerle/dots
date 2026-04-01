@@ -26,6 +26,16 @@
       "type": "local",
       "command": ["npx", "-y", "--headless true", "chrome-devtools-mcp@latest"],
       "enabled": false
+    },
+    "cloudflare-api": {
+      "type": "remote",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "enabled": false
+    },
+    "sanity": {
+      "type": "remote",
+      "url": "https://mcp.sanity.io",
+      "enabled": false
     }
   }
 }
