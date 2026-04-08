@@ -90,7 +90,7 @@
   },
   "agent": {
     "show_turn_stats": true,
-    "dock": "right",
+    "dock": "left",
     "use_modifier_to_send": true,
     "default_model": {
       "provider": "openai",
@@ -172,6 +172,7 @@
     "file_icons": false,
   },
   "collaboration_panel": {
+    "dock": "left",
     "button": false,
   },
   "notification_panel": {
