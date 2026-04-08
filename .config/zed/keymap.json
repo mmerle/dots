@@ -10,8 +10,8 @@
     "context": "Workspace",
     "bindings": {
       "cmd-shift-g": "git_panel::ToggleFocus",
-      "cmd-b": "workspace::ToggleRightDock",
-      "cmd-shift-b": "workspace::ToggleLeftDock",
+      "cmd-b": "workspace::ToggleLeftDock",
+      "cmd-shift-b": "workspace::ToggleRightDock",
       "cmd-alt-b": "editor::ToggleGitBlameInline",
     },
   },
@@ -39,15 +39,17 @@
   },
   // leader keys
   {
-    "context": "Editor && vim_mode == normal",
+    "context": "Editor && vim_mode == normal || EmptyPane",
     "bindings": {
       "space s": "workspace::Save",
       "space S": "workspace::SaveAll",
+      "space z": "workspace::ToggleZoom",
       "space x": "editor::Format",
       "space p": "file_finder::Toggle",
       "space /": "pane::DeploySearch",
       "space w": "pane::CloseActiveItem",
       "space b": "tab_switcher::ToggleAll",
+      "-": "project_panel::Toggle",
     },
   },
   // misc
@@ -94,6 +96,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
+      "-": "project_panel::Toggle",
       "o": "project_panel::NewFile",
       "y": "project_panel::Copy",
       "Y": "workspace::CopyRelativePath",
