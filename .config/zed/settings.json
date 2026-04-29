@@ -9,7 +9,7 @@
   "theme": {
     "mode": "system",
     "dark": "Flora Dark",
-    "light": "Min Light (Solid)",
+    "light": "Flora Light",
   },
   "use_smartcase_search": true,
   // formatting
@@ -28,7 +28,7 @@
     "show": "never",
   },
   "sticky_scroll": {
-    "enabled": false,
+    "enabled": true,
   },
   "file_finder": {
     "file_icons": false,
@@ -73,7 +73,7 @@
     "selections_menu": false,
   },
   "title_bar": {
-    "show_branch_icon": true,
+    "show_branch_status_icon": true,
     "show_user_picture": false,
   },
   // vim
@@ -108,22 +108,12 @@
   "agent_servers": {
     "cursor": {
       "type": "registry",
-      "default_config_options": {
-        "mode": "agent",
-        "model": "claude-opus-4-6[thinking=true,context=200k,effort=high,fast=false]",
-      },
     },
     "opencode": {
       "type": "registry",
-      "default_mode": "build",
-      "default_model": "openai/gpt-5.3-codex/high",
     },
     "codex-acp": {
       "type": "registry",
-      "default_config_options": {
-        "mode": "auto",
-        "model": "gpt-5.3-codex",
-      },
     },
   },
   "context_servers": {
@@ -187,9 +177,11 @@
   // profiles
   "profiles": {
     "work": {
-      "tab_size": 4,
-      "preferred_line_length": 100,
-      "format_on_save": "off",
+      "settings": {
+        "tab_size": 4,
+        "preferred_line_length": 100,
+        "format_on_save": "off"
+      }
     },
   },
 }
