@@ -8,7 +8,7 @@
   "tab_size": 2,
   "theme": {
     "mode": "system",
-    "dark": "Flora Dark",
+    "dark": "Flora Dimmed",
     "light": "Flora Light",
   },
   "use_smartcase_search": true,
@@ -107,13 +107,13 @@
   },
   "agent_servers": {
     "opencode": {
-      "type": "registry"
+      "type": "registry",
     },
     "codex-acp": {
       "default_config_options": {
-        "model": "gpt-5.4"
+        "model": "gpt-5.5",
       },
-      "type": "registry"
+      "type": "registry",
     },
     "cursor": {
       "type": "registry",
@@ -122,22 +122,14 @@
   "context_servers": {
     "context7": {
       "url": "https://mcp.context7.com/mcp",
-      "settings": {},
     },
     "playwright": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@playwright/mcp@latest",
-        "--isolated",
-        "--browser",
-        "webkit",
-      ],
+      "args": ["-y", "@playwright/mcp@latest", "--isolated", "--browser", "webkit"],
     },
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
-      "settings": {},
-    }
+    },
   },
   // panels
   "project_panel": {
@@ -168,8 +160,11 @@
     "dock": "left",
     "button": false,
   },
-  "notification_panel": {
-    "button": false,
+  // lang specific
+  "languages": {
+    "TypeScript": {
+      "language_servers": ["!tailwindcss-language-server", "..."],
+    },
   },
   // filetypes
   "file_types": {
@@ -187,7 +182,7 @@
         "sticky_scroll": {
           "enabled": false,
         },
-      }
+      },
     },
   },
 }
