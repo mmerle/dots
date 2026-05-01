@@ -106,13 +106,16 @@
     },
   },
   "agent_servers": {
-    "cursor": {
-      "type": "registry",
-    },
     "opencode": {
       "type": "registry",
     },
     "codex-acp": {
+      "default_config_options": {
+        "model": "gpt-5.4",
+      },
+      "type": "registry",
+    },
+    "cursor": {
       "type": "registry",
     },
   },
@@ -123,13 +126,7 @@
     },
     "playwright": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@playwright/mcp@latest",
-        "--isolated",
-        "--browser",
-        "webkit",
-      ],
+      "args": ["-y", "@playwright/mcp@latest", "--isolated", "--browser", "webkit"],
     },
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
@@ -178,6 +175,9 @@
         "tab_size": 4,
         "preferred_line_length": 100,
         "format_on_save": "off",
+        "sticky_scroll": {
+          "enabled": false,
+        },
       },
     },
   },
