@@ -106,13 +106,16 @@
     },
   },
   "agent_servers": {
-    "cursor": {
-      "type": "registry",
-    },
     "opencode": {
-      "type": "registry",
+      "type": "registry"
     },
     "codex-acp": {
+      "default_config_options": {
+        "model": "gpt-5.4"
+      },
+      "type": "registry"
+    },
+    "cursor": {
       "type": "registry",
     },
   },
@@ -180,7 +183,10 @@
       "settings": {
         "tab_size": 4,
         "preferred_line_length": 100,
-        "format_on_save": "off"
+        "format_on_save": "off",
+        "sticky_scroll": {
+          "enabled": false,
+        },
       }
     },
   },
