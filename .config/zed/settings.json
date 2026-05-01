@@ -8,7 +8,7 @@
   "tab_size": 2,
   "theme": {
     "mode": "system",
-    "dark": "Flora Dark",
+    "dark": "Flora Dimmed",
     "light": "Flora Light",
   },
   "use_smartcase_search": true,
@@ -134,7 +134,7 @@
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
       "settings": {},
-    }
+    },
   },
   // panels
   "project_panel": {
@@ -165,9 +165,6 @@
     "dock": "left",
     "button": false,
   },
-  "notification_panel": {
-    "button": false,
-  },
   // filetypes
   "file_types": {
     "Markdown": [".mdx", ".mdoc"],
@@ -180,8 +177,8 @@
       "settings": {
         "tab_size": 4,
         "preferred_line_length": 100,
-        "format_on_save": "off"
-      }
+        "format_on_save": "off",
+      },
     },
   },
 }
