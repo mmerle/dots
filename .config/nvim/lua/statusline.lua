@@ -3,8 +3,7 @@ local api = vim.api
 
 local PAD = ' '
 local SEP = '%='
-local SBAR =
-{ '▔', '🮂', '🬂', '🮃', '▀', '▄', '▃', '🬭', '▂', '▁' }
+local SBAR = { '▔', '🮂', '🬂', '🮃', '▀', '▄', '▃', '🬭', '▂', '▁' }
 
 local ORDER = {
   'pad',
@@ -37,10 +36,8 @@ end
 
 -- branch
 local function get_branch()
-  if vim.fn.isdirectory('.git') ~= 0 then
-    local branch = vim.fn.system("git branch --show-current | tr -d '\n'")
-    return '[' .. branch .. ']'
-  end
+  local branch = vim.b.gitsigns_head
+  if branch and branch ~= '' then return '[' .. branch .. ']' end
   return ''
 end
 
@@ -60,7 +57,9 @@ end
 
 -- harpoon
 local function harpoon_status()
-  local Harpoonline = require('harpoonline')
+  local ok, Harpoonline = pcall(require, 'harpoonline')
+  if not ok then return '' end
+
   return Harpoonline.format()
 end
 

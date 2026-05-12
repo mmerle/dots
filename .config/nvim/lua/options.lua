@@ -1,114 +1,84 @@
--- require('vim._extui').enable({})
+local profile = require('profile').get()
 
--- temp: surpress vscode-neovim output messages
-if vim.g.vscode then
-  vim.opt.cmdheight = 999
+vim.g.mapleader = ' '
+
+for _, plugin in ipairs({ 'gzip', 'tarPlugin', 'tohtml', 'tutor', 'zipPlugin' }) do
+  vim.g['loaded_' .. plugin] = 1
 end
 
-vim.opt.mouse            = 'a' -- enable mouse
-vim.opt.diffopt          = 'internal,filler,closeoff,linematch:60'
+if vim.env.SHELL:match('fish$') then vim.opt.shell = '/opt/homebrew/bin/bash' end
+if vim.g.vscode then vim.opt.cmdheight = 999 end
 
--- indentation
-vim.opt.expandtab        = true -- expand tabs into spaces
-vim.opt.shiftwidth       = 2    -- size of indent
-vim.opt.shiftround       = true -- round indent
-vim.opt.tabstop          = 2    -- size of tab
-vim.opt.softtabstop      = 2
-vim.opt.breakindent      = true
+vim.opt.mouse = 'a'
+vim.opt.diffopt = 'internal,filler,closeoff,linematch:60'
 
--- search
-vim.opt.ignorecase       = true
-vim.opt.smartcase        = true -- only case sensitive when alternate case is used
+vim.opt.expandtab = true
+vim.opt.shiftwidth = profile.indent
+vim.opt.shiftround = true
+vim.opt.tabstop = profile.indent
+vim.opt.softtabstop = profile.indent
+vim.opt.breakindent = true
 
--- disable netrw
-vim.g.loaded_netrw       = 1
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- spelling
-vim.o.spell              = false
-vim.o.spelloptions       = 'camel' -- camelCase word parts as separate words
--- vim.o.spelllang = 'en,fr'
+vim.opt.spell = false
+vim.opt.spelloptions = 'camel'            -- treat camelCase word parts as separate words
+vim.opt.iskeyword = '@,48-57,_,192-255,-' -- treat dash as `word` textobject part
 
--- editing
-vim.o.iskeyword          = '@,48-57,_,192-255,-' -- enables dash as part of `word` textobject
-
--- ui
-vim.opt.number           = true  -- show line numbers
-vim.opt.relativenumber   = true  -- line numbers relative to cursor
-vim.opt.signcolumn       = 'yes' -- always show signcolumn
-vim.opt.statuscolumn     = '%=%{&nu?(&rnu && v:relnum?v:relnum:v:lnum):""}%=%s'
-vim.o.colorcolumn        = '+1'
-vim.opt.showmode         = false -- hide redundant mode
-
-vim.opt.linebreak        = true
-vim.opt.showbreak        = '↪'
-
-vim.opt.winborder        = 'single'
-
-vim.opt.splitbelow       = true -- split new window below current
-vim.opt.splitright       = true -- split new window right of current
-vim.opt.splitkeep        = 'screen'
-
-vim.opt.pumheight        = 6 -- commandline completion height
-vim.opt.completeopt      = 'menu,menuone,noselect'
-
-vim.opt.smoothscroll     = true
-vim.opt.scrolloff        = 4    -- always show at least x lines above/below cursor
-vim.opt.sidescrolloff    = 4    -- always show at least x lines left/right cursor
-
-vim.opt.cursorline       = true -- highlight current line
-vim.opt.cursorlineopt    = { 'both' }
-vim.opt.laststatus       = 3    -- global statusline
-
--- chars
-vim.opt.list             = true
-vim.opt.listchars        = { tab = '  ', trail = '·' }
-vim.opt.fillchars        = {
-  eob = ' ',  -- suppress ~
-  fold = ' ', -- hide trailing folding characters
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = 'yes'
+vim.opt.statuscolumn = '%=%{&nu?(&rnu && v:relnum?v:relnum:v:lnum):""}%=%s'
+vim.opt.colorcolumn = '+1'
+vim.opt.showmode = false
+vim.opt.linebreak = true
+vim.opt.showbreak = '↪'
+vim.opt.winborder = 'single'
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.splitkeep = 'screen'
+vim.opt.pumheight = 6
+vim.opt.completeopt = 'menu,menuone,noselect' -- completion behavior
+vim.opt.smoothscroll = true
+vim.opt.scrolloff = 4
+vim.opt.sidescrolloff = 4
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = { 'both' }
+vim.opt.laststatus = 3
+vim.opt.list = true
+vim.opt.listchars = { tab = '  ', trail = '·' }
+vim.opt.fillchars = {
+  eob = ' ',
+  fold = ' ',
   foldopen = '',
   foldclose = '',
 }
 
--- folds
-vim.opt.foldcolumn       = '0'
-vim.opt.foldenable       = true
-vim.opt.foldlevel        = 99
-vim.opt.foldlevelstart   = 99
-vim.opt.foldmethod       = 'expr'
-vim.opt.foldexpr         = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.foldtext         = ''
+vim.opt.foldcolumn = '0'
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = 'manual'
+vim.opt.foldexpr = '0'
+vim.opt.foldtext = ''
 
--- ux
-vim.opt.confirm          = true
-vim.opt.updatetime       = 250 -- faster update time
-
--- messages
-vim.opt.shortmess:append {
-  W = true, -- do not print "written" when editing
-  a = true, -- use abbreviations in messages ([RO] intead of [readonly])
-  c = true, -- do not show ins-completion-menu messages (match 1 of 2)
-  C = true,
-  F = true, -- do not print file name when opening a file
-  s = true, -- do not show "Search hit BOTTOM" message
-  o = true,
-  O = true,
-}
-
--- clipboard
-vim.opt.clipboard = 'unnamedplus' -- enable universal clipboard
-
--- undo and history
-vim.opt.undofile = true -- enable undo
+vim.opt.confirm = true
+vim.opt.updatetime = 250
+vim.opt.shortmess:append({ W = true, a = true, c = true, C = true, F = true, s = true, o = true, O = true })
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.undofile = true
 vim.opt.swapfile = false
+vim.opt.shada = "'100,<50,s10,:1000,/100,@100,h"
 
--- startup
-vim.opt.shada = "'100,<50,s10,:1000,/100,@100,h" -- limit ShaDa file
 vim.cmd('filetype plugin indent on')
 if vim.fn.exists('syntax_on') ~= 1 then vim.cmd('syntax enable') end
 
--- diagnostics
 vim.diagnostic.config({
+  -- show signs on top of any other sign, but only for warning and errors
   signs = {
     priority = 9999,
     severity = { min = 'WARN', max = 'ERROR' },
@@ -119,9 +89,32 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = '●',
     },
   },
-  -- virtual_text = {
-  --   prefix = '*',
-  -- },
   virtual_text = false,
-  update_in_insert = false, -- don't update diagnostics when typing
+  update_in_insert = false, -- don't update diagnostics while typing
+})
+
+vim.g.markdown_fenced_languages = {
+  'console=sh',
+  'javascript',
+  'js=javascript',
+  'json',
+  'lua',
+  'python',
+  'sh',
+  'shell=sh',
+  'ts=typescript',
+  'typescript',
+}
+vim.g.markdown_recommended_style = 0
+
+vim.filetype.add({
+  extension = {
+    mdx = 'markdown',
+    mdoc = 'markdown',
+    conf = 'conf',
+  },
+  pattern = {
+    ['.*%.env.*'] = 'sh',
+    ['ignore$'] = 'conf',
+  },
 })
