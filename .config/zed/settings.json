@@ -111,7 +111,11 @@
     },
     "codex-acp": {
       "default_config_options": {
+<<<<<<< HEAD
         "model": "gpt-5.5",
+=======
+        "model": "gpt-5.4",
+>>>>>>> 7614abc61e983668afef63ec00425e7a6d9d33f1
       },
       "type": "registry",
     },
@@ -129,6 +133,10 @@
     },
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
+<<<<<<< HEAD
+=======
+      "settings": {},
+>>>>>>> 7614abc61e983668afef63ec00425e7a6d9d33f1
     },
   },
   // panels
@@ -160,12 +168,15 @@
     "dock": "left",
     "button": false,
   },
+<<<<<<< HEAD
   // lang specific
   "languages": {
     "TypeScript": {
       "language_servers": ["!tailwindcss-language-server", "..."],
     },
   },
+=======
+>>>>>>> 7614abc61e983668afef63ec00425e7a6d9d33f1
   // filetypes
   "file_types": {
     "Markdown": [".mdx", ".mdoc"],
