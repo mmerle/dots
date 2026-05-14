@@ -5,6 +5,23 @@ require('options')
 
 vim.pack.add({ 'https://github.com/nvim-mini/mini.misc' })
 
+-- update and remove plugins
+local function pack_sync()
+  local active_plugins, stale_plugins = {}, {}
+  for _, plugin in ipairs(vim.pack.get(nil, { info = false })) do
+    table.insert(plugin.active and active_plugins or stale_plugins, plugin.spec.name)
+  end
+
+  if #stale_plugins > 0 and vim.fn.confirm('Remove unused plugins?', '&Yes\n&No', 2) == 1 then
+    vim.pack.del(stale_plugins)
+  end
+  if #active_plugins > 0 then
+    vim.pack.update(active_plugins)
+  end
+end
+
+vim.api.nvim_create_user_command('PackSync', pack_sync, { desc = 'Sync pack deps' })
+
 -- loading helpers
 local misc = require('mini.misc')
 Config.now = function(f) misc.safely('now', f) end
