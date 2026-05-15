@@ -93,6 +93,7 @@ alias connect='kitty +kitten ssh'
 alias tmr='transmission-remote'
 alias npm='pnpm'
 alias npx='pnpm dlx'
+alias oc='opencode'
 
 # abbreviations
 abbr ta 'tmux attach'
