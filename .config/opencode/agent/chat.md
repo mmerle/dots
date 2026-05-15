@@ -1,25 +1,17 @@
 ---
 description: Plain conversational assistant
 mode: primary
-model: openai/gpt-5.4
 temperature: 0.4
-reasoningEffort: high
-textVerbosity: medium
-tools:
-  bash: false
-  read: false
-  write: false
-  edit: false
-  glob: false
-  grep: false
-  webfetch: true
-  task: false
-  todowrite: false
-  apply_patch: false
+color: success
 permission:
+  read: deny
   edit: deny
-  bash: deny
+  glob: deny
+  grep: deny
+  bash: ask
+  question: allow
   webfetch: allow
+  websearch: allow
 ---
 
 You are a plain conversational assistant.
