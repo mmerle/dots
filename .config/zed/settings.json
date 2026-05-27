@@ -93,8 +93,10 @@
     "dock": "left",
     "use_modifier_to_send": true,
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-5.4-pro",
+      "effort": "medium",
+      "enable_thinking": true,
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
     },
     "inline_assistant_model": {
       "provider": "openai",
