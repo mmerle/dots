@@ -24,7 +24,8 @@ copy-on-select = clipboard
 cursor-style-blink = false
 cursor-invert-fg-bg = true
 shell-integration-features = title, sudo, no-cursor
-
+quick-terminal-animation-duration = 0
+quick-terminal-screen = macos-menu-bar
 resize-overlay = never
 window-colorspace = display-p3
 window-padding-balance = true
@@ -45,5 +46,7 @@ keybind = super+f=text:\x02\x05
 keybind = super+g=text:\x02g
 keybind = super+d=text:\x02%
 keybind = super+shift+d=text:\x02"
+
+keybind = global:super+alt+ctrl+grave_accent=toggle_quick_terminal
 
 # vim:ft=conf
