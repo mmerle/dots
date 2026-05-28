@@ -1,4 +1,4 @@
-theme = flora-dark
+theme = light:flora-light, dark:flora-dark
 
 macos-option-as-alt = true
 macos-titlebar-style = hidden
