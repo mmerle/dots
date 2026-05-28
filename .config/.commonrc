@@ -20,8 +20,8 @@ fi
 case "$rc_shell" in
   zsh)
     setopt PROMPT_SUBST
-    PROMPT='%F{blue}%~%F{cyan}$(prompt_git_branch)%F{blue}>%f ' ;;
-  bash) PS1='\[\e[01;34m\]\w\[\e[36m\]$(prompt_git_branch)\[\e[01;34m\]>\[\e[00m\] ' ;;
+    PROMPT='%~%F{black}$(prompt_git_branch)%f> ' ;;
+  bash) PS1='\w\[\e[30m\]$(prompt_git_branch)\[\e[00m\]> ' ;;
 esac
 
 prompt_git_branch() {
