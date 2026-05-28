@@ -18,9 +18,15 @@ else
 fi
 
 case "$rc_shell" in
-  zsh) PROMPT='%F{blue}%~>%f ' ;;
-  bash) PS1='\[\e[01;34m\]\w>\[\e[00m\] ' ;;
+  zsh)
+    setopt PROMPT_SUBST
+    PROMPT='%F{blue}%~%F{cyan}$(prompt_git_branch)%F{blue}>%f ' ;;
+  bash) PS1='\[\e[01;34m\]\w\[\e[36m\]$(prompt_git_branch)\[\e[01;34m\]>\[\e[00m\] ' ;;
 esac
+
+prompt_git_branch() {
+  branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) && printf ':%s' "$branch"
+}
 
 set -o vi
 
@@ -38,9 +44,7 @@ alias ts='tmux ls'
 alias oc='opencode'
 
 if command -v zoxide >/dev/null 2>&1; then
-  case "$rc_shell" in
-    zsh|bash) eval "$(zoxide init "$rc_shell")" ;;
-  esac
+  eval "$(zoxide init "$rc_shell")"
 fi
 
 # vim: set ft=sh :
