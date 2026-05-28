@@ -11,3 +11,4 @@ gui:
     '*': '#606975'
   showBottomLine: false
   showListFooter: false
+  border: 'single'
