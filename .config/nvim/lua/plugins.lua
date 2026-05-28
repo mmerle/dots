@@ -184,6 +184,7 @@ later(function()
       width = 0.6,
       border = 'single',
       preview = { horizontal = 'right:70%', scrollbar = 'border', border = 'single' },
+      backdrop = 100,
     },
     previewers = {
       builtin = { syntax_limit_b = 1024 * 1024, limit_b = 1024 * 1024, treesitter = { context = false } },
