@@ -42,39 +42,23 @@ function fish_title
 end
 
 function fish_prompt
-    set -g __fish_git_prompt_showdirtystate 1
-
-    set -l full_path (string replace -r "^$HOME" "~" "$PWD")
-    set -l path_parts (string split "/" "$full_path")
-    set -l display_path "$full_path"
-    set -l path_count (count $path_parts)
-
-    if test $path_count -ge 8
-        # Start with the first component (usually ~)
-        set display_path $path_parts[1]
-
-        # Shorten intermediate directories, keeping the last 2 full
-        for i in (seq 2 (math $path_count - 2))
-            set display_path "$display_path/"(string sub -l 1 "$path_parts[$i]")
-        end
-
-        # Add the last two components in full
-        if test $path_count -ge 2
-            set display_path "$display_path/"$path_parts[-2]"/"$path_parts[-1]
-        end
-    end
+    set -l display_path (prompt_pwd --dir-length=0)
 
     # Git info
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1
-        set -l git_branch (git symbolic-ref --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
-        set -l git_dirty (git status --porcelain 2>/dev/null)
+        set -l git_branch (git symbolic-ref --quiet --short HEAD 2>/dev/null; or git rev-parse --short HEAD 2>/dev/null)
+        set -l git_dirty (git status --porcelain=v1 2>/dev/null)
 
         set -l git_display $git_branch
         if test -n "$git_dirty"
             set git_display "$git_display*"
         end
 
-        printf '%s:%s> ' "$display_path" "$git_display"
+        printf '%s' "$display_path"
+        set_color black
+        printf ':%s' "$git_display"
+        set_color normal
+        printf '> '
     else
         printf '%s> ' "$display_path"
     end
