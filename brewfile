@@ -19,6 +19,7 @@ brew "node"
 brew "pastel"
 brew "pnpm"
 brew "ripgrep"
+brew "stylua"
 brew "tealdeer"
 brew "tmux", args: ["HEAD"]
 brew "trash-cli"
