@@ -9,7 +9,7 @@ set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 set -gx EDITOR nvim
 set -gx MANPAGER "nvim -c +Man!"
-set -gx FZF_DEFAULT_OPTS "--color=16,border:#3d4249 --layout=reverse --gutter=' '"
+set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzfrc"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
 set -gx HOMEBREW_NO_ENV_HINTS 1
 
