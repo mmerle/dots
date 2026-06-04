@@ -7,6 +7,7 @@ export EDITOR="nvim"
 export MANPAGER="nvim -c +Man!"
 export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME/fzf/fzfrc"
 export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_EMOJI=1
 export HOMEBREW_NO_ANALYTICS=1
 
 if [ -n "${ZSH_VERSION-}" ]; then

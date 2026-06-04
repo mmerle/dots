@@ -12,6 +12,7 @@ set -gx MANPAGER "nvim -c +Man!"
 set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzfrc"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
 set -gx HOMEBREW_NO_ENV_HINTS 1
+set -gx HOMEBREW_NO_EMOJI 1
 
 # disable analytics of commonly used tools
 set -gx HOMEBREW_NO_ANALYTICS 1
