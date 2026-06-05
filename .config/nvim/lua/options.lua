@@ -6,8 +6,9 @@ for _, plugin in ipairs({ 'gzip', 'tarPlugin', 'tohtml', 'tutor', 'zipPlugin' })
   vim.g['loaded_' .. plugin] = 1
 end
 
-if vim.env.SHELL:match('fish$') then vim.opt.shell = '/opt/homebrew/bin/bash' end
-if vim.g.vscode then vim.opt.cmdheight = 999 end
+if vim.env.SHELL:match('fish$') then
+  vim.opt.shell = '/opt/homebrew/bin/bash'
+end
 
 vim.opt.mouse = 'a'
 vim.opt.diffopt = 'internal,filler,closeoff,linematch:60'
@@ -26,7 +27,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.opt.spell = false
-vim.opt.spelloptions = 'camel'            -- treat camelCase word parts as separate words
+vim.opt.spelloptions = 'camel' -- treat camelCase word parts as separate words
 vim.opt.iskeyword = '@,48-57,_,192-255,-' -- treat dash as `word` textobject part
 
 vim.opt.number = true
@@ -44,8 +45,8 @@ vim.opt.splitkeep = 'screen'
 vim.opt.pumheight = 6
 vim.opt.completeopt = 'menu,menuone,noselect' -- completion behavior
 vim.opt.smoothscroll = true
-vim.opt.scrolloff = 4
-vim.opt.sidescrolloff = 4
+vim.opt.scrolloff = 3
+vim.opt.sidescrolloff = 3
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = { 'both' }
 vim.opt.laststatus = 3
@@ -75,7 +76,9 @@ vim.opt.swapfile = false
 vim.opt.shada = "'100,<50,s10,:1000,/100,@100,h"
 
 vim.cmd('filetype plugin indent on')
-if vim.fn.exists('syntax_on') ~= 1 then vim.cmd('syntax enable') end
+if vim.fn.exists('syntax_on') ~= 1 then
+  vim.cmd('syntax enable')
+end
 
 vim.diagnostic.config({
   -- show signs on top of any other sign, but only for warning and errors
