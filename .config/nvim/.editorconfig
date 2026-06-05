@@ -3,6 +3,4 @@ root = true
 [*]
 indent_style = space
 indent_size = 2
-
-[*.lua]
-quote_style = single
+quote_type = single

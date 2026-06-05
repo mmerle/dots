@@ -37,7 +37,9 @@ map('n', 'gV', '`[v`]', { desc = 'Visually select last edited' })
 map('i', '<a-bs>', '<c-w>', { desc = 'Delete word' })
 map('n', 'yc', 'yygccp', { remap = true })
 map('n', '<leader>y', '<cmd>%y<cr>', { desc = 'Yank entire file' })
-map('n', '<C-_>', function() require('Comment.api').toggle.linewise.current() end, opts)
+map('n', '<C-_>', function()
+  require('Comment.api').toggle.linewise.current()
+end, opts)
 
 -- conceal level toggle
 map('n', '<leader>uc', function()
