@@ -6,6 +6,7 @@ macos-shortcuts = allow
 macos-icon = custom-style
 macos-icon-ghost-color = #ffffff
 macos-icon-screen-color = #000000
+auto-update = off
 
 font-family = MD IO Variable
 font-feature = calt
