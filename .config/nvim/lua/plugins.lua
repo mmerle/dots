@@ -32,7 +32,7 @@ Config.Languages = {
     markdown = { 'prettierd', 'prettier' },
     php = { 'prettierd', 'prettier' },
     twig = { 'prettierd', 'prettier' },
-    astro = { 'prettierd', 'prettier' },
+    astro = { 'biome', 'prettierd', 'prettier' },
     svelte = { 'prettierd', 'prettier' },
   }
 }
