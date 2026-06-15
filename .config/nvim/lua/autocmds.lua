@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 
 Config.new_autocmd('BufEnter', '*', function() vim.cmd('setlocal formatoptions-=o') end, 'Disable comment continuation')
-Config.new_autocmd('TextYankPost', '*', function() vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 }) end)
+Config.new_autocmd('TextYankPost', '*', function() vim.hl.hl_op({ higroup = 'IncSearch', timeout = 200 }) end)
 Config.new_autocmd('VimResized', '*', function() vim.cmd('tabdo wincmd =') end, 'Balance windows')
 
 Config.new_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, '*', function()
