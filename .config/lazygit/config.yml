@@ -12,3 +12,6 @@ gui:
   showBottomLine: false
   showListFooter: false
   border: 'single'
+git:
+  pagers:
+    - pager: delta --side-by-side --paging=never
