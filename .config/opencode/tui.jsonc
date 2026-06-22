@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/tui.json",
-  "theme": "system",
+  "theme": "flora",
   "keybinds": {
     "leader": "ctrl+o",
     "input_newline": "return",
