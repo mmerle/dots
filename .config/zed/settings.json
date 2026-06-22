@@ -94,7 +94,7 @@
     "dock": "left",
     "use_modifier_to_send": true,
     "default_model": {
-      "effort": "medium",
+      "effort": "high",
       "enable_thinking": true,
       "provider": "openai-subscribed",
       "model": "gpt-5.5",
@@ -118,20 +118,10 @@
       },
       "type": "registry",
     },
-    "cursor": {
-      "type": "registry",
-    },
   },
   "context_servers": {
     "context7": {
       "url": "https://mcp.context7.com/mcp",
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest", "--isolated", "--browser", "webkit"],
-    },
-    "paper": {
-      "url": "http://127.0.0.1:29979/mcp",
     },
   },
   // panels

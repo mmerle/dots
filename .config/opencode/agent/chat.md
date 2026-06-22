@@ -2,7 +2,7 @@
 description: Plain conversational assistant
 mode: primary
 temperature: 0.4
-color: success
+color: info
 permission:
   read: deny
   edit: deny
