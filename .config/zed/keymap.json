@@ -46,7 +46,7 @@
       "space z": "workspace::ToggleZoom",
       "space x": "editor::Format",
       "space p": "file_finder::Toggle",
-      "space /": "pane::DeploySearch",
+      "space /": "text_finder::Toggle",
       "space w": "pane::CloseActiveItem",
       "space b": "tab_switcher::ToggleAll",
       "-": "project_panel::Toggle",

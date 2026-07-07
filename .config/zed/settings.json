@@ -54,7 +54,8 @@
   "git": {
     "path_style": "file_name_first",
     "inline_blame": {
-      "enabled": false,
+      "enabled": true,
+      "location": "status_bar",
     },
   },
   "search": {
