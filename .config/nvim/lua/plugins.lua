@@ -134,9 +134,12 @@ now_if_args(function()
 
   vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities(nil, true) })
   Config.new_autocmd('LspAttach', '*', function(event)
-    local function opts(desc) return { buffer = event.buf, desc = desc } end
+    local function opts(desc) return { buf = event.buf, desc = desc } end
+    local function diagnostic_float(diagnostic)
+      if diagnostic then vim.diagnostic.open_float({ focus = false, scope = 'cursor' }) end
+    end
     local function diagnostic_jump(count)
-      return function() vim.diagnostic.jump({ count = count, float = true }) end
+      return function() vim.diagnostic.jump({ count = count, on_jump = diagnostic_float }) end
     end
 
     map('n', 'gh', vim.lsp.buf.hover, opts('Documentation'))
@@ -271,7 +274,7 @@ end)
 local function map_reference(key, dir, buffer)
   map('n', key, function() require('illuminate')['goto_' .. dir .. '_reference'](false) end, {
     desc = dir:sub(1, 1):upper() .. dir:sub(2) .. ' Reference',
-    buffer = buffer,
+    buf = buffer,
   })
 end
 
@@ -326,7 +329,7 @@ local function map_split(buf_id, lhs, direction)
     end)
     require('mini.files').set_target_window(new_target)
     require('mini.files').go_in({ close_on_file = true })
-  end, { buffer = buf_id, desc = 'Open in ' .. direction })
+  end, { buf = buf_id, desc = 'Open in ' .. direction })
 end
 
 Config.new_autocmd('User', 'MiniFilesBufferCreate', function(args)

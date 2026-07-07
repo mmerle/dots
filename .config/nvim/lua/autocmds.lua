@@ -21,7 +21,7 @@ Config.new_autocmd('BufWinEnter', '*', function(event)
 end, 'Open help pages in listed current-window buffers')
 
 Config.on_filetype('qf', function(event)
-  local opts = { buffer = event.buf, silent = true }
+  local opts = { buf = event.buf, silent = true }
   map('n', 'j', '<cmd>cn | wincmd p<CR>', opts)
   map('n', 'k', '<cmd>cN | wincmd p<CR>', opts)
 end)

@@ -42,7 +42,6 @@ end
 
 -- define custom `vim.pack.add()` hook helper
 Config.on_packchanged = function(plugin_name, kinds, callback, desc)
-  if vim.fn.has('nvim-0.12') == 0 then return end
   local f = function(event)
     local name, kind = event.data.spec.name, event.data.kind
     if not (name == plugin_name and vim.tbl_contains(kinds, kind)) then return end

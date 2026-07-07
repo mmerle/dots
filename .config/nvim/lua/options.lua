@@ -11,7 +11,7 @@ if vim.env.SHELL:match('fish$') then
 end
 
 vim.opt.mouse = 'a'
-vim.opt.diffopt = 'internal,filler,closeoff,linematch:60'
+vim.opt.diffopt = 'internal,filler,closeoff,indent-heuristic,inline:char,linematch:60'
 
 vim.opt.expandtab = true
 vim.opt.shiftwidth = profile.indent

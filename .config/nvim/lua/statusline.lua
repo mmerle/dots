@@ -43,14 +43,14 @@ end
 
 -- error
 local function diagnostic_error_status()
-  local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+  local num_errors = vim.diagnostic.count(0)[vim.diagnostic.severity.ERROR] or 0
   if num_errors > 0 then return '● ' .. num_errors end
   return ''
 end
 
 -- warning
 local function diagnostic_warn_status()
-  local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+  local num_warnings = vim.diagnostic.count(0)[vim.diagnostic.severity.WARN] or 0
   if num_warnings > 0 then return '● ' .. num_warnings end
   return ''
 end
