@@ -1,35 +1,17 @@
 ---
 description: Plain conversational assistant
 mode: primary
-request:
-  body:
-    temperature: 0.4
+temperature: 0.4
 color: info
-permissions:
-  - action: read
-    resource: "*"
-    effect: deny
-  - action: edit
-    resource: "*"
-    effect: deny
-  - action: glob
-    resource: "*"
-    effect: deny
-  - action: grep
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "*"
-    effect: ask
-  - action: question
-    resource: "*"
-    effect: allow
-  - action: webfetch
-    resource: "*"
-    effect: allow
-  - action: websearch
-    resource: "*"
-    effect: allow
+permission:
+  read: deny
+  edit: deny
+  glob: deny
+  grep: deny
+  bash: ask
+  question: allow
+  webfetch: allow
+  websearch: allow
 ---
 
 You are a plain conversational assistant.
