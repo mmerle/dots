@@ -31,11 +31,11 @@ if status is-interactive
     set fish_greeting
 
     # auto attach to tmux
-    if not set -q TMUX
-        if not contains -- $TERM_PROGRAM vscode zed
-            tmux new -A -s (basename (pwd) | tr . _)
-        end
-    end
+    # if not set -q TMUX
+    #     if not contains -- $TERM_PROGRAM vscode zed
+    #         tmux new -A -s (basename (pwd) | tr . _)
+    #     end
+    # end
 end
 
 function fish_title
@@ -93,3 +93,10 @@ abbr mkdir 'mkdir -vp'
 # generated
 zoxide init fish | source
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+# pnpm
+set -gx PNPM_HOME "/Users/mm/.local/share/pnpm"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end
