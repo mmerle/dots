@@ -1,0 +1,16 @@
+[keys]
+prefix = "ctrl+b"
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+split_vertical = "prefix+%"
+split_horizontal = 'prefix+"'
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+switch_tab = "prefix+1..9"
+close_tab = "prefix+ampersand"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+reload_config = "prefix+r"
