@@ -14,4 +14,4 @@ gui:
   border: 'single'
 git:
   pagers:
-    - pager: hunk pager --mode split
+    - pager: hunk pager --mode stack
