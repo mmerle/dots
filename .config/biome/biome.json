@@ -1,23 +1,8 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
-  "files": {
-    "ignoreUnknown": false,
-    "includes": [
-      "**/*",
-      "!**/node_modules",
-      "!**/public",
-      "!**/dist",
-      "!.next",
-      "!.astro",
-      "!.github",
-      "!.vercel",
-      "!.netlify",
-      "!pnpm-lock.yaml",
-      "!bun.lock"
-    ]
-  },
+  "$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
   "formatter": {
     "enabled": true,
+    "useEditorconfig": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
@@ -62,6 +47,12 @@
     "formatter": {
       "quoteStyle": "single",
       "trailingCommas": "es5"
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
     }
   },
   "json": {
