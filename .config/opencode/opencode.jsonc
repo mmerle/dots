@@ -5,40 +5,45 @@
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp/oauth",
-      "enabled": true
+      "enabled": true,
     },
     "playwright": {
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp@latest"],
-      "enabled": false
+      "enabled": false,
     },
     "svelte": {
       "type": "remote",
       "url": "https://mcp.svelte.dev/mcp",
-      "enabled": false
+      "enabled": false,
     },
     "astro-docs": {
       "type": "remote",
       "url": "https://mcp.docs.astro.build/mcp",
-      "enabled": false
+      "enabled": false,
     },
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--channel=canary"],
-      "enabled": false
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--channel=canary",
+        "--headless=true",
+        "--isolated=true",
+      ],
+      "enabled": false,
     },
     "cloudflare-api": {
       "type": "remote",
       "url": "https://mcp.cloudflare.com/mcp",
-      "enabled": false
+      "enabled": false,
     },
     "sanity": {
       "type": "remote",
       "url": "https://mcp.sanity.io",
-      "enabled": false
-    }
+      "enabled": false,
+    },
   },
-  "plugin": [
-    "opencode-rules@latest"
-  ]
+  "plugin": ["opencode-rules@latest"],
 }
