@@ -1,3 +1,4 @@
+onboarding = false
 [keys]
 prefix = "ctrl+b"
 focus_pane_left = "ctrl+h"
@@ -14,3 +15,25 @@ close_tab = "prefix+ampersand"
 close_pane = "prefix+x"
 zoom = "prefix+z"
 reload_config = "prefix+r"
+
+[[keys.command]]
+key = "prefix+minus"
+type = "plugin_action"
+command = "herdr-file-viewer.open-file-viewer"
+description = "toggle file viewer"
+
+[[keys.command]]
+key = "prefix+h"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+description = "toggle diff review"
+
+[ui.sound]
+enabled = false
+
+[experimental]
+pane_history = true
+
+[theme]
+name = "terminal"
+auto_switch = false
