@@ -1,6 +1,6 @@
 local map = vim.keymap.set
 local add = vim.pack.add
-local now_if_args, later, on_filetype = Config.now_if_args, Config.later, Config.on_filetype
+local now, now_if_args, later, on_filetype = Config.now, Config.now_if_args, Config.later, Config.on_filetype
 
 -- language setup
 Config.Languages = {
@@ -20,20 +20,22 @@ Config.Languages = {
   formatters_by_ft = {
     lua = { 'stylua' },
     fish = { 'fish_indent' },
-    javascript = { 'biome', 'prettierd', 'prettier' },
-    javascriptreact = { 'biome', 'prettierd', 'prettier' },
-    typescript = { 'biome', 'prettierd', 'prettier' },
-    typescriptreact = { 'biome', 'prettierd', 'prettier' },
-    json = { 'biome', 'prettierd', 'prettier' },
-    jsonc = { 'biome', 'prettierd', 'prettier' },
-    css = { 'biome', 'prettierd', 'prettier' },
-    scss = { 'prettierd', 'prettier' },
-    html = { 'prettierd', 'prettier' },
-    markdown = { 'prettierd', 'prettier' },
-    php = { 'prettierd', 'prettier' },
-    twig = { 'prettierd', 'prettier' },
-    astro = { 'biome', 'prettierd', 'prettier' },
-    svelte = { 'prettierd', 'prettier' },
+    javascript = { 'biome', 'oxfmt', 'prettierd' },
+    javascriptreact = { 'biome', 'oxfmt', 'prettierd' },
+    typescript = { 'biome', 'oxfmt', 'prettierd' },
+    typescriptreact = { 'biome', 'oxfmt', 'prettierd' },
+    json = { 'biome', 'oxfmt', 'prettierd' },
+    jsonc = { 'biome', 'oxfmt', 'prettierd' },
+    css = { 'biome', 'oxfmt', 'prettierd' },
+    scss = { 'oxfmt', 'prettierd' },
+    graphql = { 'biome', 'oxfmt', 'prettierd' },
+    html = { 'biome', 'oxfmt', 'prettierd' },
+    markdown = { 'oxfmt', 'prettierd' },
+    yaml = { 'oxfmt', 'prettierd' },
+    php = { 'prettierd' },
+    twig = { 'prettierd' },
+    astro = { 'biome', 'prettierd' },
+    svelte = { 'biome', 'prettierd' },
   }
 }
 
@@ -226,7 +228,6 @@ later(function()
   })
   fzf.register_ui_select()
 end)
-
 map('n', '<leader>fr', '<cmd>FzfLua resume<cr>', { desc = 'Resume find' })
 map('n', '<leader>p', '<cmd>FzfLua files<cr>', { desc = 'Find files' })
 map('n', '<leader>/', '<cmd>FzfLua live_grep<cr>', { desc = 'Find text' })
@@ -456,32 +457,51 @@ now_if_args(function()
 end)
 
 -- conform.nvim (https://github.com/stevearc/conform.nvim)
+local formatter_startup_directory = vim.fs.normalize(vim.uv.cwd())
+
 now_if_args(function()
   add({ 'https://github.com/stevearc/conform.nvim' })
 
   local global_biome_config = vim.fs.normalize('~/.config/biome/biome.json')
+  local global_oxfmt_config = vim.fs.normalize('~/.config/oxfmt/.oxfmtrc.json')
   local global_prettier_config = vim.fs.normalize('~/.config/.prettierrc')
-  local biome_markers = { 'biome.json', 'biome.jsonc', '.biome.json', '.biome.jsonc' }
-  local prettier_markers = {
-    '.prettierrc',
-    '.prettierrc.json',
-    '.prettierrc.js',
-    'prettier.config.js',
+  local formatter_by_marker = {
+    ['biome.json'] = 'biome',
+    ['biome.jsonc'] = 'biome',
+    ['.biome.json'] = 'biome',
+    ['.biome.jsonc'] = 'biome',
+    ['.oxfmtrc.json'] = 'oxfmt',
+    ['.oxfmtrc.jsonc'] = 'oxfmt',
+    ['oxfmt.config.ts'] = 'oxfmt',
+    ['oxfmt.config.mts'] = 'oxfmt',
+    ['.prettierrc'] = 'prettierd',
+    ['.prettierrc.json'] = 'prettierd',
+    ['.prettierrc.js'] = 'prettierd',
+    ['prettier.config.js'] = 'prettierd',
   }
+  local formatter_markers = vim.tbl_keys(formatter_by_marker)
+  table.sort(formatter_markers)
 
-  local function file_exists(path)
-    local stat = vim.uv.fs_stat(path)
-    return stat and stat.type == 'file'
+  local function find_project_formatter(dirname)
+    local directory = vim.fs.normalize(dirname)
+    if not vim.fs.relpath(formatter_startup_directory, directory) then return end
+
+    local marker = vim.fs.find(formatter_markers, {
+      path = directory,
+      upward = true,
+      stop = vim.fs.dirname(formatter_startup_directory),
+      type = 'file',
+    })[1]
+    return marker and formatter_by_marker[vim.fs.basename(marker)]
   end
 
-  local function has_project_prettier_config(dirname)
-    return vim.fs.root(dirname, function(name, path)
-      if vim.list_contains(prettier_markers, name) then return true end
-      if name ~= 'package.json' then return false end
+  local function formatters(bufnr)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    if filename == '' then return {} end
 
-      local ok, pkg = pcall(vim.json.decode, vim.secure.read(vim.fs.joinpath(path, name)) or '')
-      return ok and type(pkg) == 'table' and pkg.prettier ~= nil
-    end) ~= nil
+    local formatter = find_project_formatter(vim.fs.dirname(filename))
+    if formatter then return { formatter } end
+    return Config.Languages.formatters_by_ft[vim.bo[bufnr].filetype] or {}
   end
 
   local function autoformat_enabled(bufnr)
@@ -501,35 +521,33 @@ now_if_args(function()
   end
 
   require('conform').setup({
-    notify_on_error = false,
     default_format_opts = { lsp_format = 'fallback', stop_after_first = true },
-    formatters_by_ft = Config.Languages.formatters_by_ft,
+    formatters_by_ft = { ['*'] = formatters },
     format_on_save = function(bufnr)
       if not autoformat_enabled(bufnr) then return end
-      return { async = false, timeout_ms = 500 }
+      return { timeout_ms = 500 }
     end,
     formatters = {
-      biome = {
-        args = function(_, ctx)
-          local args = { 'format', '--stdin-file-path', '$FILENAME' }
-          if not vim.fs.root(ctx.dirname, biome_markers) and file_exists(global_biome_config) then
-            vim.list_extend(args, { '--config-path', global_biome_config })
-          end
-          return args
-        end,
-        stdin = true,
-      },
-      prettierd = {
-        env = function()
-          if file_exists(global_prettier_config) then return { PRETTIERD_DEFAULT_CONFIG = global_prettier_config } end
-        end,
-      },
-      prettier = {
+      oxfmt = {
         prepend_args = function(_, ctx)
-          if not has_project_prettier_config(ctx.dirname) and file_exists(global_prettier_config) then
-            return { '--config', global_prettier_config }
+          if find_project_formatter(ctx.dirname) ~= 'oxfmt' then
+            return { '-c', global_oxfmt_config }
           end
           return {}
+        end,
+      },
+      biome = {
+        append_args = function(_, ctx)
+          if find_project_formatter(ctx.dirname) ~= 'biome' then
+            return { '--config-path', global_biome_config }
+          end
+        end,
+      },
+      prettierd = {
+        env = function(_, ctx)
+          if find_project_formatter(ctx.dirname) ~= 'prettierd' and vim.uv.fs_stat(global_prettier_config) then
+            return { PRETTIERD_DEFAULT_CONFIG = global_prettier_config }
+          end
         end,
       },
     },
@@ -541,11 +559,11 @@ now_if_args(function()
 
   vim.api.nvim_create_user_command('FormatDisable', function(args)
     set_autoformat(false, args.bang)
-  end, { desc = 'Disable format on save', bang = true, force = true })
+  end, { desc = 'Disable format on save', bang = true })
 
   vim.api.nvim_create_user_command('FormatEnable', function(args)
     set_autoformat(true, args.bang)
-  end, { desc = 'Enable format on save', bang = true, force = true })
+  end, { desc = 'Enable format on save', bang = true })
 end)
 
 -- mini.clue (https://github.com/nvim-mini/mini.clue)
@@ -616,28 +634,6 @@ later(function()
   })
 end)
 
--- zen-mode.nvim (https://github.com/folke/zen-mode.nvim)
-later(function()
-  add({ 'https://github.com/folke/zen-mode.nvim' })
-  require('zen-mode').setup({
-    window = { backdrop = 1, width = 0.8, height = 0.8, options = { number = false, relativenumber = false } },
-    plugins = {
-      gitsigns = { enabled = true },
-      tmux = { enabled = true },
-      options = { enabled = true, showcmd = false, laststatus = 0, winborder = 'none' },
-    },
-    on_open = function()
-      vim.b.miniindentscope_disable = true
-      require('incline').disable()
-    end,
-    on_close = function()
-      vim.b.miniindentscope_disable = false
-      require('incline').enable()
-    end,
-  })
-end)
-map('n', '<leader>z', '<cmd>ZenMode<cr>', { desc = 'Zen mode' })
-
 -- harpoon (https://github.com/ThePrimeagen/harpoon)
 later(function()
   add({
@@ -682,3 +678,15 @@ end)
 later(function()
   add({ 'https://github.com/tpope/vim-repeat' })
 end)
+
+-- mini.misc (https://github.com/nvim-mini/mini.misc)
+now(function()
+  local minimisc = require('mini.misc')
+  minimisc.setup_auto_root()
+  minimisc.setup_restore_cursor()
+end)
+map('n', '<leader>z', function()
+  local name = vim.api.nvim_buf_get_name(0)
+  require('mini.misc').zoom(nil, { title = name == '' and '' or vim.fs.basename(name) })
+end, { desc = 'Zoom buffer' })
+map('n', '<leader>r', function() require('mini.misc').resize_window(0, 80) end, { desc = 'Resize window' })
