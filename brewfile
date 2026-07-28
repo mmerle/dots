@@ -2,6 +2,7 @@ tap "homebrew/cask-versions"
 
 tap "anomalyco/tap", trusted: true
 tap "fsouza/prettierd", trusted: true
+tap "jnsahaj/lumen", trusted: true
 tap "schappim/ocr", trusted: true
 
 brew "bash"
@@ -19,6 +20,7 @@ brew "gh"
 brew "git"
 brew "git-delta"
 brew "lazygit"
+brew "jnsahaj/lumen/lumen"
 brew "mas"
 brew "mosh"
 brew "neovim", args: ["HEAD"]
