@@ -29,6 +29,14 @@ prompt_git_branch() {
   branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) && printf ':%s' "$branch"
 }
 
+y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  command rm -f -- "$tmp"
+}
+
 set -o vi
 
 alias v='nvim'
