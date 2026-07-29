@@ -209,7 +209,12 @@ later(function()
       stat_file = true,
       include_current_session = true,
     },
-    buffers = { winopts = { height = 0.4, width = 0.4 }, previewer = false, ignore_current_buffer = true },
+    buffers = {
+      formatter = 'path.filename_first',
+      winopts = { height = 0.4, width = 0.4 },
+      previewer = false,
+      ignore_current_buffer = true,
+    },
     grep = {
       rg_opts =
       '--no-heading --hidden --with-filename --line-number --column --trim -g !.git -g !dist -g !build --smart-case --color=never',
