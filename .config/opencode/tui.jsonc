@@ -6,6 +6,7 @@
     "input_newline": "return",
     "input_submit": "ctrl+return,ctrl+y",
     "editor_open": "<leader>e",
-    "sidebar_toggle": "<leader>b"
-  }
+    "sidebar_toggle": "<leader>b",
+  },
+  "plugin": ["opencode-rules@latest"],
 }
