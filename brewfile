@@ -1,8 +1,8 @@
 tap "homebrew/cask-versions"
 
+tap "agavra/tap", trusted: true
 tap "anomalyco/tap", trusted: true
 tap "fsouza/prettierd", trusted: true
-tap "jnsahaj/lumen", trusted: true
 tap "schappim/ocr", trusted: true
 
 brew "bash"
@@ -20,7 +20,6 @@ brew "gh"
 brew "git"
 brew "git-delta"
 brew "lazygit"
-brew "jnsahaj/lumen/lumen"
 brew "mas"
 brew "mosh"
 brew "neovim", args: ["HEAD"]
@@ -34,6 +33,7 @@ brew "tealdeer"
 brew "tmux"
 brew "trash-cli"
 brew "tree-sitter"
+brew "agavra/tap/tuicr"
 brew "yazi"
 brew "zoxide"
 brew "anomalyco/tap/opencode"
