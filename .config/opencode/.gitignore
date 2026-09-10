@@ -1,6 +1,6 @@
 node_modules
-package.json
-bun.lock
-*.tui-migration.bak
+service.json
+AGENTS.md
+/commands
 /themes
 /rules

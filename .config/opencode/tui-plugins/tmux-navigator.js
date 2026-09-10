@@ -1,3 +1,7 @@
+import { spawn } from "node:child_process"
+
+import { Plugin } from "@opencode/plugin/tui"
+
 const directions = [
   { name: "tmux.navigate.left", key: "ctrl+h", flag: "-L" },
   {
@@ -17,39 +21,34 @@ const directions = [
   { name: "tmux.navigate.right", key: "ctrl+l", flag: "-R" },
 ]
 
-const tui = async (api) => {
-  if (!process.env.TMUX) return
-
-  api.keymap.registerLayer({
-    commands: directions.map((direction) => ({
-      name: direction.name,
-      run() {
-        const mode = api.mode.current()
-        if (mode === "autocomplete") {
-          if (direction.autocomplete) api.keymap.dispatchCommand(direction.autocomplete)
-          return
-        }
-        if (mode === "modal" || api.ui.dialog.open) {
-          if (direction.modal) api.keymap.dispatchCommand(direction.modal)
-          return
-        }
-        if (mode !== "base") return
-
-        Bun.spawn(["tmux", "select-pane", direction.flag], {
-          stdout: "ignore",
-          stderr: "ignore",
-        })
-      },
-    })),
-    bindings: directions.map((direction) => ({
-      key: direction.key,
-      cmd: direction.name,
-      desc: `Navigate tmux ${direction.name.split(".").at(-1)}`,
-    })),
-  })
-}
-
-export default {
+export default Plugin.define({
   id: "tmux-navigator",
-  tui,
-}
+  setup(context) {
+    if (!process.env.TMUX) return
+
+    context.keymap.layer(() => ({
+      mode: "global",
+      commands: directions.map((direction) => ({
+        id: direction.name,
+        title: `Navigate tmux ${direction.name.split(".").at(-1)}`,
+        bind: direction.key,
+        run() {
+          const mode = context.keymap.mode.current()
+          if (mode === "autocomplete") {
+            if (direction.autocomplete) context.keymap.dispatch(direction.autocomplete)
+            return
+          }
+          if (mode === "modal" || mode === "dialog") {
+            if (direction.modal) context.keymap.dispatch(direction.modal)
+            return
+          }
+          if (mode !== "base" && mode !== "global") return
+
+          spawn("tmux", ["select-pane", direction.flag], {
+            stdio: "ignore",
+          })
+        },
+      })),
+    }))
+  },
+})
