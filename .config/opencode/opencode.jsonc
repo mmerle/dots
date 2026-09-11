@@ -50,6 +50,15 @@
         "url": "https://mcp.svelte.dev/mcp",
         "disabled": true,
       },
+      "blender": {
+        "type": "local",
+        "command": [
+          "uvx",
+          "--from",
+          "git+https://projects.blender.org/lab/blender_mcp.git#subdirectory=mcp",
+          "blender-mcp"
+        ]
+      },
     },
   },
 }
