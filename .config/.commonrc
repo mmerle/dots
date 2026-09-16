@@ -56,4 +56,10 @@ if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init "$rc_shell")"
 fi
 
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+
 # vim: set ft=sh :
