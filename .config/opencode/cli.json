@@ -17,13 +17,12 @@
     "paste": "compact"
   },
   "session": {
-    "sidebar": "auto",
+    "sidebar": "hide",
     "scrollbar": false,
     "thinking": "show",
     "grouping": "auto"
   },
   "animations": true,
-  "plugins": ["./tui-plugins/tmux-navigator.js"],
   "keybinds": {
     "leader": "ctrl+o",
     "input.newline": "return",
@@ -37,6 +36,6 @@
     "session.sidebar.toggle": "<leader>b"
   },
   "tabs": {
-    "layout": "horizontal"
+    "layout": "vertical"
   }
 }
