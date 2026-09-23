@@ -1,0 +1,18 @@
+{
+  "lastChangelogVersion": "0.86.1",
+  "theme": "dark",
+  "editorPaddingX": 1,
+  "outputPad": 1,
+  "externalEditor": "nvim",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6-luna",
+  "defaultThinkingLevel": "medium",
+  "hideThinkingBlock": false,
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:@plannotator/pi-extension",
+    "npm:@ff-labs/pi-fff",
+    "npm:pi-web-access",
+    "npm:pi-subagents"
+  ]
+}

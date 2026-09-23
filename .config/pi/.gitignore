@@ -1,0 +1,11 @@
+# Machine-local credentials, sessions, package installs, and generated state.
+agent/auth.json
+agent/mcp-cache.json
+agent/models-store.json
+agent/sessions/
+agent/trust.json
+agent/web-search.json
+agent/fff/
+agent/git/
+agent/npm/
+pi-acp/

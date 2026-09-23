@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "arena": {
+      "url": "https://mcp.are.na/mcp",
+      "disabled": true
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp/oauth"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "disabled": true
+    },
+    "svelte": {
+      "url": "https://mcp.svelte.dev/mcp",
+      "disabled": true
+    },
+    "astro-docs": {
+      "url": "https://mcp.docs.astro.build/mcp",
+      "disabled": true
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--executablePath=/Applications/Helium.app/Contents/MacOS/Helium", "--isolated=true"],
+      "disabled": true
+    },
+    "cloudflare-api": {
+      "url": "https://mcp.cloudflare.com/mcp",
+      "disabled": true
+    },
+    "sanity": {
+      "url": "https://mcp.sanity.io",
+      "disabled": true
+    },
+    "blender": {
+      "command": "uvx",
+      "args": ["--from", "git+https://projects.blender.org/lab/blender_mcp.git#subdirectory=mcp", "blender-mcp"],
+      "disabled": true
+    }
+  }
+}
