@@ -1,4 +1,5 @@
 {
+  "diff_view_style": "split",
   "cli_default_open_behavior": "new_window",
   "telemetry": {
     "diagnostics": false,
@@ -88,9 +89,13 @@
   "which_key": { "enabled": true },
   // llm
   "edit_predictions": {
+    "allow_data_collection": "no",
     "provider": "none",
   },
   "agent": {
+    "default_profile": "write",
+    "enable_feedback": false,
+    "single_file_review": true,
     "show_turn_stats": true,
     "dock": "left",
     "use_modifier_to_send": true,
@@ -98,7 +103,7 @@
       "effort": "high",
       "enable_thinking": true,
       "provider": "openai-subscribed",
-      "model": "gpt-5.5",
+      "model": "gpt-5.6-sol",
     },
     "inline_assistant_model": {
       "provider": "openai",
@@ -114,8 +119,16 @@
       "type": "registry",
     },
     "codex-acp": {
+      "favorite_config_option_values": {
+        "model": [
+          "gpt-6-sol"
+        ]
+      },
       "default_config_options": {
-        "model": "gpt-5.5",
+        "fast-mode": false,
+        "mode": "agent",
+        "reasoning_effort": "low",
+        "model": "gpt-6-luna",
       },
       "type": "registry",
     },
@@ -134,7 +147,7 @@
     "indent_size": 12.0,
     "hide_root": true,
     "file_icons": false,
-    "folder_icons": false,
+    "folder_indicator": "chevron",
     "show_diagnostics": "off",
   },
   "git_panel": {
@@ -142,13 +155,12 @@
     "status_style": "icon",
     "dock": "right",
     "collapse_untracked_diff": false,
-    "sort_by_path": false,
   },
   "outline_panel": {
     "dock": "right",
     "indent_size": 12.0,
-    "folder_icons": false,
     "file_icons": false,
+    "folder_indicator": "chevron",
   },
   "collaboration_panel": {
     "dock": "left",
@@ -172,7 +184,7 @@
       "settings": {
         "tab_size": 4,
         "preferred_line_length": 100,
-        "format_on_save": "off",
+        "format_on_save": "modifications_if_available",
         "sticky_scroll": {
           "enabled": false,
         },

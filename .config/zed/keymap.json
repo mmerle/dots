@@ -2,6 +2,7 @@
   // global
   {
     "bindings": {
+      "cmd-shift-g": "git_panel::ToggleFocus",
       "ctrl-j": "menu::SelectNext",
       "ctrl-k": "menu::SelectPrevious",
     },
@@ -9,7 +10,6 @@
   {
     "context": "Workspace",
     "bindings": {
-      "cmd-shift-g": "git_panel::ToggleFocus",
       "cmd-b": "workspace::ToggleLeftDock",
       "cmd-shift-b": "workspace::ToggleRightDock",
       "cmd-alt-b": "editor::ToggleGitBlameInline",
