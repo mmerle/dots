@@ -54,6 +54,14 @@
   },
   // misc
   {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "] h": "editor::GoToHunk",
+      "[ h": "editor::GoToPreviousHunk",
+      "space c r": "editor::Rename",
+    },
+  },
+  {
     "context": "VimControl && !menu",
     "bindings": {
       "j": ["vim::Down", { "display_lines": true }],

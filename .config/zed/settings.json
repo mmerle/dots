@@ -1,4 +1,5 @@
 {
+  "on_new_window": "empty_tab",
   "diff_view_style": "split",
   "cli_default_open_behavior": "new_window",
   "telemetry": {
@@ -93,6 +94,7 @@
     "provider": "none",
   },
   "agent": {
+    "notify_when_agent_waiting": "primary_screen",
     "default_profile": "write",
     "enable_feedback": false,
     "single_file_review": true,
@@ -100,35 +102,44 @@
     "dock": "left",
     "use_modifier_to_send": true,
     "default_model": {
-      "effort": "high",
+      "effort": "medium",
       "enable_thinking": true,
       "provider": "openai-subscribed",
-      "model": "gpt-5.6-sol",
+      "model": "gpt-6-sol",
     },
     "inline_assistant_model": {
-      "provider": "openai",
-      "model": "gpt-5.4",
+      "provider": "openai-subscribed",
+      "model": "gpt-6-sol",
     },
     "commit_message_model": {
-      "provider": "openai",
-      "model": "gpt-5.4",
+      "provider": "openai-subscribed",
+      "model": "gpt-6-luna",
     },
   },
   "agent_servers": {
+    "pi-acp": {
+      "default_config_options": {
+        "thought_level": "medium",
+        "model": "openai-codex/gpt-6-sol",
+      },
+      "type": "registry",
+    },
     "opencode": {
+      "default_config_options": {
+        "effort": "medium",
+        "model": "openai/gpt-6-sol",
+      },
       "type": "registry",
     },
     "codex-acp": {
       "favorite_config_option_values": {
-        "model": [
-          "gpt-6-sol"
-        ]
+        "model": ["gpt-6-sol"],
       },
       "default_config_options": {
         "fast-mode": false,
         "mode": "agent",
-        "reasoning_effort": "low",
-        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "model": "gpt-6-sol",
       },
       "type": "registry",
     },
