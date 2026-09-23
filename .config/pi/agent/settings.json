@@ -8,6 +8,7 @@
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": false,
+  "quietStartup": true,
   "packages": [
     "npm:pi-mcp-adapter",
     "npm:@plannotator/pi-extension",
