@@ -172,6 +172,32 @@ now_if_args(function()
   })
 end)
 
+-- fff (https://github.com/dmtrKovalenko/fff)
+later(function()
+  Config.on_packchanged('fff', { 'install', 'update' }, function()
+    require('fff.download').download_or_build_binary()
+  end)
+  add({ 'https://github.com/dmtrKovalenko/fff' })
+
+  require('fff').setup({
+    prompt = '> ',
+    layout = { height = 0.6, width = 0.8, border = 'single', prompt_position = 'top' },
+    keymaps = {
+      move_up = { '<Up>', '<C-p>', '<C-k>' },
+      move_down = { '<Down>', '<C-n>', '<C-j>' },
+    },
+  })
+end)
+map('n', '<leader>p', function()
+  require('fff').find_files({
+    layout = { width = 0.4, height = 0.4 },
+    preview = { enabled = false },
+  })
+end, { desc = 'Find files' })
+map('n', '<leader>/', function() require('fff').live_grep() end, { desc = 'Find text' })
+map('n', '<leader>fw', function() require('fff').live_grep_under_cursor() end, { desc = 'Find current word' })
+map('n', '<leader>fr', function() require('fff').resume() end, { desc = 'Resume file/text search' })
+
 -- fzf-lua (https://github.com/ibhagwan/fzf-lua)
 later(function()
   add({ 'https://github.com/ibhagwan/fzf-lua' })
@@ -194,13 +220,6 @@ later(function()
     previewers = {
       builtin = { syntax_limit_b = 1024 * 1024, limit_b = 1024 * 1024, treesitter = { context = false } },
     },
-    files = {
-      formatter = 'path.filename_first',
-      winopts = { height = 0.4, width = 0.4 },
-      previewer = false,
-      cwd_prompt = false,
-      rg_opts = '--files --hidden -g !.git --color=never',
-    },
     oldfiles = {
       formatter = 'path.filename_first',
       winopts = { height = 0.4, width = 0.4 },
@@ -214,10 +233,6 @@ later(function()
       winopts = { height = 0.4, width = 0.4 },
       previewer = false,
       ignore_current_buffer = true,
-    },
-    grep = {
-      rg_opts =
-      '--no-heading --hidden --with-filename --line-number --column --trim -g !.git -g !dist -g !build --smart-case --color=never',
     },
     spell_suggest = { winopts = { height = 0.33, width = 0.33, relative = 'cursor' } },
     hls = { normal = 'NormalFloat', preview_normal = 'NormalFloat', border = 'FloatBorder', preview_border = 'FloatBorder' },
@@ -233,16 +248,13 @@ later(function()
   })
   fzf.register_ui_select()
 end)
-map('n', '<leader>fr', '<cmd>FzfLua resume<cr>', { desc = 'Resume find' })
-map('n', '<leader>p', '<cmd>FzfLua files<cr>', { desc = 'Find files' })
-map('n', '<leader>/', '<cmd>FzfLua live_grep<cr>', { desc = 'Find text' })
+map('n', '<leader>fR', '<cmd>FzfLua resume<cr>', { desc = 'Resume fzf picker' })
 map('n', '<leader>b', '<cmd>FzfLua buffers<cr>', { desc = 'Find buffers' })
 map('n', '<leader>fo', '<cmd>FzfLua oldfiles<cr>', { desc = 'Find recent files' })
 map('n', '<leader>fb', '<cmd>FzfLua lgrep_curbuf<cr>', { desc = 'Find in current buffer' })
 map('n', '<leader>fd', '<cmd>FzfLua lsp_document_diagnostics<cr>', { desc = 'Find diagnostics' })
 map('n', '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', { desc = 'Find symbols' })
 map('n', '<leader>fS', '<cmd>FzfLua spell_suggest<cr>', { desc = 'Find spelling suggestions' })
-map('n', '<leader>fw', '<cmd>FzfLua grep_cword<cr>', { desc = 'Find current word' })
 map('n', '<leader>fc', '<cmd>FzfLua command_history<cr>', { desc = 'Find command history' })
 map('n', '<leader>fC', '<cmd>FzfLua commands<cr>', { desc = 'Find commands' })
 map('n', '<leader>fh', '<cmd>FzfLua helptags<cr>', { desc = 'Find help' })

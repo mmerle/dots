@@ -28,6 +28,10 @@
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
     },
+    "fff": {
+      "rev": "e3f694a2e4f82bb755418e8d305dcff779c59c27",
+      "src": "https://github.com/dmtrKovalenko/fff"
+    },
     "flash.nvim": {
       "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
       "src": "https://github.com/folke/flash.nvim"
