@@ -94,6 +94,8 @@
     "provider": "none",
   },
   "agent": {
+    "expand_terminal_card": false,
+    "expand_edit_card": false,
     "notify_when_agent_waiting": "primary_screen",
     "default_profile": "write",
     "enable_feedback": false,
