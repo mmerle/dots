@@ -1,19 +1,20 @@
 {
   "lastChangelogVersion": "0.87.1",
-  "theme": "dark",
+  "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "outputPad": 1,
   "externalEditor": "nvim",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "quietStartup": true,
   "packages": [
     "npm:pi-mcp-adapter",
     "npm:@plannotator/pi-extension",
     "npm:@ff-labs/pi-fff",
     "npm:pi-web-access",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "npm:pi-claude-bridge"
   ]
 }
