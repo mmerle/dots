@@ -7,8 +7,8 @@ gui:
       - bold
     inactiveBorderColor:
       - '#606975'
-  authorColors:
-    '*': '#606975'
+    authorColors:
+      '*': '#606975'
   showBottomLine: false
   showListFooter: false
   border: 'single'
