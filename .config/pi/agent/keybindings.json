@@ -1,5 +1,17 @@
 {
   "tui.input.submit": "ctrl+enter",
-  "tui.input.newLine": "enter",
-  "tui.editor.yank": []
+  "tui.input.newLine": ["enter", "shift+enter"],
+  "tui.input.copy": [],
+  "tui.editor.yank": [],
+  "tui.input.tab": ["tab", "ctrl+y"],
+  "tui.select.up": ["up", "ctrl+k"],
+  "tui.select.down": ["down", "ctrl+j"],
+  "app.model.select": "ctrl+a",
+  "app.editor.external": "ctrl+e",
+  "app.thinking.cycle": "ctrl+t",
+  "app.thinking.toggle": [],
+  "app.session.resume": "ctrl+s",
+  "app.session.toggleSort": "alt+s",
+  "app.models.save": "alt+s",
+  "app.thinking.save": "alt+s"
 }
