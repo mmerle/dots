@@ -15,6 +15,14 @@
       "cmd-alt-b": "editor::ToggleGitBlameInline",
     },
   },
+  {
+    "context": "AgentPanel > Terminal",
+    "bindings": {
+      "ctrl-j": ["terminal::SendText", "\u001b[106;5u"],
+      "ctrl-k": ["terminal::SendText", "\u001b[107;5u"],
+      "ctrl-enter": ["terminal::SendText", "\u001b[13;5u"],
+    },
+  },
   // pane navigation
   {
     "context": "Editor && vim_mode == normal || Dock",
