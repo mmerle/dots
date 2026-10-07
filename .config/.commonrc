@@ -50,7 +50,6 @@ alias reload='exec $SHELL -l'
 alias ta='tmux attach'
 alias tn='tmux new -A -s "$(basename "$PWD" | tr . _)"'
 alias ts='tmux ls'
-alias oc='opencode'
 
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init "$rc_shell")"
