@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.0.4",
+  "lastChangelogVersion": "1.1.0",
   "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "externalEditor": "nvim",
@@ -7,7 +7,7 @@
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,
-  "quietStartup": true,
+  "quietStartup": false,
   "packages": [
     {
       "source": "npm:@plannotator/pi-extension",

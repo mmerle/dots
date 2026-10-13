@@ -1,0 +1,13 @@
+[package]
+name = "tmux-sessions"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fff-search = { git = "https://github.com/dmtrKovalenko/fff", rev = "e3f694a2e4f82bb755418e8d305dcff779c59c27" }
+neo_frizbee = "0.13.3"
+ratatui = "0.30"
+
+[profile.release]
+lto = true
+strip = true

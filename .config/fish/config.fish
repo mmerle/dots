@@ -8,6 +8,7 @@ set -gx PATH "$PNPM_HOME" $PATH
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 set -gx EDITOR nvim
+set -gx PI_ASK_USER_DISPLAY_MODE inline
 set -gx MANPAGER "nvim -c +Man!"
 set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzfrc"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
