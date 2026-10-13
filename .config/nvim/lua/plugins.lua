@@ -173,6 +173,10 @@ now_if_args(function()
 end)
 
 -- fff (https://github.com/dmtrKovalenko/fff)
+local function compact_picker_width(columns)
+  return math.min(0.9, math.max(0.4, 80 / columns))
+end
+
 later(function()
   Config.on_packchanged('fff', { 'install', 'update' }, function()
     require('fff.download').download_or_build_binary()
@@ -190,7 +194,10 @@ later(function()
 end)
 map('n', '<leader>p', function()
   require('fff').find_files({
-    layout = { width = 0.4, height = 0.4 },
+    layout = {
+      width = compact_picker_width,
+      height = 0.4,
+    },
     preview = { enabled = false },
   })
 end, { desc = 'Find files' })
@@ -203,6 +210,17 @@ later(function()
   add({ 'https://github.com/ibhagwan/fzf-lua' })
 
   local fzf = require('fzf-lua')
+  local winopts = {
+    height = 0.6,
+    width = 0.6,
+    border = 'single',
+    preview = { horizontal = 'right:70%', scrollbar = 'border', border = 'single' },
+    backdrop = 100,
+  }
+  local function compact_picker_winopts()
+    return vim.tbl_extend('force', winopts, { width = compact_picker_width(vim.o.columns), height = 0.4 })
+  end
+
   fzf.setup({
     keymap = {
       builtin = { ['<esc>'] = 'hide' },
@@ -210,19 +228,13 @@ later(function()
     },
     fzf_opts = { ['--info'] = 'hidden', ['--gutter'] = ' ' },
     defaults = { file_icons = false, git_icons = false },
-    winopts = {
-      height = 0.6,
-      width = 0.6,
-      border = 'single',
-      preview = { horizontal = 'right:70%', scrollbar = 'border', border = 'single' },
-      backdrop = 100,
-    },
+    winopts = winopts,
     previewers = {
       builtin = { syntax_limit_b = 1024 * 1024, limit_b = 1024 * 1024, treesitter = { context = false } },
     },
     oldfiles = {
       formatter = 'path.filename_first',
-      winopts = { height = 0.4, width = 0.4 },
+      winopts = compact_picker_winopts,
       previewer = false,
       cwd_only = true,
       stat_file = true,
@@ -230,7 +242,7 @@ later(function()
     },
     buffers = {
       formatter = 'path.filename_first',
-      winopts = { height = 0.4, width = 0.4 },
+      winopts = compact_picker_winopts,
       previewer = false,
       ignore_current_buffer = true,
     },
