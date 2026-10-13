@@ -1,0 +1,60 @@
+#!/bin/sh
+# session/window picker, Tab toggles lists. Lines are "window_id<TAB>session_id<TAB>name<ZWSP>note", only the name is searched
+
+t=$(printf '\t')
+esc=$(printf '\033')
+
+list() {
+  cur=$(tmux display-message -p '#{session_id}')
+  {
+    tmux list-sessions -F "#{?#{==:#{session_id},$cur},1,0}$t#{session_last_attached}$t#{session_id}$t#{window_id}$t#{session_name}$t#{session_windows}" |
+      sort -t "$t" -k1,1n -k2,2nr | sed "s/^/s$t/"
+    tmux list-windows -a -F "#{&&:#{==:#{session_id},$cur},#{window_active}}$t#{session_id}$t#{window_id}$t#{window_index}$t#{window_name}$t#{pane_current_command}" |
+      sed "s/^/w$t/"
+  } | awk -F "$t" -v view="$1" -v width="$((${FZF_COLUMNS:-$(tput cols)} - 6))" '
+    function row(wid, sid, indent, text, note, bold, dim,    pad) {
+      pad = width - indent - length(text) - length(note)
+      if (pad < 1) pad = 1
+      printf "%s\t%s\t%*s%s%s\033[22m%*s\342\200\213\033[2m%s\033[22m\n", wid, sid, indent, "", \
+        (dim ? "\033[2m" : bold ? "\033[1m" : ""), text, pad, "", note
+    }
+    $1 == "s" { order[++n] = $4; wid[$4] = $5; name[$4] = $6; count[$4] = $7 "w"; current[$4] = $2 }
+    $1 == "w" { w[$3] = w[$3] $0 "\n" }
+    END {
+      for (i = 1; i <= n; i++) {
+        s = order[i]
+        if (view == "sessions") {
+          row(wid[s], s, 0, name[s], current[s] ? "current  " count[s] : count[s], 0, current[s])
+          continue
+        }
+        row(wid[s], s, 0, name[s], count[s], 1, 0)
+        m = split(w[s], lines, "\n")
+        for (j = 1; j < m; j++) {
+          split(lines[j], f, "\t")
+          row(f[4], s, 2, f[5] ": " f[6], f[2] ? "current  " f[7] : f[7], 0, f[2])
+        }
+      }
+    }'
+}
+
+label() {
+  on="$esc[1;32m"; off="$esc[2m"
+  [ "$1" = windows ] && { on="$esc[2m"; off="$esc[1;32m"; }
+  printf ' %sSessions%s  %sWindows%s ' "$on" "$esc[0m" "$off" "$esc[0m"
+}
+
+case $1 in
+list) list "$2" ;;
+toggle)
+  case $FZF_INPUT_LABEL in
+  *"$esc[1;32mSessions"*) next=windows ;;
+  *) next=sessions ;;
+  esac
+  printf 'change-input-label(%s)+reload(%s list %s)' "$(label "$next")" "$0" "$next" ;;
+*)
+  list sessions | fzf --ansi --no-sort --delimiter '\t|\x{200b}' --with-nth=3,4 --nth=1 \
+    --info=inline-right --color=prompt:2 --scrollbar='▐' --pointer='' \
+    --input-border=sharp --list-border=sharp --input-label "$(label sessions)" \
+    --bind "tab:transform:$0 toggle" \
+    --bind 'enter:become(tmux select-window -t {1} \; switch-client -t {2})' ;;
+esac
