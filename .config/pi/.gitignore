@@ -1,11 +1,11 @@
 agent/auth.json
 agent/mcp*
-agent/pi-subagents/
+agent/pi-subagents
 agent/models-store.json
-agent/sessions/
+agent/sessions
 agent/trust.json
-agent/fff/
-agent/npm/
+agent/fff
+agent/npm
 pi-acp/
-agent/themes/
+agent/themes
 agent/claude-bridge*

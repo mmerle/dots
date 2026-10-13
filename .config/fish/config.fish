@@ -95,8 +95,8 @@ zoxide init fish | source
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 
 # pnpm
-set -gx PNPM_HOME "/Users/mm/.local/share/pnpm"
-if not string match -q -- "$PNPM_HOME/bin" $PATH
+set -gx PNPM_HOME '/Users/mm/.local/share/pnpm'
+if test "$PATH[1]" != "$PNPM_HOME/bin"
   set -gx PATH "$PNPM_HOME/bin" $PATH
 end
 # pnpm end
