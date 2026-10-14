@@ -1,10 +1,10 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.2.0",
   "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "externalEditor": "nvim",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-luna",
+  "defaultProvider": "claude-bridge",
+  "defaultModel": "claude-haiku-5-5",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": true,
   "quietStartup": false,
