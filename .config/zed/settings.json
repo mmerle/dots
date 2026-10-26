@@ -1,4 +1,5 @@
 {
+  "suggest_extensions": false,
   "on_new_window": "empty_tab",
   "diff_view_style": "split",
   "cli_default_open_behavior": "new_window",
@@ -39,6 +40,9 @@
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false,
+  },
+  "tab_switcher": {
+    "show_file_preview": false,
   },
   "tabs": {
     "file_icons": false,
@@ -94,9 +98,14 @@
     "provider": "none",
   },
   "agent": {
+    "threads_sidebar": {
+      "default_width": 250.0,
+    },
+    "default_width": 500.0,
+    "flexible": false,
     "expand_terminal_card": false,
     "expand_edit_card": false,
-    "notify_when_agent_waiting": "primary_screen",
+    "notify_when_agent_waiting": "never",
     "default_profile": "write",
     "enable_feedback": false,
     "single_file_review": true,
