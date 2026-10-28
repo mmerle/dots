@@ -1,0 +1,38 @@
+foreground = #edecec
+background = #1b1913
+
+cursor-color = #969592
+
+# black
+palette = 0=#72706d
+palette = 8=#72706d
+
+# red
+palette = 1=#fc7350
+palette = 9=#fc7350
+
+# green
+palette = 2=#2f98a3
+palette = 10=#2f98a3
+
+# yellow
+palette = 3=#ffcc66
+palette = 11=#ffcc66
+
+# blue
+palette = 4=#9ccfd8
+palette = 12=#9ccfd8
+
+# magenta
+palette = 5=#f388b6
+palette = 13=#f388b6
+
+# cyan
+palette = 6=#bb88ff
+palette = 14=#bb88ff
+
+# white
+palette = 7=#edecec
+palette = 15=#edecec
+
+# vim:ft=conf
