@@ -683,7 +683,10 @@ end)
 -- Navigator.nvim (https://github.com/numToStr/Navigator.nvim)
 later(function()
   add({ 'https://github.com/numToStr/Navigator.nvim' })
-  require('Navigator').setup({ disable_on_zoom = true })
+  require('Navigator').setup({
+    disable_on_zoom = true,
+    mux = vim.env.REX_SESSION and not vim.env.TMUX and require('plugins.rex-navigator') or 'auto',
+  })
 end)
 map('n', '<C-h>', '<cmd>NavigatorLeft<cr>')
 map('n', '<C-j>', '<cmd>NavigatorDown<cr>')
