@@ -722,3 +722,31 @@ map('n', '<leader>z', function()
   require('mini.misc').zoom(nil, { title = name == '' and '' or vim.fs.basename(name) })
 end, { desc = 'Zoom buffer' })
 map('n', '<leader>r', function() require('mini.misc').resize_window(0, 80) end, { desc = 'Resize window' })
+
+-- obsidian.nvim (https://github.com/obsidian-nvim/obsidian.nvim)
+later(function()
+  add({ {
+    src = 'https://github.com/obsidian-nvim/obsidian.nvim',
+    version = vim.version.range('*'),
+  } })
+
+  require('obsidian').setup({
+    legacy_commands = false,
+    workspaces = { { name = 'notes', path = '~/Documents/notes' } },
+    picker = { name = 'fzf-lua' },
+    frontmatter = { enabled = false },
+    checkbox = { order = { ' ', 'x' } },
+    attachments = { folder = 'attachments/images' },
+    templates = { folder = 'templates' },
+    daily_notes = {
+      folder = 'daily',
+      date_format = 'MM-DD-YY',
+      template = 'daily-template.md',
+      workdays_only = false,
+    },
+    ui = { enable = false },
+  })
+end)
+map('n', '<leader>on', '<cmd>Obsidian new<cr>', { desc = 'New note' })
+map('n', '<leader>op', '<cmd>Obsidian quick_switch<cr>', { desc = 'Quick switch notes' })
+map('n', '<leader>o/', '<cmd>Obsidian search<cr>', { desc = 'Search notes' })
