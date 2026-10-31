@@ -3,7 +3,7 @@
   "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "externalEditor": "nvim",
-  "defaultProvider": "openai-codex",
+  "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "low",
   "hideThinkingBlock": true,
