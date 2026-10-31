@@ -3,9 +3,9 @@
   "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "externalEditor": "nvim",
-  "defaultProvider": "claude-bridge",
-  "defaultModel": "claude-haiku-5-5",
-  "defaultThinkingLevel": "medium",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "low",
   "hideThinkingBlock": true,
   "quietStartup": false,
   "packages": [
