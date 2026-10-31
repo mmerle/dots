@@ -1,6 +1,7 @@
 tap "homebrew/cask-versions"
 
 tap "agavra/tap", trusted: true
+tap "anomalyco/tap", trusted: true
 tap "fsouza/prettierd", trusted: true
 tap "schappim/ocr", trusted: true
 
@@ -33,17 +34,19 @@ brew "tealdeer"
 brew "tmux"
 brew "trash-cli"
 brew "tree-sitter"
-brew "agavra/tap/tuicr"
+brew "tree-sitter-cli"
+brew "tuicr"
 brew "yazi"
 brew "zoxide"
 brew "fsouza/prettierd/prettierd"
 brew "schappim/ocr/ocr"
 
+cask "anomalyco/tap/hex"
 cask "affinity"
 cask "bitwarden"
 cask "blender"
 cask "figma"
-cask "ghostty"
+cask "ghostty@tip"
 cask "handbrake-app"
 cask "helium-browser"
 cask "hiddenbar"
