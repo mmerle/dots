@@ -37,6 +37,10 @@
         "blender-mcp"
       ],
       "enabled": false
+    },
+    "arena": {
+      "url": "https://mcp.are.na/mcp",
+      "enabled": false
     }
   }
 }
