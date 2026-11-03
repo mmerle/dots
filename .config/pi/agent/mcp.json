@@ -8,9 +8,13 @@
       "args": [
         "-y",
         "chrome-devtools-mcp@latest",
-        "--autoConnect",
+        "--headless",
+        "--executablePath",
+        "/Applications/Helium.app/Contents/MacOS/Helium",
         "--userDataDir",
-        "~/Library/Application Support/net.imput.helium"
+        "~/.local/share/pi/browser-profiles/helium-devtools",
+        "--no-usage-statistics",
+        "--no-performance-crux"
       ]
     },
     "svelte": {
