@@ -67,10 +67,6 @@ vim.opt.foldmethod = 'manual'
 vim.opt.foldexpr = '0'
 vim.opt.foldtext = ''
 
-require('vim._core.ui2').enable({
-  msg = { targets = 'msg' }
-})
-
 vim.opt.confirm = true
 vim.opt.updatetime = 250
 vim.opt.shortmess:append({ W = true, a = true, c = true, C = true, F = true, s = true, o = true, O = true })
