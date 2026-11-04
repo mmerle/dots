@@ -288,7 +288,25 @@ map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', { desc = 'Git preview h
 map({ 'n', 'v' }, '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>', { desc = 'Git reset hunk' })
 map({ 'n', 'v' }, '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { desc = 'Git stage hunk' })
 map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', { desc = 'Git stage buffer' })
-map('n', '<leader>hd', '<cmd>Gitsigns diffthis<cr>', { desc = 'Git diff hunk' })
+map('n', '<leader>hD', '<cmd>Gitsigns diffthis<cr>', { desc = 'Git diff hunk' })
+
+-- mini.diff (https://github.com/nvim-mini/mini.diff)
+now_if_args(function()
+  add({ 'https://github.com/nvim-mini/mini.diff' })
+  require('mini.diff').setup({
+    view = { style = 'sign', signs = { add = '', change = '', delete = '' } },
+    mappings = {
+      apply = '',
+      reset = '',
+      textobject = '',
+      goto_first = '',
+      goto_prev = '',
+      goto_next = '',
+      goto_last = '',
+    },
+  })
+end)
+map('n', '<leader>hd', function() require('mini.diff').toggle_overlay(0) end, { desc = 'Toggle Git diff overlay' })
 
 -- vim-illuminate (https://github.com/RRethy/vim-illuminate)
 now_if_args(function()
