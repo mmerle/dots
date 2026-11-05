@@ -44,7 +44,7 @@ function panes.float(ctx, label, command)
 
   local layer = assert(rex.session.new_layer{
     window_id = window_id,
-    bounds = { 0.1, 0.1, 0.8, 0.8 },
+    bounds = { 0.05, 0.05, 0.9, 0.9 },
     focus = true,
     layout = rex.layout.block{
       flavor = "com.superlogical.terminal.shell",
