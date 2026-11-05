@@ -177,6 +177,10 @@ local function compact_picker_width(columns)
   return math.min(0.9, math.max(0.4, 80 / columns))
 end
 
+local function compact_picker_height(_, lines)
+  return math.min(0.9, math.max(0.4, 20 / lines))
+end
+
 later(function()
   Config.on_packchanged('fff', { 'install', 'update' }, function()
     require('fff.download').download_or_build_binary()
@@ -196,7 +200,7 @@ map('n', '<leader>p', function()
   require('fff').find_files({
     layout = {
       width = compact_picker_width,
-      height = 0.4,
+      height = compact_picker_height,
     },
     preview = { enabled = false },
   })
@@ -218,7 +222,10 @@ later(function()
     backdrop = 100,
   }
   local function compact_picker_winopts()
-    return vim.tbl_extend('force', winopts, { width = compact_picker_width(vim.o.columns), height = 0.4 })
+    return vim.tbl_extend('force', winopts, {
+      width = compact_picker_width(vim.o.columns),
+      height = compact_picker_height(vim.o.columns, vim.o.lines),
+    })
   end
 
   fzf.setup({
