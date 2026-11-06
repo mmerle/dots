@@ -9,17 +9,14 @@
         "-y",
         "chrome-devtools-mcp@latest",
         "--headless",
-        "--executablePath",
-        "/Applications/Helium.app/Contents/MacOS/Helium",
-        "--userDataDir",
-        "~/.local/share/pi/browser-profiles/helium-devtools",
+        "--channel",
+        "canary",
         "--no-usage-statistics",
         "--no-performance-crux"
       ]
     },
     "svelte": {
-      "url": "https://mcp.svelte.dev/mcp",
-      "enabled": false
+      "url": "https://mcp.svelte.dev/mcp"
     },
     "astro-docs": {
       "url": "https://mcp.docs.astro.build/mcp",
