@@ -16,7 +16,8 @@
       ]
     },
     "svelte": {
-      "url": "https://mcp.svelte.dev/mcp"
+      "url": "https://mcp.svelte.dev/mcp",
+      "enabled": false
     },
     "astro-docs": {
       "url": "https://mcp.docs.astro.build/mcp",
