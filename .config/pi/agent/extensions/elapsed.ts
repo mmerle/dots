@@ -26,6 +26,13 @@ export default function elapsed(pi: ExtensionAPI) {
   let timer: ReturnType<typeof setInterval> | undefined;
   let run: { message: (typeof messages)[number]; startedAt: number } | undefined;
   let previous: (typeof messages)[number] | undefined;
+  let waiting = 0;
+  let refresh: (() => void) | undefined;
+
+  pi.events.on('ask:waiting', (data) => {
+    waiting = (data as { count: number }).count;
+    refresh?.();
+  });
 
   pi.registerEntryRenderer<{ seconds: number; message: string }>(ENTRY_TYPE, (entry, _options, theme) => {
     const { message = 'Worked', seconds = 0 } = entry.data ?? {};
@@ -39,6 +46,8 @@ export default function elapsed(pi: ExtensionAPI) {
   function stop(ctx: ExtensionContext) {
     clearInterval(timer);
     timer = undefined;
+    refresh = undefined;
+    waiting = 0;
     if (ctx.mode === 'tui') ctx.ui.setWorkingMessage();
   }
 
@@ -50,10 +59,14 @@ export default function elapsed(pi: ExtensionAPI) {
     run = current;
     previous = current.message;
 
-    const update = () =>
-      ctx.ui.setWorkingMessage(`${current.message.active} for ${formatDuration(elapsedSeconds(current.startedAt))}`);
-    update();
-    timer = setInterval(update, 1000);
+    refresh = () =>
+      ctx.ui.setWorkingMessage(
+        waiting
+          ? `Waiting on answers for ${waiting} question${waiting === 1 ? '' : 's'}`
+          : `${current.message.active} for ${formatDuration(elapsedSeconds(current.startedAt))}`,
+      );
+    refresh();
+    timer = setInterval(refresh, 1000);
   });
 
   pi.on('agent_end', (_event, ctx) => {

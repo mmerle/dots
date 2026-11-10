@@ -4,6 +4,7 @@ local opts = { silent = true }
 Config.group_clues = {
   { mode = 'n', keys = '<Leader>f', desc = '+Find' },
   { mode = 'n', keys = '<Leader>h', desc = '+Hunk' },
+  { mode = 'n', keys = '<Leader>y', desc = '+Yank' },
 }
 
 map({ 'n', 'v' }, 'j', 'gj')
@@ -39,7 +40,25 @@ map('n', '<leader>i', '<cmd>Inspect<cr>', { desc = 'Inspect syntax highlighting'
 map('n', 'gV', '`[v`]', { desc = 'Visually select last edited' })
 map('i', '<a-bs>', '<c-w>', { desc = 'Delete word' })
 map('n', 'yc', 'yygccp', { remap = true })
-map('n', '<leader>y', '<cmd>%y<cr>', { desc = 'Yank entire file' })
+map('n', '<leader>ya', '<cmd>%y<cr>', { desc = 'Yank entire file' })
+
+local function yank_path_with_line(modifier)
+  if vim.api.nvim_buf_get_name(0) == '' or vim.bo.buftype ~= '' then
+    vim.notify('Buffer has no file path', vim.log.levels.WARN)
+    return
+  end
+
+  local path = vim.fn.expand('%:' .. modifier) .. '#L' .. vim.fn.line('.')
+  vim.fn.setreg('+', path, 'v')
+  vim.notify('Yanked: ' .. path, vim.log.levels.INFO)
+end
+
+map('n', '<leader>yf', function()
+  yank_path_with_line('.')
+end, { desc = 'Yank relative path with line number' })
+map('n', '<leader>yp', function()
+  yank_path_with_line('p')
+end, { desc = 'Yank absolute path with line number' })
 map('n', '<C-_>', function()
   require('Comment.api').toggle.linewise.current()
 end, opts)

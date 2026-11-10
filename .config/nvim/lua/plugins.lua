@@ -177,6 +177,10 @@ local function compact_picker_width(columns)
   return math.min(0.9, math.max(0.4, 80 / columns))
 end
 
+local function compact_picker_height(_, lines)
+  return math.min(0.9, math.max(0.4, 20 / lines))
+end
+
 later(function()
   Config.on_packchanged('fff', { 'install', 'update' }, function()
     require('fff.download').download_or_build_binary()
@@ -196,7 +200,7 @@ map('n', '<leader>p', function()
   require('fff').find_files({
     layout = {
       width = compact_picker_width,
-      height = 0.4,
+      height = compact_picker_height,
     },
     preview = { enabled = false },
   })
@@ -218,7 +222,10 @@ later(function()
     backdrop = 100,
   }
   local function compact_picker_winopts()
-    return vim.tbl_extend('force', winopts, { width = compact_picker_width(vim.o.columns), height = 0.4 })
+    return vim.tbl_extend('force', winopts, {
+      width = compact_picker_width(vim.o.columns),
+      height = compact_picker_height(vim.o.columns, vim.o.lines),
+    })
   end
 
   fzf.setup({
@@ -288,7 +295,25 @@ map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', { desc = 'Git preview h
 map({ 'n', 'v' }, '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>', { desc = 'Git reset hunk' })
 map({ 'n', 'v' }, '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { desc = 'Git stage hunk' })
 map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', { desc = 'Git stage buffer' })
-map('n', '<leader>hd', '<cmd>Gitsigns diffthis<cr>', { desc = 'Git diff hunk' })
+map('n', '<leader>hD', '<cmd>Gitsigns diffthis<cr>', { desc = 'Git diff hunk' })
+
+-- mini.diff (https://github.com/nvim-mini/mini.diff)
+now_if_args(function()
+  add({ 'https://github.com/nvim-mini/mini.diff' })
+  require('mini.diff').setup({
+    view = { style = 'sign', signs = { add = '', change = '', delete = '' } },
+    mappings = {
+      apply = '',
+      reset = '',
+      textobject = '',
+      goto_first = '',
+      goto_prev = '',
+      goto_next = '',
+      goto_last = '',
+    },
+  })
+end)
+map('n', '<leader>hd', function() require('mini.diff').toggle_overlay(0) end, { desc = 'Toggle Git diff overlay' })
 
 -- vim-illuminate (https://github.com/RRethy/vim-illuminate)
 now_if_args(function()

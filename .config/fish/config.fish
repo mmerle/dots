@@ -8,7 +8,6 @@ set -gx PATH "$PNPM_HOME" $PATH
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 set -gx EDITOR nvim
-set -gx PI_ASK_USER_DISPLAY_MODE inline
 set -gx MANPAGER "nvim -c +Man!"
 set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzfrc"
 set -gx PRETTIERD_LOCAL_PRETTIER_ONLY false
@@ -75,7 +74,6 @@ alias la='ls -aF --color=auto'
 alias ll='ls -lavF --color=auto'
 alias vim='nvim'
 alias reload='exec $SHELL -l'
-alias connect='kitty +kitten ssh'
 alias tmr='transmission-remote'
 alias npm='pnpm'
 alias npx='pnpm dlx'

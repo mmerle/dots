@@ -1,5 +1,6 @@
 {
-  "lastChangelogVersion": "1.4.0",
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "lastChangelogVersion": "1.5.0",
   "theme": "flora-light/flora-dark",
   "editorPaddingX": 1,
   "externalEditor": "nvim",
@@ -7,7 +8,7 @@
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "low",
   "hideThinkingBlock": true,
-  "quietStartup": false,
+  "quietStartup": true,
   "packages": [
     {
       "source": "npm:@plannotator/pi-extension",
@@ -18,7 +19,10 @@
     "npm:pi-subagents",
     "npm:pi-claude-bridge",
     "npm:pi-btw",
-    "npm:pi-ask-user",
     "npm:pi-vim"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.47.0",
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.86.0"
+  }
 }

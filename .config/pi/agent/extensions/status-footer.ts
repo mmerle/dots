@@ -54,6 +54,7 @@ export default function statusFooter(pi: ExtensionAPI) {
             theme.fg('accent', modelName + effort),
             theme.fg('success', cwd),
             theme.fg('warning', session),
+            footerData.getExtensionStatuses().get('preset'),
           ]
             .filter(Boolean)
             .join(separator);
@@ -76,7 +77,7 @@ export default function statusFooter(pi: ExtensionAPI) {
 
           return [
             fitRow(dim('  ') + details, '', width),
-            fitRow(dim('  ctrl+s resume'), right ? `${right}${dim('  ')}` : '', width),
+            fitRow(dim('  ctrl+r resume'), right ? `${right}${dim('  ')}` : '', width),
           ];
         },
       };
