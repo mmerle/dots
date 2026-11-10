@@ -26,6 +26,9 @@ map('n', '<c-d>', '<c-d>zz')
 map('n', '<c-u>', '<c-u>zz')
 map('n', '<leader>H', '<c-w>H <c-w>=', { desc = 'Rotate splits (Horizontal)' })
 map('n', '<leader>V', '<c-w>K <c-w>=', { desc = 'Rotate splits (Vertical)' })
+for _, key in ipairs({ 'h', 'j', 'k', 'l' }) do
+  map('n', '<C-' .. key .. '>', '<C-w>' .. key, { desc = 'Navigate window' })
+end
 map('n', '<up>', ':horizontal resize -5<cr>')
 map('n', '<down>', ':horizontal resize +5<cr>')
 map('n', '<left>', ':vertical resize -5<cr>')

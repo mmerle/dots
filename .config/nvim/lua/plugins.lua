@@ -681,17 +681,17 @@ later(function()
 end)
 
 -- Navigator.nvim (https://github.com/numToStr/Navigator.nvim)
-later(function()
-  add({ 'https://github.com/numToStr/Navigator.nvim' })
-  require('Navigator').setup({
-    disable_on_zoom = true,
-    mux = vim.env.REX_SESSION and not vim.env.TMUX and require('plugins.rex-navigator') or 'auto',
-  })
-end)
-map('n', '<C-h>', '<cmd>NavigatorLeft<cr>')
-map('n', '<C-j>', '<cmd>NavigatorDown<cr>')
-map('n', '<C-k>', '<cmd>NavigatorUp<cr>')
-map('n', '<C-l>', '<cmd>NavigatorRight<cr>')
+if vim.env.TMUX then
+  later(function()
+    add({ 'https://github.com/numToStr/Navigator.nvim' })
+    require('Navigator').setup({ disable_on_zoom = true })
+    for key, direction in pairs({ h = 'Left', j = 'Down', k = 'Up', l = 'Right' }) do
+      map('n', '<C-' .. key .. '>', '<cmd>Navigator' .. direction .. '<cr>')
+    end
+  end)
+elseif vim.env.REX_SESSION and vim.env.REX_BLOCK then
+  require('rex-navigator').setup()
+end
 
 -- harpoonline (https://github.com/abeldekat/harpoonline)
 later(function()
